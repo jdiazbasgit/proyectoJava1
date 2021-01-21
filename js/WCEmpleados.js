@@ -97,6 +97,7 @@ class WCEmpleados extends HTMLElement{
         shadowRoot.querySelector("#botonAdd").addEventListener("click",()=>this.verModal())
         shadowRoot.querySelector("#cerrarModal").addEventListener("click",()=>this.cerrarModal())
         shadowRoot.querySelector("#cerrarModal1").addEventListener("click",()=>this.cerrarModal())
+        shadowRoot.querySelector("#guardarEmpleado").addEventListener("click",()=>this.guardarEmpleado())
 
         
         //Obtener datos JSON
@@ -136,6 +137,9 @@ class WCEmpleados extends HTMLElement{
             thEditar.innerHTML = "";
             thead.appendChild(thEditar);
             let tbody = document.createElement("tbody");
+
+            tbody.setAttribute("id", "tbody");
+
             tablaDatos.appendChild(tbody);
 
             console.log(arrayDatosJSON)
@@ -214,6 +218,86 @@ class WCEmpleados extends HTMLElement{
         console.log("verModal");
         this.shadowRoot.querySelector("#myModal").style.display = 'none'
     }
+
+    identificadorAleatorio(){
+      let idRandom = Math.round(Math.random()*6451213);
+      return idRandom;
+  }
+
+  guardarEmpleado(){
+    console.log("Empleado guardado")
+    let nombre = this.shadowRoot.querySelector("#nuevoNombre").value.toUpperCase();
+    let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value.toUpperCase();
+    let dni = this.shadowRoot.querySelector("#nuevoDNI").value;
+    let fechaAlta = this.shadowRoot.querySelector("#nuevoFecha").value;
+    console.log(nombre)
+    console.log(apellidos)
+    console.log(dni)
+    console.log(fechaAlta)
+
+    let tbody = this.shadowRoot.querySelector("#tbody")
+
+    let nuevaFila = document.createElement("tr")
+    
+    tbody.appendChild(nuevaFila);
+    
+    let nuevoEmpleado = {"nombre": nombre, "apellidos": apellidos, "DNI": dni, "identificador": this.identificadorAleatorio(), "fecha_alta": fechaAlta, "fecha_baja": null};
+
+    let datoIcono = document.createElement("td");
+    nuevaFila.appendChild(datoIcono);
+    datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+        </svg>`;
+
+    for(let propiedad in nuevoEmpleado){
+        if (nuevoEmpleado.fecha_baja == null){
+            nuevoEmpleado.fecha_baja = "-";
+    }
+        if( propiedad !== null ){
+        let td = document.createElement("td");
+        td.innerHTML = nuevoEmpleado[propiedad];
+        nuevaFila.appendChild(td);
+    }
+}
+    let botonEditar = document.createElement("td");
+                nuevaFila.appendChild(botonEditar);
+
+                botonEditar.innerHTML= 
+
+              `<!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonModificar">
+                Open modal
+              </button>
+            
+              <!-- The Modal -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                  
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Modal Heading</h4>
+                      <button type="button"  id ="cerrarModificar" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      Modal body..
+                    </div>
+                    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" id="cerrarModificar1" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>`
+
+              this.cerrarModal()
+
+}
+
 
 
 }
