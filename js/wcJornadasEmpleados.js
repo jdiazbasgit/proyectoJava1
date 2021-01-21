@@ -4,8 +4,8 @@ class WCJornadasEmpleados extends HTMLElement {
     }
 
     connectedCallback() {
-        var empleados = [];        
-        var jornadas = [];
+        this.empleados = [];        
+        this.jornadas = [];
 
         let shadowRoot = this.attachShadow({ mode: "open" });
 
@@ -15,20 +15,31 @@ class WCJornadasEmpleados extends HTMLElement {
 
         let tbody = shadowRoot.querySelector("#tbody");
         
+        this.cargaEmpleados(this.empleados,this.jornadas);
+        
+       
+        setTimeout(() => {
+            this.rellenarTabla(this.empleados, this.jornadas, tbody);
+        }, 1000);
+        
+    }
+
+    cargaEmpleados(empleados,jornadas){
         getData(this.url).then(function (datos){
             Array.prototype.forEach.call(datos, dato => {
                 empleados.push(dato);
             })
         });
+        console.log("antes de empleados")
+        console.log(empleados);
+
         getData(this.url2).then(function (datos){
             Array.prototype.forEach.call(datos, dato => {
                 jornadas.push(dato);
             })
         });
-        console.log(empleados);
-        this.rellenarTabla(empleados, jornadas, tbody);
+        console.log(jornadas);
     }
-
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "url")
             this.url = newValue;
