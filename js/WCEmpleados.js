@@ -33,7 +33,7 @@ class WCEmpleados extends HTMLElement {
 <!--ÁREA DEL MODAL-->
           
     <!-- Button to Open the Modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+    <button type="button" class="btn btn-primary" data-toggle="modal"  data-target="#myModal" id="bmodal">
         Open modal
     </button>
 
@@ -57,6 +57,7 @@ class WCEmpleados extends HTMLElement {
         </div> `
 
 
+        shadowRoot.querySelector("#bmodal").addEventListener("click",this.verModal())
         //Datos del JSON, con la promesa
         let datosJSON = getDatos("./datos/empleados.json")
 
@@ -144,7 +145,11 @@ class WCEmpleados extends HTMLElement {
        //btnAdd.addEventListener("click", () => alert("AÑADIR"))
 
     }
-
+     verModal(){
+        console.log("verModal");
+        this.shadowRoot.querySelector("#myModal").style.display = 'block'
+    }
+    
     formularioAñadir() {
         console.log("HOLA, MODAL?")
         let exampleModal = shadowRoot.querySelector("#exampleModal")
