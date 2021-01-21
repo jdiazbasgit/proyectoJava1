@@ -1,4 +1,4 @@
-class MiEmpleados extends HTMLElement {
+class WCEmpleados extends HTMLElement {
     constructor() {
         super()
     }
@@ -58,7 +58,7 @@ class MiEmpleados extends HTMLElement {
 
 
         //Datos del JSON, con la promesa
-        let datosJSON = getDatos("./empleados.json")
+        let datosJSON = getDatos("./datos/empleados.json")
 
         //Manejo de los datos del JSON 
         datosJSON
@@ -170,4 +170,4 @@ function getDatos(url) {
 }
 
 
-window.customElements.define("mi-empleados", MiEmpleados);
+window.customElements.define("wc-empleados", WCEmpleados);
