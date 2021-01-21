@@ -103,6 +103,10 @@ class WCEmpleados extends HTMLElement{
         //Obtener datos JSON
         var datosJSON = getDatos("datos/empleados.json");
 
+        let fila = "fila"
+        let cerrar = "cerrar"
+        let modificar = "modificar"
+        let contador = 0;
 
         datosJSON.then((dato) =>{
 
@@ -138,6 +142,8 @@ class WCEmpleados extends HTMLElement{
             thead.appendChild(thEditar);
             let tbody = document.createElement("tbody");
 
+            
+
             tbody.setAttribute("id", "tbody");
 
             tablaDatos.appendChild(tbody);
@@ -165,13 +171,22 @@ class WCEmpleados extends HTMLElement{
                         tr.appendChild(td);
                     }
                 }
+
+                //Asignar id para que funcione modal
+
+                let filaAdd = fila.concat(contador);
+                let cerrarAdd = cerrar.concat(contador);
+                let modificarAdd = modificar.concat(contador)
+                contador ++;
+
+
                 let botonEditar = document.createElement("td");
                     tr.appendChild(botonEditar);
 
                     botonEditar.innerHTML= 
 
                   `<!-- Button to Open the Modal -->
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonModificar">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="${filaAdd}">
                     Open modal
                   </button>
                 
@@ -183,7 +198,7 @@ class WCEmpleados extends HTMLElement{
                         <!-- Modal Header -->
                         <div class="modal-header">
                           <h4 class="modal-title">Modal Heading</h4>
-                          <button type="button"  id ="cerrarModificar" class="close" data-dismiss="modal">&times;</button>
+                          <button type="button"  id ="${cerrarAdd}" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         
                         <!-- Modal body -->
@@ -193,15 +208,15 @@ class WCEmpleados extends HTMLElement{
                         
                         <!-- Modal footer -->
                         <div class="modal-footer">
-                          <button type="button" id="cerrarModificar1" class="btn btn-danger" data-dismiss="modal">Close</button>
+                          <button type="button" id="${modificarAdd}" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                         
                       </div>
                     </div>
                   </div>`
-                    shadowRoot.querySelector("#botonModificar").addEventListener("click",function (){tr.this.verModal()})
-                    shadowRoot.querySelector("#cerrarModificar").addEventListener("click",()=>this.cerrarModal())
-                    shadowRoot.querySelector("#cerrarModificar1").addEventListener("click",()=>this.cerrarModal())
+                    shadowRoot.querySelector(`#${filaAdd}`).addEventListener("click", ()=>this.verModal())
+                    shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click",()=>this.cerrarModal())
+                    shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click",()=>this.cerrarModal())
 
                     
 
@@ -215,7 +230,7 @@ class WCEmpleados extends HTMLElement{
     }
 
     cerrarModal(){
-        console.log("verModal");
+        console.log("cerrarModal");
         this.shadowRoot.querySelector("#myModal").style.display = 'none'
     }
 
