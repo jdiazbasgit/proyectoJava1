@@ -17,6 +17,7 @@ class WCEmpleados extends HTMLElement{
         
 
         shadowRoot.innerHTML = `
+        
         <style>
         .body {
             margin: 0;
@@ -29,70 +30,68 @@ class WCEmpleados extends HTMLElement{
             background-color: #fff;
           }
         </style>
+
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
+
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 
         <div class="container-fluid body">
-            <div class="d-flex justify-content-between">
-                <h1 class="text text-dark mt-5 mb-5">EMPLEADOS</h1>
-                <div class="mt-5">
-                <div class="container">
+          <div class="d-flex justify-content-between">
+            <h1 class="text text-dark mt-5 mb-5">EMPLEADOS</h1>
+            <div class="mt-5">
+              <div class="container">
 
-  <!-- Button to Open the Modal -->
-  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonAdd">
-    Añadir Empleado
-  </button>
+      <!-- Button to Open the Modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonAdd">
+                  Añadir Empleado
+                </button>
 
-  <!-- The Modal -->
-  <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
+      <!-- The Modal -->
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
       
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="text-center tx">NUEVO EMPLEADO</h4>
-          <button type="button"  id ="cerrarModal" class="close" data-dismiss="modal">&times;</button>
-        </div>
+          <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="text-center tx">NUEVO EMPLEADO</h4>
+                        <button type="button"  id ="cerrarModal" class="close" data-dismiss="modal">&times;</button>
+                      </div>
         
-        <!-- Modal body -->
-        <div class="modal-body">
-        <div class="form-group">
-        <form action="">
-            <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
-            <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
-            <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
-            <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
-        </form>
-    </div>
-        </div>
+          <!-- Modal body -->
+                      <div class="modal-body">
+                        <div class="form-group">
+                          <form action="">
+                            <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
+                            <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
+                            <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
+                            <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
+                          </form>
+                        </div>
+                      </div>
         
-        <!-- Modal footer -->
-        <div class="modal-footer">
-            <button type="button" id="cerrarModal1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-            <button type="button" id="guardarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
-        </div>
+      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" id="cerrarModal1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="guardarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                      </div>
         
-      </div>
-    </div>
-  </div>
-  
-</div>
-                        
-                
+                    </div>
+                  </div>
                 </div>
+
+              </div>
             </div>
-            
-           
-            <table id="tablaDatos" class="table"></table>
-            
-        </div> 
+          </div>
+
+          <table id="tablaDatos" class="table"></table>
+
         </div> 
         `
         shadowRoot.querySelector("#botonAdd").addEventListener("click",()=>this.verModal())
