@@ -154,7 +154,7 @@ class WCEmpleados extends HTMLElement {
 
       tablaDatos.appendChild(tbody);
 
-      console.log(arrayDatosJSON)
+      console.log("ARRAY EMPLEADOS", arrayDatosJSON)
 
       arrayDatosJSON.forEach(empleado => {
         let tr = document.createElement("tr");
@@ -214,7 +214,15 @@ class WCEmpleados extends HTMLElement {
                         
                         <!-- Modal body -->
                         <div class="modal-body">
-                          Modal body..
+                        <div class="form-group">
+                        <form action="">
+                          <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
+                          <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
+                          <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
+                          <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
+                          <label>Fecha de baja</label><input type="date"  class="form-control" required id="nuevoFechaBaja"><br>
+                          </form>
+                      </div>
                         </div>
                         
                         <!-- Modal footer -->
@@ -229,7 +237,7 @@ class WCEmpleados extends HTMLElement {
         shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click", () => this.cerrarModal1())
         shadowRoot.querySelector(`#${modificarAdd}`).addEventListener("click", () => this.cerrarModal1())
 
-
+        
 
       })
 
@@ -260,6 +268,7 @@ class WCEmpleados extends HTMLElement {
     this.shadowRoot.querySelector("#myModal1").style.display = 'none'
   }
 
+  
 
   guardarEmpleado() {
     console.log("Empleado guardado")
@@ -272,73 +281,84 @@ class WCEmpleados extends HTMLElement {
     console.log(dni)
     console.log(fechaAlta)
 
-    let tbody = this.shadowRoot.querySelector("#tbody")
 
-    let nuevaFila = document.createElement("tr")
 
-    tbody.appendChild(nuevaFila);
+    if (nombre.trim() === "" && apellidos.trim() === "" && dni.trim() === "") {
+      alert("Debes de rellenar todos los datos")
 
-    let nuevoEmpleado = {
-      "nombre": nombre,
-      "apellidos": apellidos,
-      "DNI": dni,
-      "identificador": this.identificadorAleatorio(),
-      "fecha_alta": fechaAlta,
-      "fecha_baja": null
-    };
+    } else {
+      let tbody = this.shadowRoot.querySelector("#tbody")
 
-    let datoIcono = document.createElement("td");
-    nuevaFila.appendChild(datoIcono);
-    datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-        </svg>`;
+      let nuevaFila = document.createElement("tr")
 
-    for (let propiedad in nuevoEmpleado) {
-      if (nuevoEmpleado.fecha_baja == null) {
-        nuevoEmpleado.fecha_baja = "-";
+      tbody.appendChild(nuevaFila);
+
+     let nuevoEmpleado = {
+        "nombre": nombre,
+        "apellidos": apellidos,
+        "DNI": dni,
+        "identificador": this.identificadorAleatorio(),
+        "fecha_alta": fechaAlta,
+        "fecha_baja": null
+      };
+
+      let datoIcono = document.createElement("td");
+      nuevaFila.appendChild(datoIcono);
+      datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
+          </svg>`;
+
+      for (let propiedad in nuevoEmpleado) {
+        if (nuevoEmpleado.fecha_baja == null) {
+          nuevoEmpleado.fecha_baja = "-";
+        }
+        if (propiedad !== null) {
+          let td = document.createElement("td");
+          td.innerHTML = nuevoEmpleado[propiedad];
+          nuevaFila.appendChild(td);
+        }
+
       }
-      if (propiedad !== null) {
-        let td = document.createElement("td");
-        td.innerHTML = nuevoEmpleado[propiedad];
-        nuevaFila.appendChild(td);
-      }
-    }
-    let botonEditar = document.createElement("td");
-    nuevaFila.appendChild(botonEditar);
+      let botonEditar = document.createElement("td");
+      nuevaFila.appendChild(botonEditar);
 
-    botonEditar.innerHTML =
+      botonEditar.innerHTML =
 
-      `<!-- Button to Open the Modal -->
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonModificar">
-                Open modal
-              </button>
-            
-              <!-- The Modal -->
-              <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                  
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h4 class="modal-title">Modal Heading</h4>
-                      <button type="button"  id ="cerrarModificar" class="close" data-dismiss="modal">&times;</button>
-                    </div>
+        `<!-- Button to Open the Modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonModificar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+              </svg>
+                </button>
+              
+                <!-- The Modal -->
+                <div class="modal" id="myModal">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
                     
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                      Modal body..
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button"  id ="cerrarModificar" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+                      
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Modal body..
+                      </div>
+                      
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <button type="button" id="cerrarModificar1" class="btn btn-danger" data-dismiss="modal">Close</button>
+                      </div>
+                      
                     </div>
-                    
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                      <button type="button" id="cerrarModificar1" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                    
                   </div>
-                </div>
-              </div>`
+                </div>`
 
-    this.cerrarModal()
+      this.cerrarModal()
+    }
 
   }
 
