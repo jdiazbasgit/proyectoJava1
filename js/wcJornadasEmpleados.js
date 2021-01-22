@@ -30,6 +30,7 @@ class WCJornadasEmpleados extends HTMLElement {
 
             })
             getData(url2).then(function (datos) {
+                
                 Array.prototype.forEach.call(datos, dato => {
                     jornadas.push(dato);
                 })
