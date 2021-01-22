@@ -1,22 +1,24 @@
 //Script para los empleados
 
 
-class WCEmpleados extends HTMLElement{
-    constructor(){
-        super();
-    }
+class WCEmpleados extends HTMLElement {
+  constructor() {
+    super();
+  }
 
-    
 
-    connectedCallback(){
-    
-    
 
-        let shadowRoot = this.attachShadow({mode: "open"});
+  connectedCallback() {
 
-        
 
-        shadowRoot.innerHTML = `
+
+    let shadowRoot = this.attachShadow({
+      mode: "open"
+    });
+
+
+
+    shadowRoot.innerHTML = `
         
         <style>
         .body {
@@ -98,100 +100,100 @@ class WCEmpleados extends HTMLElement{
 
         </div> 
         `
-        shadowRoot.querySelector("#botonAdd").addEventListener("click",()=>this.verModal())
-        shadowRoot.querySelector("#cerrarModal").addEventListener("click",()=>this.cerrarModal())
-        shadowRoot.querySelector("#cerrarModal1").addEventListener("click",()=>this.cerrarModal())
-        shadowRoot.querySelector("#guardarEmpleado").addEventListener("click",()=>this.guardarEmpleado())
+    shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModal())
+    shadowRoot.querySelector("#cerrarModal").addEventListener("click", () => this.cerrarModal())
+    shadowRoot.querySelector("#cerrarModal1").addEventListener("click", () => this.cerrarModal())
+    shadowRoot.querySelector("#guardarEmpleado").addEventListener("click", () => this.guardarEmpleado())
 
-        
-        //Obtener datos JSON
-        var datosJSON = getDatos("datos/empleados.json");
 
-        let fila = "fila"
-        let cerrar = "cerrar"
-        let modificar = "modificar"
-        let contador = 0;
+    //Obtener datos JSON
+    var datosJSON = getDatos("datos/empleados.json");
 
-        datosJSON.then((dato) =>{
+    let fila = "fila"
+    let cerrar = "cerrar"
+    let modificar = "modificar"
+    let contador = 0;
 
-            let arrayDatosJSON = dato;
+    datosJSON.then((dato) => {
 
-            let propiedadesTablaEmpleados = Object.keys(dato[0]);
+      let arrayDatosJSON = dato;
 
-            let tablaDatos = shadowRoot.querySelector("#tablaDatos");
+      let propiedadesTablaEmpleados = Object.keys(dato[0]);
 
-            let thead = document.createElement("thead");
-            thead.classList.add("bg-dark")
-            thead.classList.add("text-light")
-            
-            let thIcono = document.createElement("th")
-            thIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+      let tablaDatos = shadowRoot.querySelector("#tablaDatos");
+
+      let thead = document.createElement("thead");
+      thead.classList.add("bg-dark")
+      thead.classList.add("text-light")
+
+      let thIcono = document.createElement("th")
+      thIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                 </svg>`
-            thead.appendChild(thIcono)
-            
-            propiedadesTablaEmpleados.forEach(propiedad =>{
-                if(propiedad !== "jornada"){
-                    //console.log(propiedad)
-                    let th = document.createElement("th");
-                    propiedad = propiedad.replace("_", " ");
-                    th.innerHTML = propiedad.toUpperCase();
-                    thead.appendChild(th);
-                    //console.log(propiedad)
-                }
-            })
-            tablaDatos.appendChild(thead);
-            let thEditar = document.createElement("th");
-            thEditar.innerHTML = "";
-            thead.appendChild(thEditar);
-            let tbody = document.createElement("tbody");
+      thead.appendChild(thIcono)
 
-            
+      propiedadesTablaEmpleados.forEach(propiedad => {
+        if (propiedad !== "jornada") {
+          //console.log(propiedad)
+          let th = document.createElement("th");
+          propiedad = propiedad.replace("_", " ");
+          th.innerHTML = propiedad.toUpperCase();
+          thead.appendChild(th);
+          //console.log(propiedad)
+        }
+      })
+      tablaDatos.appendChild(thead);
+      let thEditar = document.createElement("th");
+      thEditar.innerHTML = "";
+      thead.appendChild(thEditar);
+      let tbody = document.createElement("tbody");
 
-            tbody.setAttribute("id", "tbody");
 
-            tablaDatos.appendChild(tbody);
 
-            console.log(arrayDatosJSON)
+      tbody.setAttribute("id", "tbody");
 
-            arrayDatosJSON.forEach(empleado =>{
-                let tr = document.createElement("tr");
-                tbody.appendChild(tr);
+      tablaDatos.appendChild(tbody);
 
-                let datoIcono = document.createElement("td");
-                tr.appendChild(datoIcono);
-                datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
+      console.log(arrayDatosJSON)
+
+      arrayDatosJSON.forEach(empleado => {
+        let tr = document.createElement("tr");
+        tbody.appendChild(tr);
+
+        let datoIcono = document.createElement("td");
+        tr.appendChild(datoIcono);
+        datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
                 </svg>`;
 
-                for(let propiedad in empleado){
-                    if (empleado.fecha_baja == null){
-                        empleado.fecha_baja = "-"
-                    }
+        for (let propiedad in empleado) {
+          if (empleado.fecha_baja == null) {
+            empleado.fecha_baja = "-"
+          }
 
-                    if( propiedad !== null && propiedad !== "jornada"){
-                        let td = document.createElement("td");
-                        td.innerHTML = empleado[propiedad];
-                        tr.appendChild(td);
-                    }
-                }
+          if (propiedad !== null && propiedad !== "jornada") {
+            let td = document.createElement("td");
+            td.innerHTML = empleado[propiedad];
+            tr.appendChild(td);
+          }
+        }
 
-                //Asignar id para que funcione modal
+        //Asignar id para que funcione modal
 
-                let filaAdd = fila.concat(contador);
-                let cerrarAdd = cerrar.concat(contador);
-                let modificarAdd = modificar.concat(contador)
-                contador ++;
+        let filaAdd = fila.concat(contador);
+        let cerrarAdd = cerrar.concat(contador);
+        let modificarAdd = modificar.concat(contador)
+        contador++;
 
 
-                let botonEditar = document.createElement("td");
-                    tr.appendChild(botonEditar);
+        let botonEditar = document.createElement("td");
+        tr.appendChild(botonEditar);
 
-                    botonEditar.innerHTML= 
+        botonEditar.innerHTML =
 
-                  `<!-- Button to Open the Modal -->
+          `<!-- Button to Open the Modal -->
                   
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="${filaAdd}">
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" id="${filaAdd}">
                     
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
   <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
@@ -200,13 +202,13 @@ class WCEmpleados extends HTMLElement{
                   </button>
                 
                   <!-- The Modal -->
-                  <div class="modal" id="myModal">
+                  <div class="modal" id="myModal1">
                     <div class="modal-dialog">
                       <div class="modal-content">
                       
                         <!-- Modal Header -->
                         <div class="modal-header">
-                          <h4 class="modal-title">Modal Heading</h4>
+                          <h4 class="modal-title">Modificar empleado</h4>
                           <button type="button"  id ="${cerrarAdd}" class="close" data-dismiss="modal">&times;</button>
                         </div>
                         
@@ -223,32 +225,43 @@ class WCEmpleados extends HTMLElement{
                       </div>
                     </div>
                   </div>`
-                    shadowRoot.querySelector(`#${filaAdd}`).addEventListener("click", ()=>this.verModal())
-                    shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click",()=>this.cerrarModal())
-                    shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click",()=>this.cerrarModal())
+        shadowRoot.querySelector(`#${filaAdd}`).addEventListener("click", () => this.verModal1())
+        shadowRoot.querySelector(`#${cerrarAdd}`).addEventListener("click", () => this.cerrarModal1())
+        shadowRoot.querySelector(`#${modificarAdd}`).addEventListener("click", () => this.cerrarModal1())
 
-                    
 
-            })
 
-        })
-    }
-    verModal(){
-        console.log("verModal");
-        this.shadowRoot.querySelector("#myModal").style.display = 'block'
-    }
+      })
 
-    cerrarModal(){
-        console.log("cerrarModal");
-        this.shadowRoot.querySelector("#myModal").style.display = 'none'
-    }
-
-    identificadorAleatorio(){
-      let idRandom = Math.round(Math.random()*6451213);
-      return idRandom;
+    })
+  }
+  verModal() {
+    console.log("verModal");
+    this.shadowRoot.querySelector("#myModal").style.display = 'block'
   }
 
-  guardarEmpleado(){
+  cerrarModal() {
+    console.log("cerrarModal");
+    this.shadowRoot.querySelector("#myModal").style.display = 'none'
+  }
+
+  identificadorAleatorio() {
+    let idRandom = Math.round(Math.random() * 6451213);
+    return idRandom;
+  }
+
+  verModal1() {
+    console.log("verModal");
+    this.shadowRoot.querySelector("#myModal1").style.display = 'block'
+  }
+
+  cerrarModal1() {
+    console.log("cerrarModal");
+    this.shadowRoot.querySelector("#myModal1").style.display = 'none'
+  }
+
+
+  guardarEmpleado() {
     console.log("Empleado guardado")
     let nombre = this.shadowRoot.querySelector("#nuevoNombre").value.toUpperCase();
     let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value.toUpperCase();
@@ -262,10 +275,17 @@ class WCEmpleados extends HTMLElement{
     let tbody = this.shadowRoot.querySelector("#tbody")
 
     let nuevaFila = document.createElement("tr")
-    
+
     tbody.appendChild(nuevaFila);
-    
-    let nuevoEmpleado = {"nombre": nombre, "apellidos": apellidos, "DNI": dni, "identificador": this.identificadorAleatorio(), "fecha_alta": fechaAlta, "fecha_baja": null};
+
+    let nuevoEmpleado = {
+      "nombre": nombre,
+      "apellidos": apellidos,
+      "DNI": dni,
+      "identificador": this.identificadorAleatorio(),
+      "fecha_alta": fechaAlta,
+      "fecha_baja": null
+    };
 
     let datoIcono = document.createElement("td");
     nuevaFila.appendChild(datoIcono);
@@ -273,22 +293,22 @@ class WCEmpleados extends HTMLElement{
         <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
         </svg>`;
 
-    for(let propiedad in nuevoEmpleado){
-        if (nuevoEmpleado.fecha_baja == null){
-            nuevoEmpleado.fecha_baja = "-";
-    }
-        if( propiedad !== null ){
+    for (let propiedad in nuevoEmpleado) {
+      if (nuevoEmpleado.fecha_baja == null) {
+        nuevoEmpleado.fecha_baja = "-";
+      }
+      if (propiedad !== null) {
         let td = document.createElement("td");
         td.innerHTML = nuevoEmpleado[propiedad];
         nuevaFila.appendChild(td);
+      }
     }
-}
     let botonEditar = document.createElement("td");
-                nuevaFila.appendChild(botonEditar);
+    nuevaFila.appendChild(botonEditar);
 
-                botonEditar.innerHTML= 
+    botonEditar.innerHTML =
 
-              `<!-- Button to Open the Modal -->
+      `<!-- Button to Open the Modal -->
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" id="botonModificar">
                 Open modal
               </button>
@@ -318,9 +338,9 @@ class WCEmpleados extends HTMLElement{
                 </div>
               </div>`
 
-              this.cerrarModal()
+    this.cerrarModal()
 
-}
+  }
 
 
 
@@ -332,19 +352,19 @@ window.customElements.define("wc-empleados", WCEmpleados);
 
 //Funcion que obtiene los datos
 function getDatos(url) {
-    return new Promise(function (resolve, reject) {
-        fetch(url)
-            .then(function (response) {
-                if (response.ok)
-                    resolve(response.json())
-                else {
-                    reject(response.status)
-                }
-            }).catch(function (error) {
-                console.log(`ERROR ${error}`)
-                reject(error);
-            })
-    })
+  return new Promise(function (resolve, reject) {
+    fetch(url)
+      .then(function (response) {
+        if (response.ok)
+          resolve(response.json())
+        else {
+          reject(response.status)
+        }
+      }).catch(function (error) {
+        console.log(`ERROR ${error}`)
+        reject(error);
+      })
+  })
 }
 
 
