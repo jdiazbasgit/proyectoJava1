@@ -4,8 +4,8 @@ class WCJornadasEmpleados extends HTMLElement {
     }
 
     connectedCallback() {
-        this.empleados = [];
-        this.jornadas = [];
+        this.empleados = new Array();
+        this.jornadas = new Array();
 
         let shadowRoot = this.attachShadow({ mode: "open" });
 
@@ -13,13 +13,22 @@ class WCJornadasEmpleados extends HTMLElement {
         const plantilla = template.content.cloneNode(true);
         shadowRoot.appendChild(plantilla);
 
+        /* let thNombre = shadowRoot.querySelector("#thNombre");
+        let thApellidos = shadowRoot.querySelector("#thApellidos");
+
+        thApellidos.addEventListener("click", function(){
+            console.log("apellidos");
+        });
+
+        thNombre.addEventListener("click", function(){
+            console.log("nombre");
+        }); */
+
         let tbody = shadowRoot.querySelector("#tbody");
 
         this.cargaEmpleados(this.empleados, this.jornadas, tbody, this.rellenarTabla, this.url, this.url2);
 
-
         this.rellenarTabla(this.empleados, this.jornadas, tbody);
-
 
     }
 
@@ -30,7 +39,6 @@ class WCJornadasEmpleados extends HTMLElement {
 
             })
             getData(url2).then(function (datos) {
-                
                 Array.prototype.forEach.call(datos, dato => {
                     jornadas.push(dato);
                 })
@@ -38,12 +46,13 @@ class WCJornadasEmpleados extends HTMLElement {
             });
 
         });
-        //console.log("antes de empleados")
-        //console.log(empleados);
-
-
-        //console.log(jornadas);
     }
+
+    /* ordenarPorApellidos (empleados, jornadas, tbody){
+        empleados.sort(dynamicSort("apellidos"));        
+        this.rellenarTabla(empleados, jornadas, tbody);        
+    } */
+
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "url")
             this.url = newValue;
@@ -57,9 +66,11 @@ class WCJornadasEmpleados extends HTMLElement {
     }
 
     rellenarTabla(empleados, jornadas, tbody) {
+        empleados.sort(dynamicSort("apellidos"));
 
         empleados.forEach(empleado => {
-
+            if (empleado.fecha_baja != null)
+                return;
             let fila = document.createElement("tr");
 
             let nombre = document.createElement("td");
@@ -83,7 +94,6 @@ class WCJornadasEmpleados extends HTMLElement {
                 i++;
             });
 
-            //console.log(empleado.nombre);
             nombre.innerHTML = empleado.nombre;
             apellidos.innerHTML = empleado.apellidos;
 
@@ -94,6 +104,11 @@ class WCJornadasEmpleados extends HTMLElement {
             fila.appendChild(jornada);
 
             tbody.appendChild(fila);
+
+            jornadaSelect.addEventListener("change", function () {
+                let jornadaSeleccionada = option[jornadaSelect.selectedIndex].text;
+                console.log("Ha seleccionado la jornada \"" + jornadaSeleccionada + "\" para " + empleado.apellidos);
+            });
 
         });
 
@@ -114,4 +129,16 @@ function getData(url) {
             reject(error);
         });
     });
+}
+
+function dynamicSort(property) {
+    var sortOrder = 1;
+    if (property[0] === "-") {
+        sortOrder = -1;
+        property = property.substr(1);
+    }
+    return function (a, b) {
+        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+        return result * sortOrder;
+    }
 }
