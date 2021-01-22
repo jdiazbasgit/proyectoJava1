@@ -15,28 +15,32 @@ class WCJornadasEmpleados extends HTMLElement {
 
         let tbody = shadowRoot.querySelector("#tbody");
 
-        this.cargaEmpleados(this.empleados, this.jornadas);
+        this.cargaEmpleados(this.empleados, this.jornadas, tbody, this.rellenarTabla, this.url, this.url2);
 
-        setTimeout(() => {
-            this.rellenarTabla(this.empleados, this.jornadas, tbody);
-        }, 10);
+
+        this.rellenarTabla(this.empleados, this.jornadas, tbody);
+
 
     }
 
-    cargaEmpleados(empleados, jornadas) {
-        getData(this.url).then(function (datos) {
+    cargaEmpleados(empleados, jornadas, tbody, funcion, url, url2) {
+        getData(url).then(function (datos) {
             Array.prototype.forEach.call(datos, dato => {
                 empleados.push(dato);
+
             })
+            getData(url2).then(function (datos) {
+                Array.prototype.forEach.call(datos, dato => {
+                    jornadas.push(dato);
+                })
+                funcion(empleados, jornadas, tbody);
+            });
+
         });
         //console.log("antes de empleados")
         //console.log(empleados);
 
-        getData(this.url2).then(function (datos) {
-            Array.prototype.forEach.call(datos, dato => {
-                jornadas.push(dato);
-            })
-        });
+
         //console.log(jornadas);
     }
     attributeChangedCallback(name, oldValue, newValue) {
@@ -73,8 +77,8 @@ class WCJornadasEmpleados extends HTMLElement {
                 jornadaSelect.appendChild(option[i]);
                 if (empleado.jornada == jornada.id)
                     jornadaSelect.selectedIndex = i;
-                else if (empleado.jornada == null) 
-                    jornadaSelect.selectedIndex = "0";  
+                else if (empleado.jornada == null)
+                    jornadaSelect.selectedIndex = "0";
                 i++;
             });
 
@@ -87,7 +91,7 @@ class WCJornadasEmpleados extends HTMLElement {
             fila.appendChild(nombre);
             fila.appendChild(apellidos);
             fila.appendChild(jornada);
-            
+
             tbody.appendChild(fila);
 
         });
