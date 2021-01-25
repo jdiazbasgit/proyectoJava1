@@ -222,7 +222,6 @@ class WCEmpleados extends HTMLElement {
               </div>
             </div>`
 
-
       // console.log(empleado)
       this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => {
         this.verModalEditar()
@@ -231,7 +230,7 @@ class WCEmpleados extends HTMLElement {
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
       this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
-        this.guardarEditarEmpleado()
+        this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
         this.cerrarModalEditar()
       })
     })
@@ -263,12 +262,12 @@ class WCEmpleados extends HTMLElement {
     this.shadowRoot.querySelector("#myModalEditar").style.display = 'none'
   }
 
-  cargarFormuarioEditar(array, idEmpleado) {
+  cargarFormuarioEditar(arrayEmpleados, idEmpleado) {
 
-    // console.log("Array DATOS", array)
+    // console.log("Array DATOS", arrayEmpleados)
     //console.log("idEmpleado", idEmpleado)
 
-    let empleadoSeleccionado = array.find(empleado => empleado.identificador === idEmpleado)
+    let empleadoSeleccionado = arrayEmpleados.find(empleado => empleado.identificador === idEmpleado)
 
     // console.log("empleadoSeleccionado", empleadoSeleccionado)
 
@@ -302,12 +301,11 @@ class WCEmpleados extends HTMLElement {
 
       }
 
-
       // console.log("valor propiedad", empleadoSeleccionado[propiedad])
 
       //Darle valores a los inputs
 
-      //Determinar e input seeccionadado para poder borrarlo y evitar que se duplique
+      //Determinar el input seleccionadado para poder borrarlo y evitar que se duplique
       let selectInput = this.shadowRoot.getElementById(`input${propiedad}`)
 
       //Borrar el input seleccionado
@@ -343,8 +341,9 @@ class WCEmpleados extends HTMLElement {
 
   }
 
-  guardarEditarEmpleado() {
-
+  guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
+    // console.log("Array DATOS", arrayEmpleados)
+    //console.log("id Empleado", idEmpleado)
   }
 
   addEmpleado(arrayEmpleados, nuevoEmpleado) {
@@ -369,7 +368,7 @@ class WCEmpleados extends HTMLElement {
       nuevoEmpleado = {
         "nombre": nombre,
         "apellidos": apellidos,
-        "DNI": dni,
+        "dni": dni, //??????????****************************
         "identificador": this.identificadorAleatorio(),
         "fecha_alta": fechaAlta,
         "fecha_baja": null
@@ -428,7 +427,7 @@ class WCEmpleados extends HTMLElement {
           <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardarEditar" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
                 </div>
                       
               </div>
@@ -442,11 +441,12 @@ class WCEmpleados extends HTMLElement {
       })
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
-      this.shadowRoot.getElementById('guardarEditar').addEventListener("click", () => this.cerrarModalEditar())
+      this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
+        this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
+        this.cerrarModalEditar()
+      })
 
       this.cerrarModalAddEmpleado()
-
-      // arrayEmpleados = [...arrayEmpleados, nuevoEmpleado]
 
       arrayEmpleados.push(nuevoEmpleado)
 
