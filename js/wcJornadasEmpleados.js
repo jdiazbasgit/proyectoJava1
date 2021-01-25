@@ -13,26 +13,21 @@ class WCJornadasEmpleados extends HTMLElement {
         const plantilla = template.content.cloneNode(true);
         shadowRoot.appendChild(plantilla);
 
-        /* let thNombre = shadowRoot.querySelector("#thNombre");
+        let thNombre = shadowRoot.querySelector("#thNombre");
         let thApellidos = shadowRoot.querySelector("#thApellidos");
+        //let tbody = shadowRoot.querySelector("#tbody");
+        let tabla = shadowRoot.querySelector("#tabla");
 
-        thApellidos.addEventListener("click", function(){
-            console.log("apellidos");
-        });
+        this.ordenarPorApellidos(this.empleados, this.jornadas, this.rellenarTabla, tabla, thApellidos);
+        this.ordenarPorNombre(this.empleados, this.jornadas, this.rellenarTabla, tabla, thNombre);
+        
+        this.cargaEmpleados(this.empleados, this.jornadas, tabla, this.rellenarTabla, this.url, this.url2);
 
-        thNombre.addEventListener("click", function(){
-            console.log("nombre");
-        }); */
-
-        let tbody = shadowRoot.querySelector("#tbody");
-
-        this.cargaEmpleados(this.empleados, this.jornadas, tbody, this.rellenarTabla, this.url, this.url2);
-
-        this.rellenarTabla(this.empleados, this.jornadas, tbody);
+        this.rellenarTabla(this.empleados, this.jornadas, tabla);
 
     }
 
-    cargaEmpleados(empleados, jornadas, tbody, funcion, url, url2) {
+    cargaEmpleados(empleados, jornadas, tabla, funcion, url, url2) {
         getData(url).then(function (datos) {
             Array.prototype.forEach.call(datos, dato => {
                 empleados.push(dato);
@@ -42,16 +37,27 @@ class WCJornadasEmpleados extends HTMLElement {
                 Array.prototype.forEach.call(datos, dato => {
                     jornadas.push(dato);
                 })
-                funcion(empleados, jornadas, tbody);
+                funcion(empleados, jornadas, tabla);
             });
 
         });
     }
 
-    /* ordenarPorApellidos (empleados, jornadas, tbody){
-        empleados.sort(dynamicSort("apellidos"));        
-        this.rellenarTabla(empleados, jornadas, tbody);        
-    } */
+    ordenarPorApellidos (empleados, jornadas, rellenarTabla, tabla, thApellidos){
+        thApellidos.addEventListener("click", function(){
+            //console.log("apellidos");
+            empleados.sort(dynamicSort("apellidos"));                
+            rellenarTabla(empleados, jornadas, tabla);        
+        });       
+    }
+
+    ordenarPorNombre (empleados, jornadas, rellenarTabla, tabla, thNombre){
+        thNombre.addEventListener("click", function(){
+            //console.log("nombre");
+            empleados.sort(dynamicSort("nombre"));                
+            rellenarTabla(empleados, jornadas, tabla);        
+        });       
+    }
 
     attributeChangedCallback(name, oldValue, newValue) {
         if (name === "url")
@@ -65,8 +71,12 @@ class WCJornadasEmpleados extends HTMLElement {
         return ["url", "url2"];
     }
 
-    rellenarTabla(empleados, jornadas, tbody) {
-        empleados.sort(dynamicSort("apellidos"));
+    rellenarTabla(empleados, jornadas, tabla) {
+        //empleados.sort(dynamicSort("apellidos"));
+        let tbodyAntiguo = tabla.lastChild;
+        if (tbodyAntiguo!==null)
+            tabla.removeChild(tbodyAntiguo);
+        let tbody = document.createElement("tbody");
 
         empleados.forEach(empleado => {
             if (empleado.fecha_baja != null)
@@ -86,6 +96,7 @@ class WCJornadasEmpleados extends HTMLElement {
             jornadas.forEach(jornada => {
                 option[i] = document.createElement("option");
                 option[i].innerHTML = jornada.descripcion;
+                option[i].value = jornada.id;
                 jornadaSelect.appendChild(option[i]);
                 if (empleado.jornada == jornada.id)
                     jornadaSelect.selectedIndex = i;
@@ -104,13 +115,16 @@ class WCJornadasEmpleados extends HTMLElement {
             fila.appendChild(jornada);
 
             tbody.appendChild(fila);
+            
 
             jornadaSelect.addEventListener("change", function () {
                 let jornadaSeleccionada = option[jornadaSelect.selectedIndex].text;
-                console.log("Ha seleccionado la jornada \"" + jornadaSeleccionada + "\" para " + empleado.apellidos);
+                let idJornadaSeleccionada = option[jornadaSelect.selectedIndex].value;
+                console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
             });
 
         });
+        tabla.appendChild(tbody);
 
     }
 
