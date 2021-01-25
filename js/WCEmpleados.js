@@ -76,7 +76,7 @@ class WCEmpleados extends HTMLElement {
       <!-- Modal footer -->
                       <div class="modal-footer">
                         <button type="button" id="cerrarModal1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                        <button type="button" id="guardarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                        <button type="button" id="addEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
                       </div>
         
                     </div>
@@ -111,7 +111,7 @@ class WCEmpleados extends HTMLElement {
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
     shadowRoot.querySelector("#cerrarModal").addEventListener("click", () => this.cerrarModalAddEmpleado())
     shadowRoot.querySelector("#cerrarModal1").addEventListener("click", () => this.cerrarModalAddEmpleado())
-    shadowRoot.querySelector("#guardarEmpleado").addEventListener("click", () => this.guardarEmpleado(listaEmpleados, nuevoEmp))
+    shadowRoot.querySelector("#addEmpleado").addEventListener("click", () => this.addEmpleado(listaEmpleados, nuevoEmp))
 
   }
 
@@ -168,7 +168,7 @@ class WCEmpleados extends HTMLElement {
 
       for (let propiedad in empleado) {
         if (empleado.fecha_baja == null) {
-          empleado.fecha_baja = "-"
+          empleado.fecha_baja = "---"
         }
 
         if (propiedad !== null && propiedad !== "jornada") {
@@ -206,31 +206,34 @@ class WCEmpleados extends HTMLElement {
             <!-- Modal body -->
                   <div class="modal-body">
                     <div class="form-group">
-                      <form action="">
-                        <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
-                        <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
-                        <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
-                        <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
-                        <label>Fecha de baja</label><input type="date"  class="form-control" required id="nuevoFechaBaja"><br>
-                      </form>
+
+                      <form id="formEditar"></form>
+
                     </div>
                   </div>
                         
             <!-- Modal footer -->
                   <div class="modal-footer">
-                    <button type="button"  id ="cancelarEditar1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardarEditar" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
                   </div>
                         
                 </div>
               </div>
             </div>`
 
+
       // console.log(empleado)
-      this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => this.verModalEditar())
+      this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => {
+        this.verModalEditar()
+        this.cargarFormuarioEditar(arrayEmpleados, empleado.identificador)
+      })
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
-      this.shadowRoot.getElementById('cancelarEditar1').addEventListener("click", () => this.cerrarModalEditar())
-      this.shadowRoot.getElementById('guardarEditar').addEventListener("click", () => this.cerrarModalEditar())
+      this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
+      this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
+        this.guardarEditarEmpleado()
+        this.cerrarModalEditar()
+      })
     })
 
     // console.log(arrayEmpleados)
@@ -260,8 +263,91 @@ class WCEmpleados extends HTMLElement {
     this.shadowRoot.querySelector("#myModalEditar").style.display = 'none'
   }
 
+  cargarFormuarioEditar(array, idEmpleado) {
 
-  guardarEmpleado(arrayEmpleados, nuevoEmpleado) {
+    // console.log("Array DATOS", array)
+    //console.log("idEmpleado", idEmpleado)
+
+    let empleadoSeleccionado = array.find(empleado => empleado.identificador === idEmpleado)
+
+    // console.log("empleadoSeleccionado", empleadoSeleccionado)
+
+    let propiedadEmpleadoSelect = Object.keys(empleadoSeleccionado)
+
+    let formEmpleadoSelect = this.shadowRoot.querySelector("#formEditar")
+
+    propiedadEmpleadoSelect.forEach(propiedad => {
+      // console.log("propiedad", propiedad)
+
+      propiedad = propiedad.replace("_", " ");
+
+      //Selecciona label para  que no se duplique
+      let selectLabel = this.shadowRoot.getElementById('label' + propiedad)
+
+      //Hace que el label seleccionado se borre
+      if (selectLabel) {
+        formEmpleadoSelect.removeChild(selectLabel)
+      }
+
+      if (propiedad !== "jornada") {
+
+        //Se pinta el label con un id único, que será la propia propiedad
+
+        let labelpropiedad = document.createElement("label")
+        labelpropiedad.setAttribute('id', 'label' + propiedad)
+
+        labelpropiedad.innerHTML = propiedad
+
+        formEmpleadoSelect.appendChild(labelpropiedad)
+
+      }
+
+
+      // console.log("valor propiedad", empleadoSeleccionado[propiedad])
+
+      //Darle valores a los inputs
+
+      //Determinar e input seeccionadado para poder borrarlo y evitar que se duplique
+      let selectInput = this.shadowRoot.getElementById(`input${propiedad}`)
+
+      //Borrar el input seleccionado
+      if (selectInput) {
+        formEmpleadoSelect.removeChild(selectInput)
+      }
+
+      if (propiedad !== "jornada") {
+        //console.log('propiedad:', propiedad)
+        //Se pinta el label con un id único, que será la propia propiedad
+
+        let inputPropiedad = document.createElement("input")
+        inputPropiedad.setAttribute('id', `input${propiedad}`)
+
+        if (propiedad === "fecha alta" || propiedad === "fecha baja") {
+          inputPropiedad.setAttribute('type', 'date')
+          //para manejar fechas del empleado
+          propiedad = propiedad.replace(" ", "_");
+          // console.log('fechas', empleadoSeleccionado[propiedad])
+          // console.log('fecha Alta', empleadoSeleccionado["fecha_alta"])
+          // console.log('fecha Baja', empleadoSeleccionado["fecha_baja"])
+        }
+
+        inputPropiedad.value = empleadoSeleccionado[propiedad]
+        inputPropiedad.classList.add("form-control")
+
+        formEmpleadoSelect.appendChild(inputPropiedad)
+
+        //console.log('valor del input', inputPropiedad)
+
+      }
+    })
+
+  }
+
+  guardarEditarEmpleado() {
+
+  }
+
+  addEmpleado(arrayEmpleados, nuevoEmpleado) {
 
     let nombre = this.shadowRoot.querySelector("#nuevoNombre").value.toUpperCase();
     let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value.toUpperCase();
@@ -297,7 +383,7 @@ class WCEmpleados extends HTMLElement {
 
       for (let propiedad in nuevoEmpleado) {
         if (nuevoEmpleado.fecha_baja == null) {
-          nuevoEmpleado.fecha_baja = "-";
+          nuevoEmpleado.fecha_baja = "---";
         }
         if (propiedad !== null) {
           let td = document.createElement("td");
@@ -333,19 +419,15 @@ class WCEmpleados extends HTMLElement {
           <!-- Modal body -->
                 <div class="modal-body">
                   <div class="form-group">
-                    <form action="">
-                      <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
-                      <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
-                      <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
-                      <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
-                      <label>Fecha de baja</label><input type="date"  class="form-control" required id="nuevoFechaBaja"><br>
-                    </form>
+
+                  <form id="formEditar"></form>
+
                   </div>
                 </div>
                       
           <!-- Modal footer -->
                 <div class="modal-footer">
-                    <button type="button"  id ="cancelarEditar1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
                     <button type="button" id="guardarEditar" class="btn btn-warning" data-dismiss="modal">Guardar</button>
                 </div>
                       
@@ -354,9 +436,12 @@ class WCEmpleados extends HTMLElement {
           </div>`
 
       // console.log(empleado)
-      this.shadowRoot.getElementById(`${nuevoEmpleado.identificador}`).addEventListener("click", () => this.verModalEditar())
+      this.shadowRoot.getElementById(`${nuevoEmpleado.identificador}`).addEventListener("click", () => {
+        this.verModalEditar()
+        this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
+      })
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
-      this.shadowRoot.getElementById('cancelarEditar1').addEventListener("click", () => this.cerrarModalEditar())
+      this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
       this.shadowRoot.getElementById('guardarEditar').addEventListener("click", () => this.cerrarModalEditar())
 
       this.cerrarModalAddEmpleado()
