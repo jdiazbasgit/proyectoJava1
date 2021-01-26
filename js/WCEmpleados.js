@@ -28,6 +28,10 @@ class WCEmpleados extends HTMLElement {
             background-color: rgba(0, 0, 0, 0.7);
           }
 
+          .redondear {
+            border-radius: 20px !important;
+          }
+
         </style>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -48,9 +52,9 @@ class WCEmpleados extends HTMLElement {
               <div class="container">
 
       <!-- Button to Open the Modal -->
-                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
-                  Añadir Empleado
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                <button type="button" class="btn btn-warning text-light pr-4 pl-4 redondear" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
+                  AÑADIR
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle ml-4" viewBox="0 0 16 16">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                   </svg>
@@ -59,7 +63,7 @@ class WCEmpleados extends HTMLElement {
       <!-- The Modal -->
                 <div class="modal my-bg" id="myModalAddEmpleado">
                   <div class="modal-dialog">
-                    <div class="modal-content">
+                    <div class="modal-content redondear">
       
           <!-- Modal Header -->
                       <div class="modal-header">
@@ -80,9 +84,9 @@ class WCEmpleados extends HTMLElement {
                       </div>
         
       <!-- Modal footer -->
-                      <div class="modal-footer">
-                        <button type="button" id="cerrarModal1" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                        <button type="button" id="addEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                      <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" id="cerrarModal1" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
+                        <button type="button" id="addEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
                       </div>
         
                     </div>
@@ -200,7 +204,7 @@ class WCEmpleados extends HTMLElement {
         <!-- The Modal -->
             <div class="modal my-bg" id="myModalEditar">
               <div class="modal-dialog">
-                <div class="modal-content">
+                <div class="modal-content redondear">
                       
           <!-- Modal Header -->
                   <div class="modal-header">
@@ -218,9 +222,9 @@ class WCEmpleados extends HTMLElement {
                   </div>
                         
             <!-- Modal footer -->
-                  <div class="modal-footer">
-                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button"  id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                  <div class="modal-footer d-flex justify-content-center">
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
+                    <button type="button"  id="guardarEditarEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
                   </div>
                         
                 </div>
@@ -366,6 +370,9 @@ class WCEmpleados extends HTMLElement {
     let fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
     let fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
 
+    //en caso de no tener fecha de baja
+    if(!fecha_baja) fecha_baja = "---"
+
     empleadoSelect.nombre = nombre;
     empleadoSelect.apellidos = apellidos
     empleadoSelect.dni = dni
@@ -376,11 +383,11 @@ class WCEmpleados extends HTMLElement {
 
     //Sobrescribimos la tabla:
     let tablaDatos = this.shadowRoot.querySelector('#tablaDatos');
-    let pastData = tablaDatos.getElementsByTagName('tbody')[0];
+    let pastBody = tablaDatos.getElementsByTagName('tbody')[0];
     let pastThead = tablaDatos.getElementsByTagName("thead")[0]
     //1º borramos la tabla existente 
-    if (pastData) {
-      tablaDatos.removeChild(pastData)
+    if (pastBody) {
+      tablaDatos.removeChild(pastBody)
       tablaDatos.removeChild(pastThead)
     };
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
@@ -449,7 +456,7 @@ class WCEmpleados extends HTMLElement {
       <!-- The Modal -->
           <div class="modal my-bg" id="myModalEditar">
             <div class="modal-dialog">
-              <div class="modal-content">
+              <div class="modal-content redondear">
                     
         <!-- Modal Header -->
                 <div class="modal-header">
@@ -467,9 +474,9 @@ class WCEmpleados extends HTMLElement {
                 </div>
                       
           <!-- Modal footer -->
-                <div class="modal-footer">
-                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                <div class="modal-footer d-flex justify-content-center ">
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
                 </div>
                       
               </div>
