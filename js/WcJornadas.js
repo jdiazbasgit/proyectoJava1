@@ -31,7 +31,7 @@ class WcJornadas extends HTMLElement {
                     <div id="containerFormNuevaJornada" class="d-flex justify-content-between">
                         <div class="flexCol" id="jornadaName">
                             <p for="nombreJornada">Nombre</p>
-                            <input type="text" name="nombreJornada" placeholder="Nombre Jornada">
+                            <input type="text" id="descripcion" name="nombreJornada" placeholder="Nombre Jornada">
                         </div>
                         <div class="flexCol">
                             <p id="labelNumTurnos">Número de turnos</p>
@@ -79,46 +79,62 @@ class WcJornadas extends HTMLElement {
             </table>
         </div>`;
         let radios = this.shadowRoot.querySelectorAll(".radio")
-        let miTabla = this.shadowRoot.getElementById('tablaNuevaJornada');
+        let tablaTurnos = this.shadowRoot.getElementById('tablaNuevaJornada');
         let modalContainer = this.shadowRoot.getElementById('divContainer');
         let btAniadirJornada = this.shadowRoot.getElementById("newJornada");
         let botonCerrar = this.shadowRoot.getElementById('cerrarModal');
+        let botonGuardar = this.shadowRoot.getElementById('guardarJornada');
         console.log(radios)
         let numTurnos = this.shadowRoot.querySelector('input[type="radio"]:checked');
         console.log(numTurnos.value)
-        
-        
-
 
         botonCerrar.addEventListener('click', () => {
             modalContainer.style.display = "none";
+            let descripcion = this.shadowRoot.getElementById("descripcion");
             let thead = this.shadowRoot.getElementById("headTableNuevaJornada");
             let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
+            descripcion.value = "";
+            thead.remove(),
+            tbody.remove();
+            numTurnos.checked = "false";
+        });
+
+        botonGuardar.addEventListener('click', () => {
+            this.guardarJornada(tablaTurnos);
+            modalContainer.style.display = "none";
+            let descripcion = this.shadowRoot.getElementById("descripcion");
+            let thead = this.shadowRoot.getElementById("headTableNuevaJornada");
+            let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
+            descripcion.value = "";
             thead.remove(),
             tbody.remove();
             numTurnos.checked = "false";
         })
+
+
         btAniadirJornada.addEventListener('click', () => {
             modalContainer.style.alignItems = "center"
             modalContainer.style.display = 'flex';
 
 
             let valorNumTurnos = 2;
-            this.generarTablaJornadaNueva(numTurnos.value, miTabla);
-           
+            this.generarTablaJornadaNueva(numTurnos.value, tablaTurnos);
+
             for (let i = 0; i < radios.length; i++) {
                 radios[i].addEventListener('change', () => {
                     if (radios[i].value !== valorNumTurnos) {
-                        valorNumTurnos = radios[i].value   
+                        valorNumTurnos = radios[i].value
                     }
                     console.log(valorNumTurnos)
                     let thead = this.shadowRoot.getElementById("headTableNuevaJornada");
                     let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
                     thead.remove();
                     tbody.remove();
-                    this.generarTablaJornadaNueva(valorNumTurnos, miTabla);
+                    this.generarTablaJornadaNueva(valorNumTurnos, tablaTurnos);
                 })
             }
+
+
         })
 
         const url = "./datos/jornadas.json";
@@ -154,7 +170,7 @@ class WcJornadas extends HTMLElement {
 
                 if (property != "id" && property != "especial" && property != "descripcion") {
                     let td = document.createElement("td");
-                    td.id = `${property}`;
+                    td.class = `${property}`;
                     let horarios = jornada[property].split("&");
                     let horario = "";
                     for (let i = 0; i < horarios.length; i++) {
@@ -180,7 +196,9 @@ class WcJornadas extends HTMLElement {
                 tr.remove();
             });
 
-            btEditarJornada.addEventListener("click", this.editarJornada);
+            //btEditarJornada.addEventListener("click", this.editarJornada(1));
+
+            this.crearEventoBtEditarJornada(btEditarJornada, this.editarJornada, jornada.id);
 
             btBorrarJornada.innerHTML =
                 `<i class="bi bi-x-square-fill"></i>`;
@@ -198,84 +216,10 @@ class WcJornadas extends HTMLElement {
 
     }
 
-    aniadirJornada(btn) {
-        // boton añadir
-
-        // let btNewJornada = this.shadowRoot.getElementById("newJornada");
-        /* btnAdd.type = ("button");
-         btnAdd.innerHTML = "AñadirJS";
-         btnAdd.classList.add("btn");
-         btnAdd.classList.add("btn-primary");
-         btnAdd.modal="toggle";
-         btnAdd.dataset.toggle = "modal";
-         btnAdd.dataset.target = "#exampleModalCenter" */
-
-        //     main.innerHTML= ` <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-        //     Añadir
-        // </button>`;
-
-        // btnAdd.data-open("modal");
-        btn.addEventListener("click", function () {
-            ShadowRoot.innerHTML = `<div class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLongTitle">Nueva Jornada</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <form action="#" id = "miform">
-                <div class="row">
-                <label for="descripcion">Descripción </label>  <input type="text" name="" id="descripcion">
-                <legend class="col-form-label col-sm-2 pt-0">Turnos</legend>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="radios1" value="1" checked>
-                    <label class="form-check-label" for="radios1">
-                    1
-                    </label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="radios2" value="option2">
-                    <label class="form-check-label" for="radios2">
-                      2
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="radios3" value="option3" disabled>
-                    <label class="form-check-label" for="radios3">
-                      3
-                    </label>
-                  </div>
-                </div>
-    
-    
-    
-    
-    
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary">Guardar</button>
-            </div>
-          </div>
-        </div>
-      </div>`;
-        });
-
-    }
-
     editarJornada(idJornada) {
         console.log(idJornada);
-
     }
 
-
-    generarTablaJornadaNueva(numTurnos) {
-
-    }
 
     generarTablaJornadaCreada(numTurnos, idJornada) {
 
@@ -297,11 +241,7 @@ class WcJornadas extends HTMLElement {
         })
     }
 
-    generarTablaJornadaNueva(numTurnos, miTabla) {
-
-        let tablaTurnos = miTabla;
-
-
+    generarTablaJornadaNueva(numTurnos, tablaTurnos) {
         let thead = document.createElement("thead");
         thead.id = "headTableNuevaJornada";
         thead.className = "thead";
@@ -411,7 +351,6 @@ class WcJornadas extends HTMLElement {
             inputEntradaDomingo.type = "time";
             inputSalidaDomingo.type = "time";
 
-
             tdEntradaDomingo.appendChild(inputEntradaDomingo);
             tdSalidaDomingo.appendChild(inputSalidaDomingo);
             trDomingo.appendChild(tdEntradaDomingo);
@@ -447,6 +386,89 @@ class WcJornadas extends HTMLElement {
 
         }
 
+    }
+
+    guardarJornada(tablaTurnos) {
+        let bodyJornadas = this.shadowRoot.getElementById("bodyJornadas");
+
+        let trNuevaJornada = document.createElement("tr");
+
+        //trNuevaJornada.id....
+
+        let descripcion = this.shadowRoot.querySelector("#descripcion");
+        let tdIcono = document.createElement("td");
+        let tdNombre = document.createElement("td");
+
+        tdIcono.innerHTML = `<i class="fa fa-history" aria-hidden="true"></i>`;
+        tdNombre.textContent = descripcion.value.charAt(0).toUpperCase() + descripcion.value.slice(1).toLowerCase();
+
+        trNuevaJornada.appendChild(tdIcono);
+        trNuevaJornada.appendChild(tdNombre);
+
+        for (let i = 1; i < tablaTurnos.rows.length; i++) {
+            let turno = "";
+            for (let j = 1; j < tablaTurnos.rows[i].cells.length; j++) {
+                if (tablaTurnos.rows[i].cells[j].firstChild.value !== "") {
+                    console.log(tablaTurnos.rows[i].cells[j].firstChild.value);
+                    if (turno !== "") {
+                        if (j % 2 == 0) {
+                            turno += "-" + tablaTurnos.rows[i].cells[j].firstChild.value;
+                        }
+                        else {
+                            turno += "&" + tablaTurnos.rows[i].cells[j].firstChild.value;
+                        }
+                    }
+                    else {
+                        turno = tablaTurnos.rows[i].cells[j].firstChild.value;
+                    }
+
+                }
+
+            }
+            let turnos = turno.split("&");
+            let horario = "";
+            for (let j = 0; j < turnos.length; j++) {
+                horario = `${horario}${turnos[j]}<br>`;
+            }
+            let tdTurno = document.createElement("td");
+            tdTurno.innerHTML = `<p>${horario}</p>`;
+            trNuevaJornada.appendChild(tdTurno);
+        }
+
+        let tdBotones = document.createElement("td");
+        let btBorrarJornada = document.createElement("button");
+        btBorrarJornada.classList = "btn shadow-none";
+        btBorrarJornada.title = "borrar jornada";
+        let btEditarJornada = document.createElement("button");
+        btEditarJornada.classList = "btn shadow-none";
+        btEditarJornada.title = "editar jornada";
+
+        btBorrarJornada.addEventListener("click", function () {
+            trNuevaJornada.remove();
+        });
+
+        //btEditarJornada.addEventListener("click", this.editarJornada(1));
+
+        this.crearEventoBtEditarJornada(btEditarJornada, this.editarJornada, null);
+
+        btBorrarJornada.innerHTML =
+            `<i class="bi bi-x-square-fill"></i>`;
+        btEditarJornada.innerHTML =
+            `<i class="fa fa-pencil" aria-hidden="true"></i>`;
+
+        tdBotones.appendChild(btBorrarJornada);
+        tdBotones.appendChild(btEditarJornada);
+
+        trNuevaJornada.appendChild(tdBotones);
+
+        bodyJornadas.appendChild(trNuevaJornada);
+
+    }
+
+    crearEventoBtEditarJornada(btEditarJornada, funcion, idJornada) {
+        btEditarJornada.addEventListener('click', function () {
+            funcion(idJornada);
+        });
     }
 
 }
