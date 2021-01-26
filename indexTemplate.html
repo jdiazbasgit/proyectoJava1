@@ -7,23 +7,36 @@
     <title>Document</title>
     <script src="js/wcJornadasEmpleados.js" async></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+    </style>
 </head>
 
-<body>
+<body>    
     <wc-jornadasempleados url="datos/empleados.json" url2="datos/jornadas.json"></wc-jornadasempleados>
     <template id="plantilla3">
+        <style>
+            #divp{
+                background-color: rgb(236, 235, 235);
+            }
+            #tabla{
+                background-color: white;
+            }
+            #tabla td, #tabla th{
+                border-bottom: 5px solid rgb(236, 235, 235);
+            }
+        </style>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <div>
-            <h3>JORNADAS/EMPLEADOS</h3>
-            <table class="table" id="tabla">
+        <div class="container-fluid col-md-11" id="divp">
+            <h3 class="pt-3 pb-3 font-weight-normal">JORNADAS/EMPLEADOS</h3>
+            <table class="table border-bottom-2" id="tabla">
                 <thead class="thead-dark">
                     <tr>
                         <th id="thNombre">NOMBRE</th>
-                        <th id="thApellidos">APELLIDOS</th>
-                        <th>JORNADA</th>
+                        <th id="thApellidos">APELLIDOS</th>                    
+                        <th>JORNADA</th>                    
                     </tr>
                 </thead>
-                <!-- <tbody id="tbody"></tbody> -->
+                <!--<tbody id="tbody"></tbody>-->
             </table>
         </div>
     </template>
