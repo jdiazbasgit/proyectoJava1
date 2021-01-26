@@ -12,6 +12,7 @@ class WCEmpleados extends HTMLElement {
     shadowRoot.innerHTML = `
         
         <style>
+
         .body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -22,6 +23,11 @@ class WCEmpleados extends HTMLElement {
             text-align: left;
             background-color: #fff;
           }
+
+          .my-bg {
+            background-color: rgba(0, 0, 0, 0.7);
+          }
+
         </style>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -51,7 +57,7 @@ class WCEmpleados extends HTMLElement {
                 </button>
 
       <!-- The Modal -->
-                <div class="modal" id="myModalAddEmpleado">
+                <div class="modal my-bg" id="myModalAddEmpleado">
                   <div class="modal-dialog">
                     <div class="modal-content">
       
@@ -192,7 +198,7 @@ class WCEmpleados extends HTMLElement {
             </button>
                 
         <!-- The Modal -->
-            <div class="modal" id="myModalEditar">
+            <div class="modal my-bg" id="myModalEditar">
               <div class="modal-dialog">
                 <div class="modal-content">
                       
@@ -441,7 +447,7 @@ class WCEmpleados extends HTMLElement {
           </button>
               
       <!-- The Modal -->
-          <div class="modal" id="myModalEditar">
+          <div class="modal my-bg" id="myModalEditar">
             <div class="modal-dialog">
               <div class="modal-content">
                     
