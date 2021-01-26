@@ -91,6 +91,7 @@ class WCJornadasEmpleados extends HTMLElement {
             let option = [];
             option[0] = document.createElement("option");
             option[0].innerHTML = "Seleccione una jornada...";
+            option[0].disabled = true;
             jornadaSelect.appendChild(option[0]);
             let i = 1;
             jornadas.forEach(jornada => {
@@ -100,8 +101,12 @@ class WCJornadasEmpleados extends HTMLElement {
                 jornadaSelect.appendChild(option[i]);
                 if (empleado.jornada == jornada.id)
                     jornadaSelect.selectedIndex = i;
-                else if (empleado.jornada == null)
+                else if (empleado.jornada == null){
                     jornadaSelect.selectedIndex = "0";
+                    jornadaSelect.style.borderWidth = "2px";
+                    jornadaSelect.style.borderColor = "red";
+                    //jornadaSelect.className = "text-danger";
+                }
                 i++;
             });
 
@@ -118,6 +123,8 @@ class WCJornadasEmpleados extends HTMLElement {
             
 
             jornadaSelect.addEventListener("change", function () {
+                jornadaSelect.style.borderWidth = null;
+                jornadaSelect.style.borderColor = null;
                 let jornadaSeleccionada = option[jornadaSelect.selectedIndex].text;
                 let idJornadaSeleccionada = option[jornadaSelect.selectedIndex].value;
                 console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
