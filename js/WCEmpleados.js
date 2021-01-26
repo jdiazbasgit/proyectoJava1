@@ -124,6 +124,7 @@ class WCEmpleados extends HTMLElement {
 
     let tablaDatos = this.shadowRoot.querySelector("#tablaDatos")
 
+    //********* HEAD TABLA*/
     let thead = document.createElement("thead");
     thead.classList.add("bg-dark")
     thead.classList.add("text-light")
@@ -136,12 +137,10 @@ class WCEmpleados extends HTMLElement {
 
     propiedadesTablaEmpleados.forEach(propiedad => {
       if (propiedad !== "jornada") {
-        //console.log(propiedad)
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
         th.innerHTML = propiedad.toUpperCase();
         thead.appendChild(th);
-        //console.log(propiedad)
       }
     })
 
@@ -150,7 +149,7 @@ class WCEmpleados extends HTMLElement {
     thEditar.innerHTML = "";
     thead.appendChild(thEditar);
 
-
+    //********* BODY TABLA*/
     let tbody = document.createElement("tbody");
     tbody.setAttribute("id", "tbody");
     tablaDatos.appendChild(tbody);
@@ -215,27 +214,37 @@ class WCEmpleados extends HTMLElement {
             <!-- Modal footer -->
                   <div class="modal-footer">
                     <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
+                    <button type="button"  id="guardarEditarEmpleado" class="btn btn-warning" data-dismiss="modal">Guardar</button>
                   </div>
                         
                 </div>
               </div>
             </div>`
 
-      // console.log(empleado)
+      let confirmarIdentificador
+
       this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => {
+        //Para confirmar el empleado seeccionado
+        confirmarIdentificador = empleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, empleado.identificador)
+
       })
+
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
+
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
-      this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
-        this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
-        this.cerrarModalEditar()
+
+      this.shadowRoot.getElementById("guardarEditarEmpleado").addEventListener("click", () => {
+        //Para confirmar el empleado seeccionado
+        if (confirmarIdentificador === empleado.identificador) {
+          this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
+          this.cerrarModalEditar()
+        }
       })
+
     })
 
-    // console.log(arrayEmpleados)
 
   }
 
@@ -281,7 +290,7 @@ class WCEmpleados extends HTMLElement {
       propiedad = propiedad.replace("_", " ");
 
       //Selecciona label para  que no se duplique
-      let selectLabel = this.shadowRoot.getElementById('label' + propiedad)
+      let selectLabel = this.shadowRoot.getElementById(`label${propiedad}`)
 
       //Hace que el label seleccionado se borre
       if (selectLabel) {
@@ -293,7 +302,7 @@ class WCEmpleados extends HTMLElement {
         //Se pinta el label con un id único, que será la propia propiedad
 
         let labelpropiedad = document.createElement("label")
-        labelpropiedad.setAttribute('id', 'label' + propiedad)
+        labelpropiedad.setAttribute('id', `label${propiedad}`)
 
         labelpropiedad.innerHTML = propiedad
 
@@ -305,6 +314,7 @@ class WCEmpleados extends HTMLElement {
 
       //Darle valores a los inputs
 
+      propiedad = propiedad.replace(" ", "_");
       //Determinar el input seleccionadado para poder borrarlo y evitar que se duplique
       let selectInput = this.shadowRoot.getElementById(`input${propiedad}`)
 
@@ -320,13 +330,11 @@ class WCEmpleados extends HTMLElement {
         let inputPropiedad = document.createElement("input")
         inputPropiedad.setAttribute('id', `input${propiedad}`)
 
-        if (propiedad === "fecha alta" || propiedad === "fecha baja") {
+
+        if (propiedad === "fecha_alta" || propiedad === "fecha_baja") {
           inputPropiedad.setAttribute('type', 'date')
           //para manejar fechas del empleado
-          propiedad = propiedad.replace(" ", "_");
-          // console.log('fechas', empleadoSeleccionado[propiedad])
-          // console.log('fecha Alta', empleadoSeleccionado["fecha_alta"])
-          // console.log('fecha Baja', empleadoSeleccionado["fecha_baja"])
+          // propiedad = propiedad.replace(" ", "_");
         }
 
         inputPropiedad.value = empleadoSeleccionado[propiedad]
@@ -334,7 +342,7 @@ class WCEmpleados extends HTMLElement {
 
         formEmpleadoSelect.appendChild(inputPropiedad)
 
-        //console.log('valor del input', inputPropiedad)
+        // console.log('valor del input', inputPropiedad)
 
       }
     })
@@ -342,8 +350,36 @@ class WCEmpleados extends HTMLElement {
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
-    // console.log("Array DATOS", arrayEmpleados)
-    //console.log("id Empleado", idEmpleado)
+
+    let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+
+    //los id de los input son "input${propiedad}:"
+    let nombre = this.shadowRoot.querySelector("#inputnombre").value;
+    let apellidos = this.shadowRoot.querySelector("#inputapellidos").value
+    let dni = this.shadowRoot.querySelector("#inputdni").value
+    let fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
+    let fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
+
+    empleadoSelect.nombre = nombre;
+    empleadoSelect.apellidos = apellidos
+    empleadoSelect.dni = dni
+    empleadoSelect.fecha_alta = fecha_alta
+    empleadoSelect.fecha_baja = fecha_baja
+
+    console.log("Nuevo Array MODIFICADO", arrayEmpleados)
+
+    //Sobrescribimos la tabla:
+    let tablaDatos = this.shadowRoot.querySelector('#tablaDatos');
+    let pastData = tablaDatos.getElementsByTagName('tbody')[0];
+    let pastThead = tablaDatos.getElementsByTagName("thead")[0]
+    //1º borramos la tabla existente 
+    if (pastData) {
+      tablaDatos.removeChild(pastData)
+      tablaDatos.removeChild(pastThead)
+    };
+    //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
+    this.crearTablaEmpeados(arrayEmpleados)
+
   }
 
   addEmpleado(arrayEmpleados, nuevoEmpleado) {
@@ -368,7 +404,7 @@ class WCEmpleados extends HTMLElement {
       nuevoEmpleado = {
         "nombre": nombre,
         "apellidos": apellidos,
-        "dni": dni, //??????????****************************
+        "dni": dni,
         "identificador": this.identificadorAleatorio(),
         "fecha_alta": fechaAlta,
         "fecha_baja": null
@@ -434,25 +470,32 @@ class WCEmpleados extends HTMLElement {
             </div>
           </div>`
 
-      // console.log(empleado)
+      let confirmarIdentificador
+
       this.shadowRoot.getElementById(`${nuevoEmpleado.identificador}`).addEventListener("click", () => {
+
+        confirmarIdentificador = nuevoEmpleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
+
       })
+
       this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
+
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
+
       this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
-        this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
-        this.cerrarModalEditar()
+        if (confirmarIdentificador === nuevoEmpleado.identificador) {
+
+          this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
+          this.cerrarModalEditar()
+
+        }
       })
 
       this.cerrarModalAddEmpleado()
 
       arrayEmpleados.push(nuevoEmpleado)
-
-      console.log("Nuevo empleado guardado", nuevoEmpleado)
-
-      console.log("Nueva Lista", arrayEmpleados)
 
     }
 
