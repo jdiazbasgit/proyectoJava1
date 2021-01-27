@@ -25,6 +25,9 @@ class WcJornadas extends HTMLElement {
 
 
         <div id="containerJornadas">
+            <div id="divContainer2">
+                <p>Heyyyy pasooooote de boton no</p>
+            </div>
             <div id="divContainer">
                 <div id="modalContainer">
                     <h3>Nueva Jornada</h3>
@@ -78,15 +81,16 @@ class WcJornadas extends HTMLElement {
                 </tbody>
             </table>
         </div>`;
+
         let radios = this.shadowRoot.querySelectorAll(".radio")
         let tablaTurnos = this.shadowRoot.getElementById('tablaNuevaJornada');
         let modalContainer = this.shadowRoot.getElementById('divContainer');
         let btAniadirJornada = this.shadowRoot.getElementById("newJornada");
         let botonCerrar = this.shadowRoot.getElementById('cerrarModal');
         let botonGuardar = this.shadowRoot.getElementById('guardarJornada');
-        console.log(radios)
         let numTurnos = this.shadowRoot.querySelector('input[type="radio"]:checked');
-        console.log(numTurnos.value)
+        
+
 
         botonCerrar.addEventListener('click', () => {
             modalContainer.style.display = "none";
@@ -125,7 +129,6 @@ class WcJornadas extends HTMLElement {
                     if (radios[i].value !== valorNumTurnos) {
                         valorNumTurnos = radios[i].value
                     }
-                    console.log(valorNumTurnos)
                     let thead = this.shadowRoot.getElementById("headTableNuevaJornada");
                     let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
                     thead.remove();
@@ -144,6 +147,7 @@ class WcJornadas extends HTMLElement {
             .then(listaJornadas => {
                 this.rellenarTabla(listaJornadas);
             })
+
     }
 
     rellenarTabla(listaJornadas) {
@@ -189,16 +193,23 @@ class WcJornadas extends HTMLElement {
             btBorrarJornada.classList = "btn shadow-none";
             btBorrarJornada.title = "borrar jornada";
             let btEditarJornada = document.createElement("button");
-            btEditarJornada.classList = "btn shadow-none";
+            btEditarJornada.classList = "btnEditar btn shadow-none";
             btEditarJornada.title = "editar jornada";
 
             btBorrarJornada.addEventListener("click", function () {
                 tr.remove();
             });
 
+            
+
+            btEditarJornada.addEventListener('click', ()=>{
+                let modalEditar = this.shadowRoot.getElementById('divContainer2')
+                modalEditar.style.display = "block";
+                this.editarJornada(1);
+            });
+
             //btEditarJornada.addEventListener("click", this.editarJornada(1));
 
-            this.crearEventoBtEditarJornada(btEditarJornada, this.editarJornada, jornada.id);
 
             btBorrarJornada.innerHTML =
                 `<i class="bi bi-x-square-fill"></i>`;
@@ -217,7 +228,7 @@ class WcJornadas extends HTMLElement {
     }
 
     editarJornada(idJornada) {
-        console.log(idJornada);
+        console.log("funciona");
     }
 
 
@@ -440,16 +451,22 @@ class WcJornadas extends HTMLElement {
         btBorrarJornada.classList = "btn shadow-none";
         btBorrarJornada.title = "borrar jornada";
         let btEditarJornada = document.createElement("button");
-        btEditarJornada.classList = "btn shadow-none";
+        btEditarJornada.classList = "btnEditar btn shadow-none";
         btEditarJornada.title = "editar jornada";
 
         btBorrarJornada.addEventListener("click", function () {
             trNuevaJornada.remove();
         });
 
-        //btEditarJornada.addEventListener("click", this.editarJornada(1));
+        
 
-        this.crearEventoBtEditarJornada(btEditarJornada, this.editarJornada, null);
+        btEditarJornada.addEventListener('click', ()=>{
+            let modalEditar = this.shadowRoot.getElementById('divContainer2')
+            modalEditar.style.display = "block";
+            this.editarJornada(1);
+        });
+
+        
 
         btBorrarJornada.innerHTML =
             `<i class="bi bi-x-square-fill"></i>`;
@@ -466,9 +483,7 @@ class WcJornadas extends HTMLElement {
     }
 
     crearEventoBtEditarJornada(btEditarJornada, funcion, idJornada) {
-        btEditarJornada.addEventListener('click', function () {
-            funcion(idJornada);
-        });
+      
     }
 
 }
