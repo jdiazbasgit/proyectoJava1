@@ -32,6 +32,10 @@ class WCEmpleados extends HTMLElement {
             border-radius: 20px !important;
           }
 
+          .modal .modal-dialog .modal-content .modal-header h4 {
+            margin-left: 2rem !import;
+          }
+
         </style>
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
@@ -67,7 +71,7 @@ class WCEmpleados extends HTMLElement {
       
           <!-- Modal Header -->
                       <div class="modal-header">
-                        <h4 class="text-center tx">NUEVO EMPLEADO</h4>
+                        <h4 class="text-center my-text">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp NUEVO EMPLEADO</h4>
                         <button type="button"  id ="cerrarModal" class="close" data-dismiss="modal">&times;</button>
                       </div>
         
@@ -130,7 +134,6 @@ class WCEmpleados extends HTMLElement {
   crearTablaEmpeados(arrayEmpleados) {
 
     let propiedadesTablaEmpleados = Object.keys(arrayEmpleados[0])
-    //console.log("propiedadesTablaEmpleados", propiedadesTablaEmpleados)
 
     let tablaDatos = this.shadowRoot.querySelector("#tablaDatos")
 
@@ -190,9 +193,6 @@ class WCEmpleados extends HTMLElement {
       let botonEditar = document.createElement("td");
       tr.appendChild(botonEditar);
 
-      //Asignar id para que funcione modal
-      //console.log("id empleado:", empleado.identificador)
-
       botonEditar.innerHTML =
         `<!-- Button to Open the Modal -->
             <button type="button" class="btn" data-toggle="modal" data-target="#myModalEditar" id="${empleado.identificador}">
@@ -208,7 +208,7 @@ class WCEmpleados extends HTMLElement {
                       
           <!-- Modal Header -->
                   <div class="modal-header">
-                    <h4 class="modal-title">MODIFICAR EMPLEADO</h4>
+                    <h4 class="modal-title">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp MODIFICAR EMPLEADO</h4>
                     <button type="button"  id ="cancelarEditar" class="close" data-dismiss="modal">&#10005</button>
                   </div>
                         
@@ -234,7 +234,7 @@ class WCEmpleados extends HTMLElement {
       let confirmarIdentificador
 
       this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => {
-        //Para confirmar el empleado seeccionado
+        //Para confirmar el empleado seleccionado
         confirmarIdentificador = empleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, empleado.identificador)
@@ -246,7 +246,7 @@ class WCEmpleados extends HTMLElement {
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
 
       this.shadowRoot.getElementById("guardarEditarEmpleado").addEventListener("click", () => {
-        //Para confirmar el empleado seeccionado
+        //Para confirmar el empleado seleccionado
         if (confirmarIdentificador === empleado.identificador) {
           this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
           this.cerrarModalEditar()
@@ -282,20 +282,15 @@ class WCEmpleados extends HTMLElement {
   }
 
   cargarFormuarioEditar(arrayEmpleados, idEmpleado) {
-
-    // console.log("Array DATOS", arrayEmpleados)
-    //console.log("idEmpleado", idEmpleado)
-
+    //Buscar el empleado seleccionado
     let empleadoSeleccionado = arrayEmpleados.find(empleado => empleado.identificador === idEmpleado)
-
-    // console.log("empleadoSeleccionado", empleadoSeleccionado)
-
+    //Sacar las propiedades del empleado seleccionado
     let propiedadEmpleadoSelect = Object.keys(empleadoSeleccionado)
 
+    //****Crear el formulario del empleado seleccionado */
     let formEmpleadoSelect = this.shadowRoot.querySelector("#formEditar")
 
     propiedadEmpleadoSelect.forEach(propiedad => {
-      // console.log("propiedad", propiedad)
 
       propiedad = propiedad.replace("_", " ");
 
@@ -313,17 +308,17 @@ class WCEmpleados extends HTMLElement {
 
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-
-        labelpropiedad.innerHTML = propiedad
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad)
+        //Poner "dni" en mayúscula
+        if (propiedad === "dni") {
+          labelpropiedad.innerHTML = propiedad.toUpperCase()
+        }
 
         formEmpleadoSelect.appendChild(labelpropiedad)
 
       }
 
-      // console.log("valor propiedad", empleadoSeleccionado[propiedad])
-
       //Darle valores a los inputs
-
       propiedad = propiedad.replace(" ", "_");
       //Determinar el input seleccionadado para poder borrarlo y evitar que se duplique
       let selectInput = this.shadowRoot.getElementById(`input${propiedad}`)
@@ -334,62 +329,66 @@ class WCEmpleados extends HTMLElement {
       }
 
       if (propiedad !== "jornada") {
-        //console.log('propiedad:', propiedad)
         //Se pinta el label con un id único, que será la propia propiedad
 
         let inputPropiedad = document.createElement("input")
         inputPropiedad.setAttribute('id', `input${propiedad}`)
 
-
+        //Darle el tipado fecha a as fechas
         if (propiedad === "fecha_alta" || propiedad === "fecha_baja") {
           inputPropiedad.setAttribute('type', 'date')
-          //para manejar fechas del empleado
-          // propiedad = propiedad.replace(" ", "_");
         }
-
+        //Obtener el valor de los inputs
         inputPropiedad.value = empleadoSeleccionado[propiedad]
+        //Inputs con estilos de boostrap
         inputPropiedad.classList.add("form-control")
 
         formEmpleadoSelect.appendChild(inputPropiedad)
-
-        // console.log('valor del input', inputPropiedad)
 
       }
     })
 
   }
 
-  guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
+  //Función para poner a primera letra en mayúscua
+  capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 
+  guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
+    //Iddentificar e empleado seleccionado
     let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
 
-    //los id de los input son "input${propiedad}:"
-    let nombre = this.shadowRoot.querySelector("#inputnombre").value;
-    let apellidos = this.shadowRoot.querySelector("#inputapellidos").value
-    let dni = this.shadowRoot.querySelector("#inputdni").value
+    //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
+    let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
+    let apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
+    let dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
     let fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
     let fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
 
     //en caso de no tener fecha de baja
-    if(!fecha_baja) fecha_baja = "---"
+    if (!fecha_baja) fecha_baja = "---"
 
+    //Para modificar el valor de los inputs del empleado modificado
     empleadoSelect.nombre = nombre;
     empleadoSelect.apellidos = apellidos
     empleadoSelect.dni = dni
     empleadoSelect.fecha_alta = fecha_alta
     empleadoSelect.fecha_baja = fecha_baja
 
-    console.log("Nuevo Array MODIFICADO", arrayEmpleados)
+    //console.log("Nuevo Array MODIFICADO", arrayEmpleados)
 
     //Sobrescribimos la tabla:
     let tablaDatos = this.shadowRoot.querySelector('#tablaDatos');
     let pastBody = tablaDatos.getElementsByTagName('tbody')[0];
     let pastThead = tablaDatos.getElementsByTagName("thead")[0]
+
     //1º borramos la tabla existente 
     if (pastBody) {
       tablaDatos.removeChild(pastBody)
       tablaDatos.removeChild(pastThead)
     };
+
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
 
@@ -397,17 +396,18 @@ class WCEmpleados extends HTMLElement {
 
   addEmpleado(arrayEmpleados, nuevoEmpleado) {
 
+    //Obtener los valores de los inputs en mayúscula
     let nombre = this.shadowRoot.querySelector("#nuevoNombre").value.toUpperCase();
     let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value.toUpperCase();
     let dni = this.shadowRoot.querySelector("#nuevoDNI").value;
     let fechaAlta = this.shadowRoot.querySelector("#nuevoFecha").value;
 
-
+    //En caso de no haber añadido nuevo empleado y darle a guardar, saca una alerta
     if (nombre.trim() === "" && apellidos.trim() === "" && dni.trim() === "") {
       alert("Debes de rellenar todos los datos")
 
     } else {
-
+      //Cuando se añaden campos del nuevo empleado
       let tbody = this.shadowRoot.querySelector("#tbody")
 
       let nuevaFila = document.createElement("tr")
@@ -424,7 +424,9 @@ class WCEmpleados extends HTMLElement {
       };
 
       let datoIcono = document.createElement("td");
+
       nuevaFila.appendChild(datoIcono);
+
       datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
           <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
           </svg>`;
@@ -443,8 +445,6 @@ class WCEmpleados extends HTMLElement {
       let botonEditar = document.createElement("td");
       nuevaFila.appendChild(botonEditar);
 
-      //console.log('id Nuevo Empleado:', nuevoEmpleado.identificador)
-
       botonEditar.innerHTML =
         `<!-- Button to Open the Modal -->
           <button type="button" class="btn" data-toggle="modal" data-target="#myModalEditar" id="${nuevoEmpleado.identificador}">
@@ -460,7 +460,7 @@ class WCEmpleados extends HTMLElement {
                     
         <!-- Modal Header -->
                 <div class="modal-header">
-                  <h4 class="modal-title">MODIFICAR EMPLEADO</h4>
+                  <h4 class="modal-title">&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp MODIFICAR EMPLEADO</h4>
                   <button type="button"  id ="cancelarEditar" class="close" data-dismiss="modal">&#10005</button>
                 </div>
                       
@@ -483,6 +483,7 @@ class WCEmpleados extends HTMLElement {
             </div>
           </div>`
 
+      //Para comprobar el identificador del empleado seleccionado
       let confirmarIdentificador
 
       this.shadowRoot.getElementById(`${nuevoEmpleado.identificador}`).addEventListener("click", () => {
