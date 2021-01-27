@@ -26,7 +26,35 @@ class WcJornadas extends HTMLElement {
 
         <div id="containerJornadas">
             <div id="divContainer2">
-                <p>Heyyyy pasooooote de boton no</p>
+                <div id="modalContainer2">
+                    <h3>Editar Jornada</h3>
+                    <div id="containerFormEditarJornada" class="d-flex justify-content-between">
+                        <div class="flexCol" id="jornadaNameEditar">
+                            <p for="nombreJornadaEditar">Nombre</p>
+                            <input type="text" id="descripcionEditar" name="nombreJornadaEditar" placeholder="Nombre Jornada">
+                        </div>
+                        <div class="flexCol">
+                            <p id="labelNumTurnosEditar">Número de turnos</p>
+                            <div>
+                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                <label for="inlineRadio1">1</label>
+                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" checked>
+                                <label for="inlineRadio2">2</label>
+                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                                <label for="inlineRadio3">3</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <table id="tablaEditarJornada" class="table table-sm table-hover">
+                        
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-around">
+                        <button id="cerrarModalEditar" type="button" class="btn  shadow-none">CANCELAR</button>
+                        <button id="guardarJornadaEditar" type="button" class="btn shadow-none">ACTUALIZAR</button>
+                    </div>
+                </div>
             </div>
             <div id="divContainer">
                 <div id="modalContainer">
@@ -84,12 +112,19 @@ class WcJornadas extends HTMLElement {
 
         let radios = this.shadowRoot.querySelectorAll(".radio")
         let tablaTurnos = this.shadowRoot.getElementById('tablaNuevaJornada');
+        let tablaEditar = this.shadowRoot.getElementById('tablaEditarJornada')
         let modalContainer = this.shadowRoot.getElementById('divContainer');
+        let modalContainer2 = this.shadowRoot.getElementById('divContainer2');
         let btAniadirJornada = this.shadowRoot.getElementById("newJornada");
         let botonCerrar = this.shadowRoot.getElementById('cerrarModal');
+        let botonCerrarEditar = this.shadowRoot.getElementById('cerrarModalEditar');
         let botonGuardar = this.shadowRoot.getElementById('guardarJornada');
         let numTurnos = this.shadowRoot.querySelector('input[type="radio"]:checked');
         
+
+        botonCerrarEditar.addEventListener('click', ()=>{
+            modalContainer2.style.display = 'none';
+        })
 
 
         botonCerrar.addEventListener('click', () => {
@@ -204,7 +239,8 @@ class WcJornadas extends HTMLElement {
 
             btEditarJornada.addEventListener('click', ()=>{
                 let modalEditar = this.shadowRoot.getElementById('divContainer2')
-                modalEditar.style.display = "block";
+                modalEditar.style.display = "flex";
+                modalEditar.style.alignItems = "center"
                 this.editarJornada(1);
             });
 
@@ -462,7 +498,8 @@ class WcJornadas extends HTMLElement {
 
         btEditarJornada.addEventListener('click', ()=>{
             let modalEditar = this.shadowRoot.getElementById('divContainer2')
-            modalEditar.style.display = "block";
+            modalEditar.style.display = "flex";
+            modalEditar.style.alignItems = "center"
             this.editarJornada(1);
         });
 
