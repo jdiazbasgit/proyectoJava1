@@ -1,12 +1,3 @@
-//plantilla Miguel <=========|
-//estilos Elena    <=========|
-//rellenarTabla() Guiu   <=========| 
-//aniadirJornada() Diego   <=========| FALTA IMPLEMENTARLA
-//generarTablaJornadaNueva(numTurnos) Estela
-//borrarJornada() Álvaro   <=========|
-//editarJornada(idJornada) Álvaro, Miguel
-//generarTablaJornadaCreada(numTurnos, idJornada) Álvaro, Miguel
-
 class WcJornadas extends HTMLElement {
 
     constructor() {
@@ -111,11 +102,9 @@ class WcJornadas extends HTMLElement {
             numTurnos.checked = "false";
         })
 
-
         btAniadirJornada.addEventListener('click', () => {
             modalContainer.style.alignItems = "center"
             modalContainer.style.display = 'flex';
-
 
             let valorNumTurnos = 2;
             this.generarTablaJornadaNueva(numTurnos.value, tablaTurnos);
