@@ -11,6 +11,17 @@ class WCEmpleados extends HTMLElement {
 
     shadowRoot.innerHTML = `
         
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
+    
         <style>
 
         .body {
@@ -33,27 +44,28 @@ class WCEmpleados extends HTMLElement {
           }
 
           .modal .modal-dialog .modal-content .modal-header h4 {
-            margin-left: 2rem !import;
+            margin-left: 2rem !important;
           }
 
           .containerPrincipal {
-            background-color: #eeeee !import;   
-          }
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #949090 !important;    
+          } 
           
+          #tbody {
+            padding-bottom: .5rem !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+            font-size: medium !important;
+        }
+
         </style>
 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-        integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+       
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-        crossorigin="anonymous"></script>
-
-        <d class="container-fluid body ">
+        <d class="container body">
           <div class="d-flex justify-content-between">
             <h1 class="text text-dark mt-5 mb-5">EMPLEADOS</h1>
             <div class="mt-5">
@@ -178,7 +190,8 @@ class WCEmpleados extends HTMLElement {
 
     //********* BODY TABLA*/
     let tbody = document.createElement("tbody");
-    thead.classList.add("bg-light")
+    tbody.classList.add("bg-light");
+    tbody.classList.add("pb-0");
     tbody.setAttribute("id", "tbody");
     tablaDatos.appendChild(tbody);
 
