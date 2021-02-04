@@ -127,6 +127,7 @@ class WcJornadas extends HTMLElement {
                     let tbody = this.shadowRoot.getElementById('tbodyEditarJornada');
                     thead.remove();
                     tbody.remove();
+                    numTurnos.checked = "false";
                 })
 
 
