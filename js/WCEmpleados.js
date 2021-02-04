@@ -129,6 +129,17 @@ class WCEmpleados extends HTMLElement {
 
   }
 
+  //Hacer que la url se le pase directamente desde la etiqueta del WC
+  attributeChangedCallback(name, oldValue, newValue) {
+    
+    this.url = newValue;
+  }
+
+  static get observedAttributes() {
+
+    return ["url"]
+  }
+
   //Fuera de "connectedCallback()"
 
   crearTablaEmpeados(arrayEmpleados) {
