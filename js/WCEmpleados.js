@@ -22,16 +22,20 @@ class WCEmpleados extends HTMLElement {
     integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
     crossorigin="anonymous"></script>
     
-        <style>
+    <style>
 
-        .body {
-            margin: 0;
+        .mybody {
+          padding: 0 !important;
+          margin: 0 !important;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             font-size: 1rem;
             font-weight: 400;
             line-height: 1.5;
             color: #212529;
             text-align: left;
+           
+            width: 100vw;
+            height: 100vh;
           }
 
           .my-bg {
@@ -45,8 +49,6 @@ class WCEmpleados extends HTMLElement {
           .my-text {
             margin-left: 8rem;
           }
-          
-         
 
           #tablaDatos {
             width: 90vw;
@@ -106,16 +108,17 @@ class WCEmpleados extends HTMLElement {
         }
 
 
-        </style>
+    </style>
 
 
-        <d class="container body">
+        <div class="mybody">
           <div class="d-flex justify-content-between">
-            <h1 class="text text-dark mt-5 mb-4 ml-5 pl-4">EMPLEADOS</h1>
-            <div class="mt-5">
-              <div class="container mr-2">
+            <h3 class="text text-dark mt-5 mb-4 ml-5 pl-4">EMPLEADOS</h3>
+            <div>
+              <div class="container">
 
       <!-- Button to Open the Modal -->
+              <div class="mr-2 mt-5">
                 <button type="button" class="btn btn-warning text-light mr-5 pr-4 pl-4 redondear" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
                   AÑADIR
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle ml-4" viewBox="0 0 16 16">
@@ -123,6 +126,7 @@ class WCEmpleados extends HTMLElement {
                       <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                   </svg>
                 </button>
+              </div>
 
       <!-- The Modal -->
                 <div class="modal my-bg" id="myModalAddEmpleado">
@@ -165,6 +169,10 @@ class WCEmpleados extends HTMLElement {
           </div>
         `
 
+    //PONER EL BODY EN GRIS
+    let body = document.getElementsByTagName('body')
+    body[0].style.backgroundColor = '#EEEE'
+
     //Datos de JSON
     let datosJSON = getDatos("datos/empleados.json")
 
@@ -174,7 +182,7 @@ class WCEmpleados extends HTMLElement {
     datosJSON.then((empleado) => {
 
       listaEmpleados = empleado
-      console.log("Lista inicial", listaEmpleados)
+      //console.log("Lista inicial", listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
     })
@@ -211,8 +219,8 @@ class WCEmpleados extends HTMLElement {
     let thead = document.createElement("thead");
 
     let thIcono = document.createElement("th")
-    //Se modificó  viewBox="0 -150 850 850" para adaptar el icóno a la tabla
-    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -150 850 850"><defs><style>.cls-1{fill:#fff;}</style></defs>
+    //Se modificó  viewBox="0 -150 980 980" para adaptar el icóno a la tabla
+    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -150 980 980"><defs><style>.cls-1{fill:#fff;}</style></defs>
     <g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph"><circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
     <circle class="cls-1" cx="256" cy="149.33" r="85.33"/><path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
     <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
@@ -247,8 +255,8 @@ class WCEmpleados extends HTMLElement {
 
       let datoIcono = document.createElement("td");
       tr.appendChild(datoIcono);
-      //se tocó  viewBox="0 -150 850 850" para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 850 850"><defs>
+      //se tocó viewBox="0 -150 980 980" para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 980 980"><defs>
       <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
       <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
       <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
@@ -505,8 +513,8 @@ class WCEmpleados extends HTMLElement {
 
       nuevaFila.appendChild(datoIcono);
 
-      //se tocó  viewBox="0 -150 850 850" para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 850 850"><defs>
+      //se tocó  viewBox="0 -150 980 980" para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 980 980"><defs>
       <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
       <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
       <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
