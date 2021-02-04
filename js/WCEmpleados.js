@@ -33,9 +33,11 @@ class WCEmpleados extends HTMLElement {
             line-height: 1.5;
             color: #212529;
             text-align: left;
-           
-            width: 100vw;
-            height: 100vh;
+          }
+
+
+          .tituloEmpleados {
+            margin-left: 2.75rem !important;
           }
 
           .my-bg {
@@ -113,7 +115,7 @@ class WCEmpleados extends HTMLElement {
 
         <div class="mybody">
           <div class="d-flex justify-content-between">
-            <h3 class="text text-dark mt-5 mb-4 ml-5 pl-4">EMPLEADOS</h3>
+            <h3 class="text text-dark mt-5 mb-4 ml-5 pl-4 tituloEmpleados">EMPLEADOS</h3>
             <div>
               <div class="container">
 
