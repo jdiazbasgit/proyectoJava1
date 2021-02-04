@@ -32,7 +32,7 @@ class WCEmpleados extends HTMLElement {
             line-height: 1.5;
             color: #212529;
             text-align: left;
-            background-color: #fff;
+            background-color: #eeee;
           }
 
           .my-bg {
@@ -46,24 +46,15 @@ class WCEmpleados extends HTMLElement {
           .modal .modal-dialog .modal-content .modal-header h4 {
             margin-left: 2rem !important;
           }
-
-          .containerPrincipal {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #949090 !important;    
-          } 
           
-          #tbody {
-            padding-bottom: .5rem !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
-            font-size: medium !important;
+          .table td {
+            font-size: 0.85em;
+            vertical-align: middle;
+            padding: 0;
         }
 
         </style>
 
-       
 
         <d class="container body">
           <div class="d-flex justify-content-between">
