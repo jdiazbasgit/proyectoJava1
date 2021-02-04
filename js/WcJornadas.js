@@ -27,11 +27,11 @@ class WcJornadas extends HTMLElement {
                         <div class="flexCol">
                             <p id="labelNumTurnosEditar">Número de turnos</p>
                             <div>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                <input type="radio" class="radio" name="numJorEdit" id="numJorEdit1" value="1">
                                 <label for="inlineRadio1">1</label>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" checked>
+                                <input type="radio" class="radio" name="numJorEdit" id="numJorEdit2" value="2" checked>
                                 <label for="inlineRadio2">2</label>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                                <input type="radio" class="radio" name="numJorEdit" id="numJorEdit3" value="3">
                                 <label for="inlineRadio3">3</label>
                             </div>
                         </div>
@@ -58,11 +58,11 @@ class WcJornadas extends HTMLElement {
                         <div class="flexCol">
                             <p id="labelNumTurnos">Número de turnos</p>
                             <div>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                <input type="radio" class="radio" name="numJorNew" id="numJorNew1" value="1">
                                 <label for="inlineRadio1">1</label>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio2" value="2" checked>
+                                <input type="radio" class="radio" name="numJorNew" id="numJorNew1" value="2" checked>
                                 <label for="inlineRadio2">2</label>
-                                <input type="radio" class="radio" name="inlineRadioOptions" id="inlineRadio3" value="3">
+                                <input type="radio" class="radio" name="numJorNew" id="numJorNew1" value="3">
                                 <label for="inlineRadio3">3</label>
                             </div>
                         </div>
