@@ -101,7 +101,7 @@ class WCJornadasEmpleados extends HTMLElement {
                 jornadaSelect.appendChild(option[i]);
                 if (empleado.jornada == jornada.id)
                     jornadaSelect.selectedIndex = i;
-                else if (empleado.jornada == 0){
+                else if (empleado.jornada == null){
                     jornadaSelect.selectedIndex = "0";
                     jornadaSelect.style.borderWidth = "2px";
                     jornadaSelect.style.borderColor = "red";
