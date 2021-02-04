@@ -104,7 +104,7 @@ class WcJornadas extends HTMLElement {
         const url = "./datos/jornadas.json";
         var jornadas = this.getDatos(url);
 
-        
+
 
         jornadas
             .then(listaJornadas => {
@@ -119,9 +119,9 @@ class WcJornadas extends HTMLElement {
                 let botonCerrarEditar = this.shadowRoot.getElementById('cerrarModalEditar');
                 let botonGuardar = this.shadowRoot.getElementById('guardarJornada');
                 let numTurnos = this.shadowRoot.querySelector('input[type="radio"]:checked');
-                
 
-                botonCerrarEditar.addEventListener('click', ()=>{
+
+                botonCerrarEditar.addEventListener('click', () => {
                     modalContainer2.style.display = 'none';
                     let thead = this.shadowRoot.getElementById('theadEditarJornada');
                     let tbody = this.shadowRoot.getElementById('tbodyEditarJornada');
@@ -138,7 +138,7 @@ class WcJornadas extends HTMLElement {
                     let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
                     descripcion.value = "";
                     thead.remove(),
-                    tbody.remove();
+                        tbody.remove();
                     numTurnos.checked = "false";
                 });
 
@@ -150,7 +150,7 @@ class WcJornadas extends HTMLElement {
                     let tbody = this.shadowRoot.getElementById("bodyTableNuevaJornada");
                     descripcion.value = "";
                     thead.remove(),
-                    tbody.remove();
+                        tbody.remove();
                     numTurnos.checked = "false";
                 })
 
@@ -177,16 +177,18 @@ class WcJornadas extends HTMLElement {
 
                 })
             })
-        
+
     }
 
     rellenarTabla(listaJornadas) {
 
         console.table(listaJornadas);
-        
+
 
         let tablaJornadas = this.shadowRoot.getElementById("tableJornadas");
         let bodyJornadas = this.shadowRoot.getElementById("bodyJornadas");
+
+        bodyJornadas.innerHTML = "";
 
         Array.from(listaJornadas).forEach(jornada => {
             let tr = document.createElement("tr");
@@ -205,6 +207,7 @@ class WcJornadas extends HTMLElement {
 
                 if (property != "id" && property != "especial" && property != "descripcion") {
                     let td = document.createElement("td");
+                    td.id = `${property}`;
                     td.class = `${property}`;
                     let horarios = jornada[property].split("&");
                     let horario = "";
@@ -230,33 +233,17 @@ class WcJornadas extends HTMLElement {
             btBorrarJornada.addEventListener("click", function () {
                 tr.remove();
             });
-            
 
-            btEditarJornada.addEventListener('click', ()=>{
+
+            btEditarJornada.addEventListener('click', () => {
                 let modalEditar = this.shadowRoot.getElementById('divContainer2')
-                let radios = this.shadowRoot.querySelectorAll('.radio');
                 modalEditar.style.display = "flex";
                 modalEditar.style.alignItems = "center"
-                this.editarJornada(listaJornadas);
-                let valorNumTurnos = 2;
-                    this.generarTablaEditarJornada(valorNumTurnos);
 
-                    for (let i = 0; i < radios.length; i++) {
-                        radios[i].addEventListener('change', () => {
-                            if (radios[i].value !== valorNumTurnos) {
-                                valorNumTurnos = radios[i].value
-                            }
-                            let thead = this.shadowRoot.getElementById("theadEditarJornada");
-                            let tbody = this.shadowRoot.getElementById("tbodyEditarJornada");
-                            thead.remove();
-                            tbody.remove();
-                            this.generarTablaEditarJornada(valorNumTurnos);
-                        })
-                    }
+                let datosJornada = jornada;
+
+                this.editarJornada(datosJornada);
             });
-
-            
-
 
             btBorrarJornada.innerHTML =
                 `<i class="bi bi-x-square-fill"></i>`;
@@ -274,23 +261,48 @@ class WcJornadas extends HTMLElement {
 
     }
 
-    editarJornada(listaJornadas, trTableId) {
-        console.log(listaJornadas[1].lunes);
+    editarJornada(datosJornada) { 
+        //TODO Reccorrer los arrays de String de los días para rellenar los inputs
+        let radios = this.shadowRoot.querySelectorAll('.radio');
+        let numTurnos = 0;
+        let arrayHorario = [];
+        console.log(datosJornada);
+        //Horario ordenado en pares entrada impares salida
+        for (const key in datosJornada) {
 
+            if (key != "id" && key != "descripcion" && key != "especial") {
 
-        // for(let i=0;i<jornadas.length;i++){
-        //     if(jornadas[i].id == trTableId){
-        //         for (let j = 2; j < jornadas[i][j].length; j++) {
-        //             console.log(jornadas[i])
-        //         }
-        //     }
-        // }
+                datosJornada[key] = `${datosJornada[key]}`.split(/-|&/);
+
+                arrayHorario = datosJornada[key];
+
+                if (arrayHorario.length / 2 > numTurnos) {
+                    numTurnos = arrayHorario.length / 2;
+                }
+            }
+        }
+        console.log(datosJornada);
+
+        this.generarTablaEditarJornada(numTurnos);
+
+        for (let i = 0; i < radios.length; i++) {
+            radios[i].addEventListener('change', () => {
+                if (radios[i].value !== numTurnos) {
+                    numTurnos = radios[i].value
+                }
+                let thead = this.shadowRoot.getElementById("theadEditarJornada");
+                let tbody = this.shadowRoot.getElementById("tbodyEditarJornada");
+                thead.remove();
+                tbody.remove();
+                this.generarTablaEditarJornada(numTurnos);
+            })
+        }
 
     }
 
 
     generarTablaJornadaCreada(numTurnos, idJornada) {
-        
+
     }
 
     getDatos(url) {
@@ -457,21 +469,8 @@ class WcJornadas extends HTMLElement {
     }
 
     guardarJornada(tablaTurnos, listaJornadas) {
-        let bodyJornadas = this.shadowRoot.getElementById("bodyJornadas");
 
-        let trNuevaJornada = document.createElement("tr");
-
-        //trNuevaJornada.id....
-
-        let descripcion = this.shadowRoot.querySelector("#descripcion");
-        let tdIcono = document.createElement("td");
-        let tdNombre = document.createElement("td");
-
-        tdIcono.innerHTML = `<i class="fa fa-history" aria-hidden="true"></i>`;
-        tdNombre.textContent = descripcion.value.charAt(0).toUpperCase() + descripcion.value.slice(1).toLowerCase();
-
-        trNuevaJornada.appendChild(tdIcono);
-        trNuevaJornada.appendChild(tdNombre);
+        //TODO Condicion de editar o guardar en base a si ya existe el id
 
         let jornada = {
             "id": listaJornadas.length + 1,
@@ -482,11 +481,9 @@ class WcJornadas extends HTMLElement {
             "viernes": "",
             "sabado": "",
             "domingo": "",
-            "descripcion": "",
+            "descripcion": this.shadowRoot.querySelector("#descripcion").value,
             "especial": 0
         };
-
-        console.log(jornada);
 
         for (let i = 1; i < tablaTurnos.rows.length; i++) {
             let turno = "";
@@ -504,80 +501,20 @@ class WcJornadas extends HTMLElement {
                     else {
                         turno = tablaTurnos.rows[i].cells[j].firstChild.value;
                     }
-
                 }
-                console.log(jornada.property[2]);
-                jornada[2] = turno;
-                console.log(jornada.property[2]);
+                jornada[tablaTurnos.rows[i].id] = turno;
             }
-            let turnos = turno.split("&");
-            let horario = "";
-            for (let j = 0; j < turnos.length; j++) {
-                horario = `${horario}${turnos[j]}<br>`;
-            }
-            let tdTurno = document.createElement("td");
-            tdTurno.innerHTML = `<p>${horario}</p>`;
-            trNuevaJornada.appendChild(tdTurno);
         }
 
         listaJornadas.push(jornada);
 
-        console.table(listaJornadas);
-
-        let tdBotones = document.createElement("td");
-        let btBorrarJornada = document.createElement("button");
-        btBorrarJornada.classList = "btn shadow-none";
-        btBorrarJornada.title = "borrar jornada";
-        let btEditarJornada = document.createElement("button");
-        btEditarJornada.classList = "btnEditar btn shadow-none";
-        btEditarJornada.title = "editar jornada";
-
-        btBorrarJornada.addEventListener("click", function () {
-            trNuevaJornada.remove();
-        });
-
-        
-
-        btEditarJornada.addEventListener('click', ()=>{
-            let modalEditar = this.shadowRoot.getElementById('divContainer2')
-            let radios = this.shadowRoot.querySelectorAll('.radio');
-            modalEditar.style.display = "flex";
-            modalEditar.style.alignItems = "center"
-            this.editarJornada(listaJornadas);
-            let valorNumTurnos = 2;
-                    this.generarTablaEditarJornada(valorNumTurnos);
-
-                    for (let i = 0; i < radios.length; i++) {
-                        radios[i].addEventListener('change', () => {
-                            if (radios[i].value !== valorNumTurnos) {
-                                valorNumTurnos = radios[i].value
-                            }
-                            let thead = this.shadowRoot.getElementById("theadEditarJornada");
-                            let tbody = this.shadowRoot.getElementById("tbodyEditarJornada");
-                            thead.remove();
-                            tbody.remove();
-                            this.generarTablaEditarJornada(valorNumTurnos);
-                        })
-                    }
-        });
-
-        
-
-        btBorrarJornada.innerHTML =
-            `<i class="bi bi-x-square-fill"></i>`;
-        btEditarJornada.innerHTML =
-            `<i class="fa fa-pencil" aria-hidden="true"></i>`;
-
-        tdBotones.appendChild(btBorrarJornada);
-        tdBotones.appendChild(btEditarJornada);
-
-        trNuevaJornada.appendChild(tdBotones);
-
-        bodyJornadas.appendChild(trNuevaJornada);
+        this.rellenarTabla(listaJornadas);
 
     }
 
     generarTablaEditarJornada(numTurnos) {
+
+        //TODO Cambiar checked en función al numero de turnos
 
         let tablaEditar = this.shadowRoot.getElementById("tablaEditarJornada");
 
