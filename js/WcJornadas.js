@@ -255,7 +255,7 @@ class WcJornadas extends HTMLElement {
                     }
             });
 
-            //btEditarJornada.addEventListener("click", this.editarJornada(1));
+            
 
 
             btBorrarJornada.innerHTML =
