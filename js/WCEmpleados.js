@@ -36,6 +36,9 @@ class WCEmpleados extends HTMLElement {
             margin-left: 2rem !import;
           }
 
+          .containerPrincipal {
+            background-color: #eeeee !import;   
+          }
           
         </style>
 
@@ -50,7 +53,7 @@ class WCEmpleados extends HTMLElement {
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
 
-        <div class="container-fluid body">
+        <d class="container-fluid body ">
           <div class="d-flex justify-content-between">
             <h1 class="text text-dark mt-5 mb-5">EMPLEADOS</h1>
             <div class="mt-5">
@@ -101,10 +104,9 @@ class WCEmpleados extends HTMLElement {
               </div>
             </div>
           </div>
-
-          <table id="tablaDatos" class="table"></table>
-
-        </div> 
+          <div>
+            <table id="tablaDatos" class="table"></table>
+          </div>
         `
 
     //Datos de JSON
@@ -132,7 +134,7 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC
   attributeChangedCallback(name, oldValue, newValue) {
-    
+
     this.url = newValue;
   }
 
@@ -176,6 +178,7 @@ class WCEmpleados extends HTMLElement {
 
     //********* BODY TABLA*/
     let tbody = document.createElement("tbody");
+    thead.classList.add("bg-light")
     tbody.setAttribute("id", "tbody");
     tablaDatos.appendChild(tbody);
 
