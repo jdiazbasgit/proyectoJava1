@@ -83,6 +83,7 @@ class WCJornadasEmpleados extends HTMLElement {
                 return;
             let fila = document.createElement("tr");
 
+            let icono = document.createElement("td");
             let nombre = document.createElement("td");
             let apellidos = document.createElement("td");
             let jornada = document.createElement("td");
@@ -110,11 +111,13 @@ class WCJornadasEmpleados extends HTMLElement {
                 i++;
             });
 
+            icono.innerHTML = `<img src="img/svg/icono3amarillo.svg"/>`;
             nombre.innerHTML = empleado.nombre;
             apellidos.innerHTML = empleado.apellidos;
 
             jornada.appendChild(jornadaSelect);
 
+            fila.appendChild(icono);
             fila.appendChild(nombre);
             fila.appendChild(apellidos);
             fila.appendChild(jornada);
