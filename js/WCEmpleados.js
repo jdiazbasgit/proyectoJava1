@@ -46,6 +46,7 @@ class WCEmpleados extends HTMLElement {
             margin-left: 8rem;
           }
           
+         
 
           #tablaDatos {
             width: 90vw;
@@ -54,12 +55,6 @@ class WCEmpleados extends HTMLElement {
             border-collapse:separate; 
             border-spacing: 0 2px;
             }
-
-        #tablaDatos tr > td:first-child {
-          text-align: center;
-          padding-right: .5rem;
-          padding-left: 1rem;
-          }
 
           #tablaDatos tr > td {
             font-size: 0.85em;
@@ -77,25 +72,37 @@ class WCEmpleados extends HTMLElement {
         }
         
         #tablaDatos thead th:first-child{
-            padding-left: 1rem;
-            text-align: center;
+          text-align: center;
+          padding: 0 1.5rem 0 2.5rem;
+          marging: 0 1rem 0 1rem;
         }
 
         #tablaDatos thead th {
           text-align: left;
+          marging-bottom: 1rem;
+          
         }
         
+        #tablaDatos tr > td:first-child {
+          text-align: center;
+          padding: 0 1.5rem 0 2.5rem;
+          marging: 0 1rem 0 1rem;
+          }
+
         #tablaDatos tbody > tr{
             background-color: #FFFFFF;
             text-align: left;
             marging-left: .5 rem;
         }
 
-        
+        #formEditar label {
+          display: inline-block;
+          margin-bottom: .5rem;
+        }
 
-        #tablaDatos tbody td:last-child {
-          text-align: right;
-          padding-right: 1rem;
+        #formEditar input {
+          margin-bottom: .8rem;
+          
         }
 
 
@@ -104,12 +111,12 @@ class WCEmpleados extends HTMLElement {
 
         <d class="container body">
           <div class="d-flex justify-content-between">
-            <h1 class="text text-dark mt-5 mb-5">EMPLEADOS</h1>
+            <h1 class="text text-dark mt-5 mb-4 ml-5 pl-4">EMPLEADOS</h1>
             <div class="mt-5">
-              <div class="container">
+              <div class="container mr-2">
 
       <!-- Button to Open the Modal -->
-                <button type="button" class="btn btn-warning text-light pr-4 pl-4 redondear" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
+                <button type="button" class="btn btn-warning text-light mr-5 pr-4 pl-4 redondear" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
                   AÑADIR
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle ml-4" viewBox="0 0 16 16">
                       <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -202,15 +209,12 @@ class WCEmpleados extends HTMLElement {
 
     //********* HEAD TABLA*/
     let thead = document.createElement("thead");
-    //thead.classList.add("bg-dark")
-    //thead.classList.add("text-light")
 
     let thIcono = document.createElement("th")
-    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs>
-    <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
-    <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
-    <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
-    <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
+    //Se modificó  viewBox="0 -150 850 850" para adaptar el icóno a la tabla
+    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -150 850 850"><defs><style>.cls-1{fill:#fff;}</style></defs>
+    <g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph"><circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
+    <circle class="cls-1" cx="256" cy="149.33" r="85.33"/><path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
     <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
     <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`
     thead.appendChild(thIcono)
@@ -243,8 +247,8 @@ class WCEmpleados extends HTMLElement {
 
       let datoIcono = document.createElement("td");
       tr.appendChild(datoIcono);
-      //se tocó 'viewBox="0 0 612 612"' para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612"><defs>
+      //se tocó  viewBox="0 -150 850 850" para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 850 850"><defs>
       <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
       <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
       <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
@@ -501,8 +505,8 @@ class WCEmpleados extends HTMLElement {
 
       nuevaFila.appendChild(datoIcono);
 
-      //se tocó 'viewBox="0 0 612 612"' para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612"><defs>
+      //se tocó  viewBox="0 -150 850 850" para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 850 850"><defs>
       <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
       <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
       <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
