@@ -58,6 +58,7 @@ class WCEmpleados extends HTMLElement {
         #tablaDatos tr > td:first-child {
           text-align: center;
           padding-right: .5rem;
+          padding-left: 1rem;
           }
 
           #tablaDatos tr > td {
@@ -70,6 +71,9 @@ class WCEmpleados extends HTMLElement {
           #tablaDatos thead{
             background-color: #324047;
             color: white;
+            font-size: 0.85em;
+            vertical-align: middle;
+            padding: 0;
         }
         
         #tablaDatos thead th:first-child{
@@ -86,6 +90,8 @@ class WCEmpleados extends HTMLElement {
             text-align: left;
             marging-left: .5 rem;
         }
+
+        
 
         #tablaDatos tbody td:last-child {
           text-align: right;
@@ -200,9 +206,13 @@ class WCEmpleados extends HTMLElement {
     //thead.classList.add("text-light")
 
     let thIcono = document.createElement("th")
-    thIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-              </svg>`
+    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs>
+    <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
+    <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
+    <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
+    <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
+    <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
+    <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`
     thead.appendChild(thIcono)
 
     propiedadesTablaEmpleados.forEach(propiedad => {
@@ -222,7 +232,7 @@ class WCEmpleados extends HTMLElement {
     //********* BODY TABLA*/
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
-    tbody.classList.add("pb-0");
+    //tbody.classList.add("pb-0");
     tbody.setAttribute("id", "tbody");
     tablaDatos.appendChild(tbody);
 
@@ -233,9 +243,14 @@ class WCEmpleados extends HTMLElement {
 
       let datoIcono = document.createElement("td");
       tr.appendChild(datoIcono);
-      datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-                </svg>`;
+      //se tocó 'viewBox="0 0 612 612"' para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612"><defs>
+      <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
+      <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
+      <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
+      <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
+      <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
+      <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`;
 
       for (let propiedad in empleado) {
         if (empleado.fecha_baja == null) {
@@ -486,9 +501,14 @@ class WCEmpleados extends HTMLElement {
 
       nuevaFila.appendChild(datoIcono);
 
-      datoIcono.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person" viewBox="0 0 16 16">
-          <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z"/>
-          </svg>`;
+      //se tocó 'viewBox="0 0 612 612"' para hacer el icono más pequeño
+      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612"><defs>
+      <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
+      <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
+      <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
+      <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
+      <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
+      <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`;
 
       for (let propiedad in nuevoEmpleado) {
         if (nuevoEmpleado.fecha_baja == null) {
