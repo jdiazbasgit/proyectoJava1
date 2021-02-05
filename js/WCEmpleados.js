@@ -176,14 +176,13 @@ class WCEmpleados extends HTMLElement {
     body[0].style.backgroundColor = '#EEEE'
 
 
-    // ******** SACAR LA URL DEL JSON **********
+    // **************     SACAR LA URL DEL JSON     ****************
     let link = document.querySelector('#urlJSON');
     let URL = link.getAttribute('url');
 
     //Datos de JSON
     let datosJSON = getDatos(URL)
 
-    //onsole.log(datosJSON)
     //Array con Empleados
     let listaEmpleados
 
@@ -204,7 +203,7 @@ class WCEmpleados extends HTMLElement {
 
   }
 
-  //Hacer que la url se le pase directamente desde la etiqueta del WC
+  //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   // attributeChangedCallback(name, oldValue, newValue) {
 
   //   this.url = newValue;
