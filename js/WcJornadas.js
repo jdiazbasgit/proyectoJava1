@@ -257,6 +257,9 @@ class WcJornadas extends HTMLElement {
     }
 
     editarJornada(jornada) {
+        let modalEditar = this.shadowRoot.getElementById('divContainer2')
+        modalEditar.style.display = "flex";
+        modalEditar.style.alignItems = "center"
         //TODO Reccorrer los arrays de String de los días para rellenar los inputs
         var jornadaEnHoras = Object.assign({}, jornada);
         let arrayHorario = [];
@@ -271,16 +274,14 @@ class WcJornadas extends HTMLElement {
                 let contador = 0;
                 let inputHora;
                 arrayHorario.forEach(hora => {
-
+                    
                     inputHora = this.shadowRoot.querySelector(`#${key}${contador}`)
                     inputHora.value = hora;
                     contador++;
                 });
             }
         }
-        let modalEditar = this.shadowRoot.getElementById('divContainer2')
-        modalEditar.style.display = "flex";
-        modalEditar.style.alignItems = "center"
+        
 
     }
 
@@ -561,7 +562,7 @@ class WcJornadas extends HTMLElement {
         tablaEditar.appendChild(thead);
 
         let c = 0
-        for (var i = 0; i < 3; i++) {
+        for (var i = 1; i <= 3; i++) {
             let thEntrada = document.createElement("th");
             let thSalida = document.createElement("th");
 
