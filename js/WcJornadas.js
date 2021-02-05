@@ -236,13 +236,8 @@ class WcJornadas extends HTMLElement {
 
 
             btEditarJornada.addEventListener('click', () => {
-                let modalEditar = this.shadowRoot.getElementById('divContainer2')
-                modalEditar.style.display = "flex";
-                modalEditar.style.alignItems = "center"
-
-                let datosJornada = jornada;
-
-                this.editarJornada(datosJornada);
+                this.generarTablaEditarJornada()
+                this.editarJornada(jornada);
             });
 
             btBorrarJornada.innerHTML =
@@ -261,42 +256,31 @@ class WcJornadas extends HTMLElement {
 
     }
 
-    editarJornada(datosJornada) { 
+    editarJornada(jornada) {
         //TODO Reccorrer los arrays de String de los días para rellenar los inputs
-        let radios = this.shadowRoot.querySelectorAll('.radio');
-        let numTurnos = 0;
+        var jornadaEnHoras = Object.assign({}, jornada);
         let arrayHorario = [];
-        console.log(datosJornada);
         //Horario ordenado en pares entrada impares salida
-        for (const key in datosJornada) {
+        for (const key in jornadaEnHoras) {
 
             if (key != "id" && key != "descripcion" && key != "especial") {
 
-                datosJornada[key] = `${datosJornada[key]}`.split(/-|&/);
+                jornadaEnHoras[key] = `${jornada[key]}`.split(/-|&/)
+                arrayHorario = jornadaEnHoras[key]
+                console.log(arrayHorario);
+                let contador = 0;
+                let inputHora;
+                arrayHorario.forEach(hora => {
 
-                arrayHorario = datosJornada[key];
-
-                if (arrayHorario.length / 2 > numTurnos) {
-                    numTurnos = arrayHorario.length / 2;
-                }
+                    inputHora = this.shadowRoot.querySelector(`#${key}${contador}`)
+                    inputHora.value = hora;
+                    contador++;
+                });
             }
         }
-        console.log(datosJornada);
-
-        this.generarTablaEditarJornada(numTurnos);
-
-        for (let i = 0; i < radios.length; i++) {
-            radios[i].addEventListener('change', () => {
-                if (radios[i].value !== numTurnos) {
-                    numTurnos = radios[i].value
-                }
-                let thead = this.shadowRoot.getElementById("theadEditarJornada");
-                let tbody = this.shadowRoot.getElementById("tbodyEditarJornada");
-                thead.remove();
-                tbody.remove();
-                this.generarTablaEditarJornada(numTurnos);
-            })
-        }
+        let modalEditar = this.shadowRoot.getElementById('divContainer2')
+        modalEditar.style.display = "flex";
+        modalEditar.style.alignItems = "center"
 
     }
 
@@ -512,7 +496,7 @@ class WcJornadas extends HTMLElement {
 
     }
 
-    generarTablaEditarJornada(numTurnos) {
+    generarTablaEditarJornada() {
 
         //TODO Cambiar checked en función al numero de turnos
 
@@ -576,7 +560,8 @@ class WcJornadas extends HTMLElement {
         thead.appendChild(trHead);
         tablaEditar.appendChild(thead);
 
-        for (var i = 1; i <= numTurnos; i++) {
+        let c = 0
+        for (var i = 0; i < 3; i++) {
             let thEntrada = document.createElement("th");
             let thSalida = document.createElement("th");
 
@@ -628,20 +613,23 @@ class WcJornadas extends HTMLElement {
             inputSalidaDomingo.type = "time";
 
             //añadir id a los input
-            inputEntradaLunes.id = "l-e" + i;
-            inputEntradaMartes.id = "m-e" + i;
-            inputEntradaMiercoles.id = "x-e" + i;
-            inputEntradaJueves.id = "j-e" + i;
-            inputEntradaViernes.id = "v-e" + i;
-            inputEntradaSabado.id = "s-e" + i;
-            inputEntradaDomingo.id = "d-e" + i;
-            inputSalidaLunes.id = "l-s" + i;
-            inputSalidaMartes.id = "m-s" + i;
-            inputSalidaMiercoles.id = "x-s" + i;
-            inputSalidaJueves.id = "j-s" + i;
-            inputSalidaViernes.id = "v-s" + i;
-            inputSalidaSabado.id = "s-s" + i;
-            inputSalidaDomingo.id = "d-s" + i;
+            inputEntradaLunes.id = "lunes" + c;
+            inputEntradaMartes.id = "martes" + c;
+            inputEntradaMiercoles.id = "miercoles" + c;
+            inputEntradaJueves.id = "jueves" + c;
+            inputEntradaViernes.id = "viernes" + c;
+            inputEntradaSabado.id = "sabado" + c;
+            inputEntradaDomingo.id = "domingo" + c;
+            c++;
+
+            inputSalidaLunes.id = "lunes" + c;
+            inputSalidaMartes.id = "martes" + c;
+            inputSalidaMiercoles.id = "miercoles" + c;
+            inputSalidaJueves.id = "jueves" + c;
+            inputSalidaViernes.id = "viernes" + c;
+            inputSalidaSabado.id = "sabado" + c;
+            inputSalidaDomingo.id = "domingo" + c;
+            c++;
 
             tdEntradaDomingo.appendChild(inputEntradaDomingo);
             tdSalidaDomingo.appendChild(inputSalidaDomingo);
