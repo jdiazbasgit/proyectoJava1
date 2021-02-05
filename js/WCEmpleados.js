@@ -175,9 +175,15 @@ class WCEmpleados extends HTMLElement {
     let body = document.getElementsByTagName('body')
     body[0].style.backgroundColor = '#EEEE'
 
-    //Datos de JSON
-    let datosJSON = getDatos("datos/empleados.json")
 
+    // ******** SACAR LA URL DEL JSON **********
+    let link = document.querySelector('#urlJSON');
+    let URL = link.getAttribute('url');
+
+    //Datos de JSON
+    let datosJSON = getDatos(URL)
+
+    //onsole.log(datosJSON)
     //Array con Empleados
     let listaEmpleados
 
@@ -199,15 +205,15 @@ class WCEmpleados extends HTMLElement {
   }
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC
-  attributeChangedCallback(name, oldValue, newValue) {
+  // attributeChangedCallback(name, oldValue, newValue) {
 
-    this.url = newValue;
-  }
+  //   this.url = newValue;
+  // }
 
-  static get observedAttributes() {
+  // static get observedAttributes() {
 
-    return ["url"]
-  }
+  //   return ["url"]
+  // }
 
   //Fuera de "connectedCallback()"
 
