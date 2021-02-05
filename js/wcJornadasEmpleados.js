@@ -97,7 +97,7 @@ class WCJornadasEmpleados extends HTMLElement {
             let i = 1;
             jornadas.forEach(jornada => {
                 option[i] = document.createElement("option");
-                option[i].innerHTML = jornada.descripcion;
+                option[i].innerHTML = jornada.descripcion.capitalize();
                 option[i].value = jornada.id;
                 jornadaSelect.appendChild(option[i]);
                 if (empleado.jornada == jornada.id)
@@ -110,10 +110,10 @@ class WCJornadasEmpleados extends HTMLElement {
                 }
                 i++;
             });
-
+            
             icono.innerHTML = `<img src="img/svg/icono3amarillo.svg"/>`;
-            nombre.innerHTML = empleado.nombre;
-            apellidos.innerHTML = empleado.apellidos;
+            nombre.innerHTML = empleado.nombre.capitalize();
+            apellidos.innerHTML = empleado.apellidos.capitalize();
 
             jornada.appendChild(jornadaSelect);
 
@@ -165,4 +165,8 @@ function dynamicSort(property) {
         var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
         return result * sortOrder;
     }
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1).toLowerCase();
 }
