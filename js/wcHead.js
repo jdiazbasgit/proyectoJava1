@@ -108,27 +108,27 @@ class WcHead extends HTMLElement {
         div8.href = "#";
         div8.innerHTML = " Empleados";
         a1.appendChild(div8);
-        a1.id = "a1";
+        a1.id = "empleados";
         div10.innerHTML = "Jornadas";
         div10.id = "div10";
         div10.href = "#";
         a2.appendChild(div10);
-        a2.id = "a2";
+        a2.id = "jornadas";
         div12.innerHTML = "Jornadas/Empleados ";
         div12.id = "div12";
         div12.href = "#";
         a3.appendChild(div12);
-        a3.id = "a3";
+        a3.id = "jornadasempleados";
         div14.innerHTML = "Calendario ";
         div14.id = "div14";
         div14.href = "#";
         a4.appendChild(div14);
-        a4.id = "a4";
+        a4.id = "calendario";
         div16.innerHTML = "Calendario/Empleados";
         div16.id = "div16";
         div16.href = "#";
         a5.appendChild(div16);
-        a5.id = "a5";
+        a5.id = "calendarioempleados";
         div7.id = "div7";
         div9.id = "div9";
         div11.id = "div11";
@@ -185,11 +185,11 @@ class WcHead extends HTMLElement {
         shadowRoot.appendChild(div);
 
 
-        var a1 = shadowRoot.querySelector('#a1');
-        var a2 = shadowRoot.querySelector('#a2');
-        var a3 = shadowRoot.querySelector('#a3');
-        var a4 = shadowRoot.querySelector('#a4');
-        var a5 = shadowRoot.querySelector('#a5');
+        var a1 = shadowRoot.querySelector('#empleados');
+        var a2 = shadowRoot.querySelector('#jornadas');
+        var a3 = shadowRoot.querySelector('#jornadasempleados');
+        var a4 = shadowRoot.querySelector('#calendario');
+        var a5 = shadowRoot.querySelector('#calendarioempleados');
 
 
         this.cambiarColor(a1, div8, div7, 1);
@@ -315,31 +315,81 @@ class WcHead extends HTMLElement {
 
     cambiarColor(componente, componente1, componente2, numero) {
         componente.addEventListener("click", (() => {
-            for (let i = 1; i <= 5; i++) {
-                var icono = "#icono" + i + "b";
 
-                this.shadowRoot.querySelector(icono).src = "./img/svg/icono" + i + "blanco.svg";
+            if (contenido.hasChildNodes()) {
+                var children = contenido.childNodes;
+                for (var j = 0; j < children.length; j++) {
 
-                for (let i = 8; i <= 16; i = i + 2) {
-                    var a = this.shadowRoot.querySelector("#div" + i);
+                    for (let i = 1; i <= 5; i++) {
+                        var icono = "#icono" + i + "b";
 
-                    a.style.color = "#FFFFFF";
-                    for (let i = 7; i <= 15; i = i + 2){
-                        var e = this.shadowRoot.querySelector("#div" + i);
-                        e.style.borderLeft ="#FFFFFF 3px solid";
+                        this.shadowRoot.querySelector(icono).src = "./img/svg/icono" + i + "blanco.svg";
+
+                        for (let i = 8; i <= 16; i = i + 2) {
+                            var a = this.shadowRoot.querySelector("#div" + i);
+
+                            a.style.color = "#FFFFFF";
+
+                            for (let i = 7; i <= 15; i = i + 2) {
+                                var e = this.shadowRoot.querySelector("#div" + i);
+                                e.style.borderLeft = "#FFFFFF 3px solid";
+
+                            }
+
+                        }
 
                     }
 
+                    var icono = "#icono" + numero + "b";
+                    this.shadowRoot.querySelector(icono).src = "./img/svg/icono" + numero + "amarillo.svg";
+                    componente1.style.color = "#F2BB3F";
+                    componente2.style.borderLeft = "#F2BB3F 3px solid";
+
+                    contenido.removeChild(children[j]);
                 }
 
-}
-var icono = "#icono" + numero + "b";
-this.shadowRoot.querySelector(icono).src = "./img/svg/icono" + numero + "amarillo.svg";
-componente1.style.color = "#F2BB3F";
-componente2.style.borderLeft="#F2BB3F 3px solid";
+            }
+
+            if (componente.id === "empleados") {
+
+                let contenido = document.querySelector("#contenido");
+                let empleados = document.createElement("wc-empleados");
+                contenido.appendChild(empleados);
+
+            }
+
+            if (componente.id === "jornadas") {
+
+                let contenido = document.querySelector("#contenido");
+                let jornadas = document.createElement("Wc-Jornadas");
+                contenido.appendChild(jornadas);
+
+            }
+
+            if (componente.id === "jornadasempleados") {
+
+                let contenido = document.querySelector("#contenido");
+                let jornadasempleados = document.createElement("wc-jornadasempleados");
+                contenido.appendChild(jornadasempleados);
+            }
+
+            /*if (componente.id === "calendario") {
+
+                let contenido = document.querySelector("#contenido");
+                let empleados = document.createElement("wc-empleados");
+                contenido.appendChild(empleados);
+            }
+
+            if (componente.id === "calendarioempleados") {
+
+                let contenido = document.querySelector("#contenido");
+                let empleados = document.createElement("wc-empleados");
+                contenido.appendChild(empleados);
+            }
+            */
 
 
-            // Meter componente aquí con un AppendChild
+
         }));
 
 
