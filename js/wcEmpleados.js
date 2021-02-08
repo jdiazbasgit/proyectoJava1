@@ -51,7 +51,10 @@ class WCEmpleados extends HTMLElement {
           .my-text {
             margin-left: 8rem;
           }
-
+          .table td{
+            font-size: 0.85em;
+            vertical-align: middle;
+        }
           #tablaDatos {
             width: 90vw;
             margin: 0 auto;
@@ -167,7 +170,7 @@ class WCEmpleados extends HTMLElement {
             </div>
           </div>
           <div>
-            <table id="tablaDatos" class="table"></table>
+            <table id="tablaDatos"  class="table table-sm table-hover"></table>
           </div>
         `
 
@@ -177,11 +180,11 @@ class WCEmpleados extends HTMLElement {
 
 
     // **************     SACAR LA URL DEL JSON     ****************
-    let link = document.querySelector('#urlJSON');
-    let URL = link.getAttribute('url');
+    //let link = document.querySelector('#urlJSON');
+    //let URL = link.getAttribute('url');
 
     //Datos de JSON
-    let datosJSON = getDatos(URL)
+    let datosJSON = getDatos(this.url)
 
     //Array con Empleados
     let listaEmpleados
@@ -204,15 +207,16 @@ class WCEmpleados extends HTMLElement {
   }
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
-  // attributeChangedCallback(name, oldValue, newValue) {
+  attributeChangedCallback(name, oldValue, newValue) {
+   
+      this.url = newValue;
+    
+  }
 
-  //   this.url = newValue;
-  // }
+  static get observedAttributes() {
 
-  // static get observedAttributes() {
-
-  //   return ["url"]
-  // }
+    return ["url","id"]
+  }
 
   //Fuera de "connectedCallback()"
 
