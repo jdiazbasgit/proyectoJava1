@@ -11,16 +11,9 @@ class WCEmpleados extends HTMLElement {
 
     shadowRoot.innerHTML = `
         
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
-    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-    crossorigin="anonymous"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
-    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
     
     <style>
 
@@ -37,20 +30,29 @@ class WCEmpleados extends HTMLElement {
 
 
           .tituloEmpleados {
-            margin-left: 2.75rem !important;
+            margin-left: 3.5rem !important;
+            font-size: 1.75rem;
           }
 
           .my-bg {
             background-color: rgba(0, 0, 0, 0.7);
           }
 
-          .redondear {
-            border-radius: 20px;
+          .styleModal {
+            min-width: 40%;
+            margin: 0 auto;
+            padding: 2rem 3rem;
+            background-color: #EEEEEE;
+            border-radius: 30px;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            text-align: left;
           }
 
           .my-text {
-            margin-left: 8rem;
+            margin-left: 5rem;
           }
+
+
           .table td{
             font-size: 0.85em;
             vertical-align: middle;
@@ -68,38 +70,46 @@ class WCEmpleados extends HTMLElement {
             vertical-align: middle;
             padding: 0;
             padding-left: .5rem;
+           <!-- text-transform: lowercase; -->
           }
+
+         <!-- #tablaDatos tr > td:first-letter {
+            text-transform: uppercase;
+          } -->
 
           #tablaDatos thead{
             background-color: #324047;
             color: white;
-            font-size: 0.85em;
+            font-size: .95rem;
             vertical-align: middle;
             padding: 0;
         }
         
+
         #tablaDatos thead th:first-child{
           text-align: center;
-          padding: 0 1.5rem 0 2.5rem;
-          marging: 0 1rem 0 1rem;
+          padding-right: .5rem;
         }
 
-        #tablaDatos thead th {
-          text-align: left;
-          marging-bottom: 1rem;
-          
+        .bi-people-fill {
+          color: #F2BB3F;
+          font-size: 0.85rem;
+          padding-right: .5rem;
         }
+
         
         #tablaDatos tr > td:first-child {
           text-align: center;
-          padding: 0 1.5rem 0 2.5rem;
-          marging: 0 1rem 0 1rem;
           }
 
         #tablaDatos tbody > tr{
             background-color: #FFFFFF;
             text-align: left;
             marging-left: .5 rem;
+        }
+
+        #tablaDatos tr > td:last-child {
+          
         }
 
         #formEditar label {
@@ -112,54 +122,117 @@ class WCEmpleados extends HTMLElement {
           
         }
 
+        #botonAdd{
+          background-color: #F2BB3F;
+          width: 135px;
+          height: 30px;
+          border-radius: 30px 30px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-left: 1.3rem;
+          padding-right: 1.3rem;
+          padding-bottom: 7px;
+          border: 0;
+          outline: none !important;
+          font-weight: 600;
+          font-size: smaller;
+          vertical-align: middle;
+          margin-right: 3.5rem;
+      }
+      #botonAdd:hover{
+          background-color: #324047;
+      }
+      #botonAdd:hover i{
+          color: #F2BB3F;
+      } 
+      
+      #botonAdd > i{
+          font-size: medium;
+          color: white;
+      }
+
+      .btnGuardar{
+        background-color:#F2BB3F;
+        width: 135px;
+        height: 30px;
+        border-radius: 30px 30px;
+        border: 0;
+        outline: none !important;
+        font-weight: 600;
+        font-size: smaller;
+        vertical-align: middle;
+        line-height: 9px;
+        color: #FFFFFF;
+      }
+
+      .btnGuardar:hover{
+        background-color:#324047;
+      }
+
+    .btnCancelar{
+      background-color:#324047;
+      width: 135px;
+      height: 30px;
+      border-radius: 30px 30px;
+      border: 0;
+      outline: none !important;
+      font-weight: 600;
+      font-size: smaller;
+      vertical-align: middle;
+      line-height: 9px;
+      color: #FFFFFF;
+    }
+
+    .btnCancelar:hover{
+      background-color:#F2BB3F;
+    }
 
     </style>
 
 
         <div class="mybody">
           <div class="d-flex justify-content-between">
-            <h3 class="text text-dark mt-5 mb-4 ml-5 pl-4 tituloEmpleados">EMPLEADOS</h3>
+            <h3 class="text text-dark mt-5 mb-4 ml-5 pl-4 tituloEmpleados">Empleados</h3>
             <div>
               <div class="container">
 
       <!-- Button to Open the Modal -->
               <div class="mr-2 mt-5">
-                <button type="button" class="btn btn-warning text-light mr-5 pr-4 pl-4 redondear" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
+                <button type="button" class="btn btn-warning shadow-none text-light" data-toggle="modal" data-target="#myModalAddEmpleado" id="botonAdd">
                   AÑADIR
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle ml-4" viewBox="0 0 16 16">
-                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                      <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                  </svg>
+                  <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 </button>
               </div>
 
       <!-- The Modal -->
                 <div class="modal my-bg" id="myModalAddEmpleado">
                   <div class="modal-dialog">
-                    <div class="modal-content redondear">
+                    <div class="modal-content styleModal">
       
           <!-- Modal Header -->
                       <div class="modal-header">
-                        <h4 class="text-center my-text">NUEVO EMPLEADO</h4>
-                        <button type="button"  id ="cerrarModal" class="close" data-dismiss="modal">&times;</button>
+                        <h3 class="text-center my-text">Nuevo Empleado</h3>
                       </div>
         
           <!-- Modal body -->
                       <div class="modal-body">
                         <div class="form-group">
                           <form action="">
-                            <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre"><br>
-                            <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido"><br>
-                            <label>DNI</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI"><br>
-                            <label>Fecha de alta</label><input type="date"  class="form-control" required id="nuevoFecha"><br>
+                            <label>Nombre:</label> <input type="text" class="form-control" placeholder="Nombre" required id="nuevoNombre">
+                            <label>Apellidos:</label> <input type="text" class="form-control" placeholder="Apellidos" required id="nuevoApellido">
+                            <label>DNI:</label><input type="text" class="form-control" placeholder="DNI" required id="nuevoDNI">
+                            <label>Fecha de alta:</label><input type="date"  class="form-control" required id="nuevoFecha">
                           </form>
                         </div>
                       </div>
         
       <!-- Modal footer -->
-                      <div class="modal-footer d-flex justify-content-center">
-                        <button type="button" id="cerrarModal1" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
-                        <button type="button" id="addEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
+                      <div class="modal-footer d-flex justify-content-around">
+                        
+                          <button type="button" id="cerrarModal1" class="btn shadow-none btnCancelar text-light" data-dismiss="modal">CANCELAR</button>
+                          <button type="button" id="addEmpleado" class="btn shadow-none btnGuardar text-light" data-dismiss="modal">GUARDAR</button>
+                       
                       </div>
         
                     </div>
@@ -200,7 +273,6 @@ class WCEmpleados extends HTMLElement {
     let nuevoEmp
 
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
-    shadowRoot.querySelector("#cerrarModal").addEventListener("click", () => this.cerrarModalAddEmpleado())
     shadowRoot.querySelector("#cerrarModal1").addEventListener("click", () => this.cerrarModalAddEmpleado())
     shadowRoot.querySelector("#addEmpleado").addEventListener("click", () => this.addEmpleado(listaEmpleados, nuevoEmp))
 
@@ -208,14 +280,14 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-   
-      this.url = newValue;
-    
+
+    this.url = newValue;
+
   }
 
   static get observedAttributes() {
 
-    return ["url","id"]
+    return ["url", "id"]
   }
 
   //Fuera de "connectedCallback()"
@@ -228,21 +300,24 @@ class WCEmpleados extends HTMLElement {
 
     //********* HEAD TABLA*/
     let thead = document.createElement("thead");
+    thead.classList.add("thead");
 
     let thIcono = document.createElement("th")
-    //Se modificó  viewBox="0 -150 980 980" para adaptar el icóno a la tabla
-    thIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 -150 980 980"><defs><style>.cls-1{fill:#fff;}</style></defs>
-    <g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph"><circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
-    <circle class="cls-1" cx="256" cy="149.33" r="85.33"/><path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
-    <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
-    <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`
+    
+    //thIcono.innerHTML = `<i class="bi bi-people-fill"></i> `
+    thIcono.innerHTML = ""
     thead.appendChild(thIcono)
 
     propiedadesTablaEmpleados.forEach(propiedad => {
       if (propiedad !== "jornada") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        th.innerHTML = propiedad.toUpperCase();
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad); 
+
+        if (propiedad === "dni") {
+          th.innerHTML = propiedad.toUpperCase() 
+        }
+
         thead.appendChild(th);
       }
     })
@@ -255,7 +330,6 @@ class WCEmpleados extends HTMLElement {
     //********* BODY TABLA*/
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
-    //tbody.classList.add("pb-0");
     tbody.setAttribute("id", "tbody");
     tablaDatos.appendChild(tbody);
 
@@ -266,14 +340,8 @@ class WCEmpleados extends HTMLElement {
 
       let datoIcono = document.createElement("td");
       tr.appendChild(datoIcono);
-      //se tocó viewBox="0 -150 980 980" para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 980 980"><defs>
-      <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
-      <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
-      <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
-      <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
-      <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
-      <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`;
+      
+      datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in empleado) {
         if (empleado.fecha_baja == null) {
@@ -282,7 +350,12 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada") {
           let td = document.createElement("td");
-          td.innerHTML = empleado[propiedad];
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); 
+          
+          if (propiedad === "dni") {
+            td.innerHTML = empleado[propiedad].toUpperCase() 
+          }
+
           tr.appendChild(td);
         }
       }
@@ -293,20 +366,17 @@ class WCEmpleados extends HTMLElement {
       botonEditar.innerHTML =
         `<!-- Button to Open the Modal -->
             <button type="button" class="btn" data-toggle="modal" data-target="#myModalEditar" id="${empleado.identificador}">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-              </svg>
+              <i class="fa fa-pencil" aria-hidden="true"></i>
             </button>
                 
         <!-- The Modal -->
             <div class="modal my-bg" id="myModalEditar">
               <div class="modal-dialog">
-                <div class="modal-content redondear">
+                <div class="modal-content styleModal">
                       
           <!-- Modal Header -->
                   <div class="modal-header">
-                    <h4 class="modal-title my-text">MODIFICAR EMPLEADO</h4>
-                    <button type="button"  id ="cancelarEditar" class="close" data-dismiss="modal">&#10005</button>
+                    <h3 class="modal-title my-text">Modificar Empleado</h3>
                   </div>
                         
             <!-- Modal body -->
@@ -320,8 +390,8 @@ class WCEmpleados extends HTMLElement {
                         
             <!-- Modal footer -->
                   <div class="modal-footer d-flex justify-content-center">
-                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
-                    <button type="button"  id="guardarEditarEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn shadow-none btnCancelar text-light" data-dismiss="modal">CANCELAR</button>
+                    <button type="button"  id="guardarEditarEmpleado" class="btn shadow-none btnGuardar text-light" data-dismiss="modal">GUARDAR</button>
                   </div>
                         
                 </div>
@@ -337,8 +407,6 @@ class WCEmpleados extends HTMLElement {
         this.cargarFormuarioEditar(arrayEmpleados, empleado.identificador)
 
       })
-
-      this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
 
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
 
@@ -448,8 +516,10 @@ class WCEmpleados extends HTMLElement {
   }
 
   //Función para poner a primera letra en mayúscua
-  capitalizarPrimeraLetra(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  capitalizarPrimeraLetra(miString) {
+
+    return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
@@ -493,10 +563,12 @@ class WCEmpleados extends HTMLElement {
 
   addEmpleado(arrayEmpleados, nuevoEmpleado) {
 
-    //Obtener los valores de los inputs en mayúscula
-    let nombre = this.shadowRoot.querySelector("#nuevoNombre").value.toUpperCase();
-    let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value.toUpperCase();
-    let dni = this.shadowRoot.querySelector("#nuevoDNI").value;
+    //Obtener los valores de los inputs capitalizados
+    let nombre = this.shadowRoot.querySelector("#nuevoNombre").value;
+    nombre = this.capitalizarPrimeraLetra(nombre)
+    let apellidos = this.shadowRoot.querySelector("#nuevoApellido").value;
+    apellidos = this.capitalizarPrimeraLetra(apellidos)
+    let dni = this.shadowRoot.querySelector("#nuevoDNI").value.toUpperCase();
     let fechaAlta = this.shadowRoot.querySelector("#nuevoFecha").value;
 
     //En caso de no haber añadido nuevo empleado y darle a guardar, saca una alerta
@@ -525,13 +597,7 @@ class WCEmpleados extends HTMLElement {
       nuevaFila.appendChild(datoIcono);
 
       //se tocó  viewBox="0 -150 980 980" para hacer el icono más pequeño
-      datoIcono.innerHTML = `<svg id="Capa_1" data-name="Capa 1" xmlns="http://www.w3.org/2000/svg"  viewBox="0 -150 980 980"><defs>
-      <style>.cls-1{fill:#f2bb3f;}</style></defs><g id="_23-teamwork" data-name=" 23-teamwork"><g id="Glyph">
-      <circle class="cls-1" cx="405.33" cy="192" r="64"/><circle class="cls-1" cx="106.67" cy="192" r="64"/>
-      <circle class="cls-1" cx="256" cy="149.33" r="85.33"/>
-      <path class="cls-1" d="M469.33,277.33H393.87A84.79,84.79,0,0,1,405.33,320V469.33h85.34A21.33,21.33,0,0,0,512,448V320A42.67,42.67,0,0,0,469.33,277.33Z"/>
-      <path class="cls-1" d="M118.15,277.33H42.67A42.67,42.67,0,0,0,0,320V448a21.33,21.33,0,0,0,21.33,21.33h85.34V320A84.81,84.81,0,0,1,118.15,277.33Z"/>
-      <path class="cls-1" d="M320,234.67H298.67L256,362.67l-42.67-128H192a64,64,0,0,0-64,64v192A21.33,21.33,0,0,0,149.33,512H362.67A21.33,21.33,0,0,0,384,490.67v-192A64,64,0,0,0,320,234.67Z"/></g></g></svg>`;
+      datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
         if (nuevoEmpleado.fecha_baja == null) {
@@ -550,20 +616,17 @@ class WCEmpleados extends HTMLElement {
       botonEditar.innerHTML =
         `<!-- Button to Open the Modal -->
           <button type="button" class="btn" data-toggle="modal" data-target="#myModalEditar" id="${nuevoEmpleado.identificador}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-              <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-            </svg>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
           </button>
               
       <!-- The Modal -->
           <div class="modal my-bg" id="myModalEditar">
             <div class="modal-dialog">
-              <div class="modal-content redondear">
+              <div class="modal-content styleModal">
                     
         <!-- Modal Header -->
                 <div class="modal-header">
-                  <h4 class="modal-title my-text">MODIFICAR EMPLEADO</h4>
-                  <button type="button"  id ="cancelarEditar" class="close" data-dismiss="modal">&#10005</button>
+                  <h3 class="modal-title my-text">Modificar Empleado</h3>
                 </div>
                       
           <!-- Modal body -->
@@ -577,8 +640,8 @@ class WCEmpleados extends HTMLElement {
                       
           <!-- Modal footer -->
                 <div class="modal-footer d-flex justify-content-center ">
-                    <button type="button"  id ="cancelarEditarEmpleado" class="btn btn-dark mr-3 pl-5 pr-5 redondear" data-dismiss="modal">Cancelar</button>
-                    <button type="button" id="guardarEditarEmpleado" class="btn btn-warning ml-3 pl-5 pr-5 text-light redondear" data-dismiss="modal">Guardar</button>
+                    <button type="button"  id ="cancelarEditarEmpleado" class="btn shadow-none btnCancelar text-light" data-dismiss="modal">CANCELAR</button>
+                    <button type="button" id="guardarEditarEmpleado" class="btn shadow-none btnGuardar text-light" data-dismiss="modal">GUARDAR</button>
                 </div>
                       
               </div>
@@ -595,8 +658,6 @@ class WCEmpleados extends HTMLElement {
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
 
       })
-
-      this.shadowRoot.getElementById('cancelarEditar').addEventListener("click", () => this.cerrarModalEditar())
 
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
 
