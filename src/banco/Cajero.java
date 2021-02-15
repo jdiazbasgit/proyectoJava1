@@ -13,7 +13,7 @@ import java.util.List;
 
 import utilidades.Utilidades;
 
-public class Cajero {
+public class Cajero {//esto es una prueba de git
 
 	public static final String NO_CUENTA = "No hay ninguna cuenta seleccionada como activa";
 	private static List<CuentaCorriente> cuentas;
