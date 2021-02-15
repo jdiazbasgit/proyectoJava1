@@ -4,10 +4,12 @@ public class TransferenciaHilo extends Thread {
 
 	public static final String TEXTO_TRANSFERENCIA = "Transferencia recibida";
 	private int importe;
+	private CuentaCorriente cuenta;
 	
-	public TransferenciaHilo(int importe) {
+	public TransferenciaHilo(int importe,CuentaCorriente cuenta) {
 		
 		this.importe = importe;
+		this.cuenta=cuenta;
 	}
 	
 	@Override
@@ -22,7 +24,8 @@ public class TransferenciaHilo extends Thread {
 		
 		Cajero.getCuentaCorrienteDestino().setSaldo(Cajero.getCuentaCorrienteDestino().getSaldo() + importe);
 		Cajero.grabaMovimiento(getImporte(), TransferenciaHilo.TEXTO_TRANSFERENCIA, Cajero.getCuentaCorrienteDestino());
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
+		GestionarCuentas.grabaMovimientoBaseDatos("transferencia recibida", getImporte(), getCuenta().getId());
+		Cajero.cargacuentas();
 	}
 
 	public int getImporte() {
@@ -31,5 +34,13 @@ public class TransferenciaHilo extends Thread {
 
 	public void setImporte(int importe) {
 		this.importe = importe;
+	}
+
+	public CuentaCorriente getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(CuentaCorriente cuenta) {
+		this.cuenta = cuenta;
 	}
 }

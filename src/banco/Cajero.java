@@ -5,20 +5,26 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.mysql.jdbc.Driver;
+
 import utilidades.Utilidades;
 
-public class Cajero {//esto es una prueba de git
+public class Cajero {// esto es una prueba de git
 
 	public static final String NO_CUENTA = "No hay ninguna cuenta seleccionada como activa";
 	private static List<CuentaCorriente> cuentas;
 	private static CuentaCorriente cuentaCorrienteActiva;
-	private static CuentaCorriente cuentaCorrienteDestino;
+	public static CuentaCorriente cuentaCorrienteDestino;
 	private static ObjectInputStream input;
 
 	public static void main(String[] args) {
@@ -40,8 +46,26 @@ public class Cajero {//esto es una prueba de git
 		 * (SinSaldoException e) { System.err.println(e.getMessage()); }
 		 */
 
-		GestionarCuentas.leerCuentas(getCuentas());
+		// ----------GESTION DE BBDD---------
+		// 1.- REGISTRAR DRIVER
+		// opcion 1 registrar directamente de la clase
 
+		try {
+			DriverManager.registerDriver(new Driver());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// opcion 2 registrar cpom String
+
+		/*
+		 * try { Class.forName("com.mysql.jdbc.Driver"); } catch (ClassNotFoundException
+		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
+		 */
+
+		// GestionarCuentas.leerCuentas(getCuentas());
+		cargacuentas();
 		while (true) {
 			Cajero.pintarMenu();
 			String opcion = Utilidades.getTeclado(1);
@@ -83,6 +107,19 @@ public class Cajero {//esto es una prueba de git
 
 	}
 
+	public static void cargacuentas() {
+		if(Cajero.cuentas!=null)
+		Cajero.cuentas.clear();
+		Cajero.cuentas = GestionarCuentas.getCuentasBaseDatos();
+		for (CuentaCorriente cuenta : Cajero.getCuentas()) {
+			cuenta.setMovimientos(GestionarCuentas.getMovimientosDeCuentaBaseDatos(cuenta.getId()));
+			for (MovimientoCuenta movimiento : cuenta.getMovimientos()) {
+				cuenta.setSaldo(cuenta.getSaldo()+movimiento.getImporte());
+			}
+			
+		}
+	}
+
 	private static void seleccionarCuenta(String texto, int tipo) {
 		Cajero.listarCuentas();
 		System.out.println(texto);
@@ -93,11 +130,11 @@ public class Cajero {//esto es una prueba de git
 		else
 			Cajero.cuentaCorrienteDestino = buscarCuenta(nombre);
 
-		if (Cajero.cuentaCorrienteActiva == null) {
+		if (Cajero.cuentaCorrienteActiva == null && tipo==0) {
 			System.out.println("Cuenta corriente seleccionada no existe");
 			return;
 		}
-		if (Cajero.cuentaCorrienteDestino == null) {
+		if (Cajero.cuentaCorrienteDestino == null && tipo==1) {
 			System.out.println("Cuenta corriente seleccionada no existe");
 			return;
 		}
@@ -143,20 +180,19 @@ public class Cajero {//esto es una prueba de git
 			return;
 		}
 
-		CuentaCorriente cuentaCorriente = new CuentaCorriente(nombre, 0, 0);
+		CuentaCorriente cuentaCorriente = new CuentaCorriente(0, nombre, 0, 0);
 		Cajero.getCuentas().add(cuentaCorriente);
 		for (CuentaCorriente cuenta1 : getCuentas()) {
 			System.out.println(cuenta1.getNombreDecuenta());
 		}
-
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
-		System.out.println("Cuenta creada");
+		int resultado = GestionarCuentas.grabaCuentaBaseDatos(cuentaCorriente);
+		if (resultado == 1)
+			System.out.println("Cuenta creada");
+		else
+			System.err.println("Cuenta no creada");
+		cargacuentas();
 		pintarMenu();
-		
-		
-		ArrayList<String> textos=new ArrayList<>();
-;		
-		
+
 	}
 
 	public static void ingresar() {
@@ -170,25 +206,27 @@ public class Cajero {//esto es una prueba de git
 
 		Cajero.cuentaCorrienteActiva.setSaldo(Cajero.cuentaCorrienteActiva.getSaldo() + importeNumero);
 		System.out.println("Saldo actual: " + Cajero.cuentaCorrienteActiva.getSaldo());
-		grabaMovimiento(importeNumero, "ingreso", cuentaCorrienteActiva);
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
+		GestionarCuentas.grabaMovimientoBaseDatos("ingreso", importeNumero, Cajero.cuentaCorrienteActiva.getId());
+		cargacuentas();
 	}
 
 	public static void grabaMovimiento(int importe, String concepto, CuentaCorriente cuenta) {
 
-		MovimientoCuenta movimientoCuenta = new MovimientoCuenta(new GregorianCalendar(), concepto, importe);
-		if (cuenta == null) {
-			System.out.println(NO_CUENTA);
-			return;
-		}
-		if (cuenta.getMovimientos() == null)
-			cuenta.setMovimientos(new ArrayList<>());
-		cuenta.getMovimientos().add(movimientoCuenta);
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
+		
+		/*
+		 * MovimientoCuenta movimientoCuenta = new MovimientoCuenta(new
+		 * GregorianCalendar(), concepto, importe); if (cuenta == null) {
+		 * System.out.println(NO_CUENTA); return; } if (cuenta.getMovimientos() == null)
+		 * cuenta.setMovimientos(new ArrayList<>());
+		 * cuenta.getMovimientos().add(movimientoCuenta);
+		 * GestionarCuentas.grabarCuentas(Cajero.getCuentas());
+		 * GestionarCuentas.grabaMovimientoBaseDatos(concepto, importe, 16);
+		 */
+		 
 	}
 
 	public static void sacar() {
-		System.out.println("Escribe la cantidad a ingresar");
+		System.out.println("Escribe la cantidad a sacar");
 		String importe = Utilidades.getTeclado(0);
 		int importeNumero = Integer.parseInt(importe);
 
@@ -196,7 +234,8 @@ public class Cajero {//esto es una prueba de git
 		System.out.println("Saldo actual: " + Cajero.cuentaCorrienteActiva.getSaldo());
 
 		grabaMovimiento(importeNumero, "reintegro", cuentaCorrienteActiva);
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
+		GestionarCuentas.grabaMovimientoBaseDatos("reintegro", importeNumero*-1, Cajero.cuentaCorrienteActiva.getId());
+		cargacuentas();
 	}
 
 	public static void transferencia() {
@@ -208,12 +247,12 @@ public class Cajero {//esto es una prueba de git
 		int importeTransferencia = Integer.parseInt(importe);
 		Cajero.cuentaCorrienteActiva.setSaldo(Cajero.cuentaCorrienteActiva.getSaldo() - importeTransferencia);
 		System.out.println("Tu saldo actual es de: " + Cajero.cuentaCorrienteActiva.getSaldo());
-
-		grabaMovimiento(importeTransferencia, "Transferencia realizada", cuentaCorrienteActiva);
-
-		TransferenciaHilo hilo = new TransferenciaHilo(importeTransferencia);
+		
+		GestionarCuentas.grabaMovimientoBaseDatos("transferencia realizada", importeTransferencia*-1,
+				Cajero.cuentaCorrienteActiva.getId());
+		cargacuentas();
+		TransferenciaHilo hilo = new TransferenciaHilo(importeTransferencia, Cajero.cuentaCorrienteDestino);
 		hilo.start();
-		GestionarCuentas.grabarCuentas(Cajero.getCuentas());
 	}
 
 	public static void movimientos() {
@@ -223,9 +262,8 @@ public class Cajero {//esto es una prueba de git
 		}
 
 		for (MovimientoCuenta movimiento : Cajero.cuentaCorrienteActiva.getMovimientos()) {
-			Date fecha = new Date(movimiento.getFecha().getTimeInMillis());
-			System.out.println(new SimpleDateFormat("dd/MM/YY").format(fecha) + " - " + movimiento.getConcepto() + " - "
-					+ movimiento.getImporte());
+			System.out.println(new SimpleDateFormat("dd/MM/YY").format(movimiento.getFecha()) + " - "
+					+ movimiento.getConcepto() + " - " + movimiento.getImporte());
 		}
 
 	}
