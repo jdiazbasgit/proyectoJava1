@@ -8,10 +8,41 @@ class WCJornadasEmpleados extends HTMLElement {
         this.jornadas = new Array();
 
         let shadowRoot = this.attachShadow({ mode: "open" });
-
-        const template = document.querySelector("#plantilla3");
+        shadowRoot.innerHTML=`<style>
+        #divp{
+            background-color: rgb(236, 235, 235);
+        }
+        #tabla{
+            background-color: white;
+        }
+        #tabla td, #tabla th{
+            border-bottom: 5px solid rgb(236, 235, 235);
+        }
+        thead{
+            background-color: rgb(50,64,71);
+            color: white;
+        }
+        h3, tbody{
+            color: rgb(50,64,71); 
+        }            
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <div class="container-fluid col-md-11" id="divp">
+        <h3 class="pt-3 pb-3 font-weight-normal">JORNADAS/EMPLEADOS</h3>
+        <table class="table border-bottom-2" id="tabla">
+            <thead>
+                <tr>
+                    <th id="thNombre">NOMBRE</th>
+                    <th id="thApellidos">APELLIDOS</th>                    
+                    <th>JORNADA</th>                    
+                </tr>
+            </thead>
+            <!--<tbody id="tbody"></tbody>-->
+        </table>
+    </div>`
+        /*const template = document.querySelector("#plantilla3");
         const plantilla = template.content.cloneNode(true);
-        shadowRoot.appendChild(plantilla);
+        shadowRoot.appendChild(plantilla);*/
 
         let thNombre = shadowRoot.querySelector("#thNombre");
         let thApellidos = shadowRoot.querySelector("#thApellidos");

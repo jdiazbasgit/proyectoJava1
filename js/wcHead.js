@@ -354,6 +354,10 @@ class WcHead extends HTMLElement {
 
                 let contenido = document.querySelector("#contenido");
                 let empleados = document.createElement("wc-empleados");
+             
+                //empleados.url="datos/empleados.json";
+                empleados.setAttribute("url","datos/empleados.json");
+                empleados.id="urlJSON"
                 contenido.appendChild(empleados);
 
             }
@@ -370,6 +374,8 @@ class WcHead extends HTMLElement {
 
                 let contenido = document.querySelector("#contenido");
                 let jornadasempleados = document.createElement("wc-jornadasempleados");
+                jornadasempleados.setAttribute("url","datos/empleados.json");
+                jornadasempleados.setAttribute("url2","datos/jornadas.json");
                 contenido.appendChild(jornadasempleados);
             }
 
