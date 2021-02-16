@@ -45,7 +45,7 @@ public class GestionarCuentasDao {
 		try {
 			Properties properties= new Properties();
 			properties.load(new FileInputStream("bd.properties"));
-			return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/banco", properties.getProperty("usuario"), properties.getProperty("clave"));
+			return DriverManager.getConnection("jdbc:mysql://"+properties.getProperty("servidor")+":3306/banco", properties.getProperty("usuario"), properties.getProperty("clave"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
