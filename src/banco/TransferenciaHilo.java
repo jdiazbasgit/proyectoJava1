@@ -17,13 +17,11 @@ public class TransferenciaHilo extends Thread {
 		
 		try {
 			Thread.sleep(120000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		Cajero.getCuentaCorrienteDestino().setSaldo(Cajero.getCuentaCorrienteDestino().getSaldo() + importe);
-		//Cajero.grabaMovimiento(getImporte(), TransferenciaHilo.TEXTO_TRANSFERENCIA, Cajero.getCuentaCorrienteDestino());
 		GestionarCuentasDao.grabaMovimientoBaseDatos("transferencia recibida", getImporte(), getCuenta().getId());
 		Cajero.cargacuentas();
 	}

@@ -5,8 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Utilidades {
-
-	//tipo 0 numero, tipo 1 texto
+	
+	private Utilidades() {
+	}
+	
 	public static String getTeclado(int tipo) {
 		String salida = null;
 		boolean fin = false;
@@ -15,11 +17,10 @@ public class Utilidades {
 			try {
 				salida = bufferedReader.readLine();
 				if (tipo == 0) {
-					int salidaNumero = Integer.parseInt(salida);
+					Integer.parseInt(salida);
 				}
 				fin=true;
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (NumberFormatException e) {
 				System.out.println("no has introducido un número");

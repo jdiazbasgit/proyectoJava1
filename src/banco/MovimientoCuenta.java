@@ -2,7 +2,6 @@ package banco;
 
 import java.io.Serializable;
 import java.sql.Date;
-import java.util.GregorianCalendar;
 
 public class MovimientoCuenta implements Serializable {
 

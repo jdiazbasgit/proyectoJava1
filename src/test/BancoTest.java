@@ -6,12 +6,12 @@ import static org.junit.Assert.assertNotNull;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.Random;
 
 import org.junit.Test;
 
@@ -22,25 +22,19 @@ import banco.MovimientoCuenta;
 public class BancoTest {
 	
 	
-	@Test //Annotations
+	@Test 
 	public void crearCuentaTest() {
-		//creamos cuenta
-		CuentaCorriente cuenta= new CuentaCorriente(0,String.valueOf((int)(Math.random()*1000000000)),0,0);
+		CuentaCorriente cuenta= new CuentaCorriente(0,String.valueOf(new Random().nextInt()*1000000000),0,0);
 		assertNotNull(cuenta);
-		//grabamos cuenta en base de datos
 		int resultado= GestionarCuentasDao.grabaCuentaBaseDatos(cuenta);
 		assertNotEquals(0, resultado);
-		//creamos movimiento
 		MovimientoCuenta movimientoCuenta= new MovimientoCuenta(0, new Date(new GregorianCalendar().getTimeInMillis()), "prueba", 0, buscarUltimaCuenta(cuenta.getNombreDecuenta()));
 		assertNotNull(movimientoCuenta);
-		//grabamos movimiento en base de datos
 		int resultadoGrabar=GestionarCuentasDao.grabaMovimientoBaseDatos(movimientoCuenta.getConcepto(),
 				movimientoCuenta.getImporte(), movimientoCuenta.getCuentaId());
 		assertNotEquals(0, resultadoGrabar);
-		//borramos movimiento de base de datos
 		int resultado1=GestionarCuentasDao.borrarMovimiento(buscarUltimoMovimiento());
 		assertEquals(1, resultado1);
-		//borramos cuenta de bae de datos
 		int resultado2=GestionarCuentasDao.borrarCuenta(buscarUltimaCuenta(cuenta.getNombreDecuenta()));
 		assertEquals(1, resultado2);
 	}
@@ -61,6 +55,11 @@ public class BancoTest {
 		
 	}
 	
+	@Test
+	public void profeTest() {
+		
+		
+	}
 	
 
 	public int buscarUltimaCuenta(String nombre) {
@@ -68,13 +67,12 @@ public class BancoTest {
 		
 		Connection conexion=GestionarCuentasDao.getConexion();
 		String sql="select id from cuentas where nombre='"+nombre+"'";
-		try {
-			Statement statement= conexion.createStatement();
-			ResultSet resultset=statement.executeQuery(sql);
+		try (Statement statement= conexion.createStatement();
+				ResultSet resultset=statement.executeQuery(sql);){
+			
 			if(resultset.next())
 				salida=resultset.getInt(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		finally {
@@ -89,13 +87,13 @@ public class BancoTest {
 		
 		Connection conexion=GestionarCuentasDao.getConexion();
 		String sql="select id from movimientos order by id desc";
-		try {
-			Statement statement= conexion.createStatement();
-			ResultSet resultset=statement.executeQuery(sql);
+		try(Statement statement= conexion.createStatement();
+				ResultSet resultset=statement.executeQuery(sql);) {
+			
+			
 			if(resultset.next())
 				salida=resultset.getInt(1);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally {
 			GestionarCuentasDao.desconectar(conexion);

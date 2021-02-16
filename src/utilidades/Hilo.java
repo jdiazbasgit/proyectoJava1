@@ -8,25 +8,26 @@ public class Hilo extends Thread{
 		this.nombre = nombre;
 	}
 	
+	@Override
 	public void run() {
-		
-		try {
 			ejecutar(getNombre());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-			
-		
 	}
 	
-	public void ejecutar(String nombre) throws InterruptedException {
+	public void ejecutar(String nombre)  {
 		
-		Thread.sleep(10000);
+		try {
+			Thread.sleep(10000);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		for (int i = 0; i < nombre.length(); i++) {
 			System.out.println(nombre.substring(0,i));
-			Thread.sleep(1000);
+			try {
+				Thread.sleep(1000);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		
 		}
 	}

@@ -1,19 +1,12 @@
+
 package banco;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.mysql.jdbc.Driver;
 
@@ -22,50 +15,23 @@ import utilidades.Utilidades;
 public class Cajero {// esto es una prueba de git
 
 	public static final String NO_CUENTA = "No hay ninguna cuenta seleccionada como activa";
+	public static final String SALDO_ACTUAL = "Saldo Actual";
+
 	private static List<CuentaCorriente> cuentas;
 	private static CuentaCorriente cuentaCorrienteActiva;
 	public static CuentaCorriente cuentaCorrienteDestino;
-	private static ObjectInputStream input;
-
+	private static Logger logger= Logger.getLogger("banco.Cajero");
 	public static void main(String[] args) {
 
-		// CuentaCorriente cuentaOrigen = new CuentaCorriente("Cuenta1", 0, 0);
-		// CuentaCorriente cuentaDestino = new CuentaCorriente("Cuenta2", 0, 0);
-		// CuentaCorriente cuentaDestino2 = new CuentaCorriente("Cuenta3", 0, 0);
-
-		// cuentaOrigen.setNombreDecuenta("Cuenta1");
-		// cuentaDestino.setNombreDecuenta("Cuenta2");
-		// cuentaDestino2.setNombreDecuenta("Cuenta3");
-
-		/*
-		 * cuentaOrigen.setCredito(5000); cuentaOrigen.ingresarDinero(1000000);
-		 * cuentaOrigen.ingresarDinero(325000); cuentaDestino.ingresarDinero(100000);
-		 * try { cuentaOrigen.transferencia(1000000, cuentaDestino); } catch
-		 * (SinSaldoException e) { System.err.println(e.getMessage()); } try {
-		 * cuentaDestino.transferencia(200000, cuentaDestino2); } catch
-		 * (SinSaldoException e) { System.err.println(e.getMessage()); }
-		 */
-
-		// ----------GESTION DE BBDD---------
-		// 1.- REGISTRAR DRIVER
-		// opcion 1 registrar directamente de la clase
+		
 
 		try {
 			DriverManager.registerDriver(new Driver());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		// opcion 2 registrar cpom String
-
-		/*
-		 * try { Class.forName("com.mysql.jdbc.Driver"); } catch (ClassNotFoundException
-		 * e) { // TODO Auto-generated catch block e.printStackTrace(); }
-		 */
-
-		// GestionarCuentas.leerCuentas(getCuentas());
-		cargacuentas();
+		
 		while (true) {
 			Cajero.pintarMenu();
 			String opcion = Utilidades.getTeclado(1);
@@ -136,7 +102,7 @@ public class Cajero {// esto es una prueba de git
 			return;
 		}
 
-		System.out.println("Saldo actual: " + Cajero.cuentaCorrienteActiva.getSaldo());
+		System.out.println(Cajero.SALDO_ACTUAL + Cajero.cuentaCorrienteActiva.getSaldo());
 
 	}
 
@@ -167,8 +133,8 @@ public class Cajero {// esto es una prueba de git
 
 	private static void crearCuenta() {
 		if (Cajero.getCuentas() == null)
-			Cajero.setCuentas(new ArrayList<CuentaCorriente>());
-		System.out.println("Escribe nombre de cuenta:");
+			Cajero.setCuentas(new ArrayList<>());
+		logger.info("Escribe nombre de cuenta:");
 
 		String nombre = Utilidades.getTeclado(1);
 		CuentaCorriente cuenta = buscarCuenta(nombre);
@@ -207,23 +173,7 @@ public class Cajero {// esto es una prueba de git
 		cargacuentas();
 	}
 
-	/*
-	 * public static void grabaMovimiento(int importe, String concepto,
-	 * CuentaCorriente cuenta) {
-	 * 
-	 * 
-	 * 
-	 * MovimientoCuenta movimientoCuenta = new MovimientoCuenta(new
-	 * GregorianCalendar(), concepto, importe); if (cuenta == null) {
-	 * System.out.println(NO_CUENTA); return; } if (cuenta.getMovimientos() == null)
-	 * cuenta.setMovimientos(new ArrayList<>());
-	 * cuenta.getMovimientos().add(movimientoCuenta);
-	 * GestionarCuentas.grabarCuentas(Cajero.getCuentas());
-	 * GestionarCuentas.grabaMovimientoBaseDatos(concepto, importe, 16);
-	 * 
-	 * 
-	 * }
-	 */
+	
 
 	public static void sacar() {
 		System.out.println("Escribe la cantidad a sacar");
@@ -233,7 +183,6 @@ public class Cajero {// esto es una prueba de git
 		Cajero.cuentaCorrienteActiva.setSaldo(Cajero.cuentaCorrienteActiva.getSaldo() - importeNumero);
 		System.out.println("Saldo actual: " + Cajero.cuentaCorrienteActiva.getSaldo());
 
-		//grabaMovimiento(importeNumero, "reintegro", cuentaCorrienteActiva);
 		GestionarCuentasDao.grabaMovimientoBaseDatos("reintegro", importeNumero * -1,
 				Cajero.cuentaCorrienteActiva.getId());
 		cargacuentas();
@@ -241,8 +190,6 @@ public class Cajero {// esto es una prueba de git
 
 	public static void transferencia() {
 		seleccionarCuenta("Selecciona cuenta destino", 1);
-		// String nombre = Utilidades.getTeclado(1);
-		// Cajero.cuentaCorrienteDestino = buscarCuenta(nombre);
 		System.out.println("Escribe el importe:");
 		String importe = Utilidades.getTeclado(0);
 		int importeTransferencia = Integer.parseInt(importe);
@@ -261,33 +208,15 @@ public class Cajero {// esto es una prueba de git
 			System.out.println("No hay cuenta seleccionada");
 			return;
 		}
-
+		System.err.println(Cajero.getCuentaCorrienteActiva().getMovimientos().size());
 		for (MovimientoCuenta movimiento : Cajero.cuentaCorrienteActiva.getMovimientos()) {
-			System.out.println(new SimpleDateFormat("dd/MM/YY").format(movimiento.getFecha()) + " - "
+			System.out.println(new SimpleDateFormat("dd/MM/yy").format(movimiento.getFecha()) + " - "
 					+ movimiento.getConcepto() + " - " + movimiento.getImporte());
 		}
 
 	}
 
-	/*
-	 * public static void grabarCuentas() { try (ObjectOutputStream
-	 * objectOutputStream = new ObjectOutputStream(new
-	 * FileOutputStream("cuentas.banco"))) {
-	 * objectOutputStream.writeObject(getCuentas()); objectOutputStream.flush();
-	 * 
-	 * } catch (Exception e) { System.out.println(e.getMessage());
-	 * e.printStackTrace(); } }
-	 */
-
-	/*
-	 * @SuppressWarnings("unchecked") public static void leerCuentas() { try
-	 * (ObjectInputStream objectInputStream = new ObjectInputStream(new
-	 * FileInputStream("cuentas.banco"))) { setCuentas((List<CuentaCorriente>)
-	 * input.readObject());
-	 * 
-	 * } catch (Exception e) { System.out.println("No existe ninguna cuenta"); } }
-	 */
-
+	
 	public static void pintarMenu() {
 		System.out.println("MENÚ DE OPCIONES");
 		System.out.println("============");
@@ -327,4 +256,5 @@ public class Cajero {// esto es una prueba de git
 		Cajero.cuentaCorrienteDestino = cuentaCorrienteDestino;
 	}
 
+	
 }

@@ -1,20 +1,16 @@
 package banco;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class CuentaCorriente implements Serializable  {
 	
-	//definimos las propiedades
 	private int id;
 	private int saldo;
 	private int credito;
 	private String nombreDecuenta;
 	private List <MovimientoCuenta> movimientos;
 	
-	//Constructores
 	public CuentaCorriente(int id,String nombreDeCuenta, int credito, int saldo) {
 		this.id=id;
 		this.nombreDecuenta = nombreDeCuenta;
@@ -26,34 +22,6 @@ public class CuentaCorriente implements Serializable  {
 		
 	}
 	
-	//metodos de negocio
-	
-	/*
-	 * public void ingresarDinero(int dinero) { this.setSaldo(this.getSaldo() +
-	 * dinero); imprimirSaldo(); // ponerMovimiento("Ingreso", dinero);
-	 * 
-	 * }
-	 * 
-	 * public void ponerMovimiento(String concepto, int importe,int cuentaId) { if
-	 * (getMovimientos() == null); setMovimientos(new ArrayList<>());
-	 * //getMovimientos().add(new MovimientoCuenta( null,concepto,
-	 * importe,cuentaId)); }
-	 * 
-	 * public void retirarDinero(int dinero) throws SinSaldoException { if (dinero
-	 * <= getSaldo() + getCredito()) { this.setSaldo(this.getSaldo() - dinero);
-	 * imprimirSaldo(); } else { throw new
-	 * SinSaldoException("No hay saldo en tu cuenta");
-	 * 
-	 * //System.err.println("No hay suficiente saldo"); } }
-	 * 
-	 * public void imprimirSaldo() { if (getSaldo() >= 0) {
-	 * System.out.println(getNombreDecuenta() + ":" + getSaldo()); } else {
-	 * System.err.println(getNombreDecuenta() + ":" + getSaldo()); } }
-	 * 
-	 * public void transferencia(int dinero, CuentaCorriente cuentaDestino) throws
-	 * SinSaldoException { this.retirarDinero(dinero); //temporizador
-	 * cuentaDestino.ingresarDinero(dinero); }
-	 */
 	
 	
 	public int getSaldo() {
