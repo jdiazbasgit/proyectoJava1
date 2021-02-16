@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 
 public class GestionarCuentasDao {
@@ -42,8 +43,10 @@ public class GestionarCuentasDao {
 	public static Connection getConexion() {
 
 		try {
-			return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/banco", "generation", "Cursocurso1;");
-		} catch (SQLException e) {
+			Properties properties= new Properties();
+			properties.load(new FileInputStream("bd.properties"));
+			return DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/banco", properties.getProperty("usuario"), properties.getProperty("clave"));
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
