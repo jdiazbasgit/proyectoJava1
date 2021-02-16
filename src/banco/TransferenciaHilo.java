@@ -23,8 +23,8 @@ public class TransferenciaHilo extends Thread {
 		}
 		
 		Cajero.getCuentaCorrienteDestino().setSaldo(Cajero.getCuentaCorrienteDestino().getSaldo() + importe);
-		Cajero.grabaMovimiento(getImporte(), TransferenciaHilo.TEXTO_TRANSFERENCIA, Cajero.getCuentaCorrienteDestino());
-		GestionarCuentas.grabaMovimientoBaseDatos("transferencia recibida", getImporte(), getCuenta().getId());
+		//Cajero.grabaMovimiento(getImporte(), TransferenciaHilo.TEXTO_TRANSFERENCIA, Cajero.getCuentaCorrienteDestino());
+		GestionarCuentasDao.grabaMovimientoBaseDatos("transferencia recibida", getImporte(), getCuenta().getId());
 		Cajero.cargacuentas();
 	}
 

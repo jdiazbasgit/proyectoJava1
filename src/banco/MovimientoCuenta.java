@@ -10,6 +10,7 @@ public class MovimientoCuenta implements Serializable {
 	private String concepto;
 	private Date fecha;
 	private int importe;
+	private int cuentaId;
 	
 	public MovimientoCuenta(int id,Date fecha, String concepto, int importe, int cuentaId) {
 		
@@ -17,6 +18,7 @@ public class MovimientoCuenta implements Serializable {
 		this.setFecha(fecha);
 		this.concepto = concepto;
 		this.importe = importe;
+		this.cuentaId=cuentaId;
 	}
 	
 	public String getConcepto() {
@@ -50,6 +52,14 @@ public class MovimientoCuenta implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public int getCuentaId() {
+		return cuentaId;
+	}
+
+	public void setCuentaId(int cuentaId) {
+		this.cuentaId = cuentaId;
 	}
 	
 }
