@@ -3,6 +3,7 @@ package test;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -15,6 +16,7 @@ import java.util.Random;
 
 import org.junit.Test;
 
+import banco.Cajero;
 import banco.CuentaCorriente;
 import banco.GestionarCuentasDao;
 import banco.MovimientoCuenta;
@@ -93,6 +95,31 @@ public class BancoTest {
 		assertNotNull(excepcion);
 		SinSaldoException excepcion2 = new SinSaldoException("Error sin saldo");
 		assertEquals("Error sin saldo", excepcion2.getMessage());
+	}
+	
+	@Test
+	public void miguelListarCuentas() {
+		assertNotNull(GestionarCuentasDao.getCuentasBaseDatos());
+	}
+	
+	@Test
+	public void miguelModificarCuenta() {
+		CuentaCorriente cuenta = new CuentaCorriente(60, "Laura", 0, 35000);
+		int salida = 0;
+		assertEquals(salida, GestionarCuentasDao.modificarCuentaBaseDatos(cuenta));
+	}
+	
+	@Test
+	public void miguelListadoCuentas() {
+		int cuentaId = 2;
+		assertNotNull(GestionarCuentasDao.getMovimientosDeCuentaBaseDatos(cuentaId));
+		assertEquals(6, GestionarCuentasDao.getMovimientosDeCuentaBaseDatos(cuentaId).size());
+	}
+	
+	@Test
+	public void miguelListadoCuentasVoid() {
+		int cuentaIdNoExistente = 0;
+		assertEquals(0, GestionarCuentasDao.getMovimientosDeCuentaBaseDatos(cuentaIdNoExistente).size());
 	}
 
 	public int buscarUltimaCuenta(String nombre) {
