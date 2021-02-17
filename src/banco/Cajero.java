@@ -74,6 +74,7 @@ public class Cajero {// esto es una prueba de git
 	}
 
 	public static void cargacuentas() {
+		
 		if (Cajero.cuentas != null)
 			Cajero.cuentas.clear();
 		Cajero.cuentas = GestionarCuentasDao.getCuentasBaseDatos();

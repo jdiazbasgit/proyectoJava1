@@ -480,7 +480,7 @@ class WCEmpleados extends HTMLElement {
     if (pastBody) {
       tablaDatos.removeChild(pastBody)
       tablaDatos.removeChild(pastThead)
-    };
+    }
 
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
