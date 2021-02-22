@@ -3,6 +3,7 @@ package banco;
 import java.io.Serializable;
 import java.sql.Date;
 
+@SuppressWarnings("serial")
 public class MovimientoCuenta implements Serializable {
 
 	private int id;

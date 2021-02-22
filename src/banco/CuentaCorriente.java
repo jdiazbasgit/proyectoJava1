@@ -3,6 +3,7 @@ package banco;
 import java.io.Serializable;
 import java.util.List;
 
+@SuppressWarnings("serial")
 public class CuentaCorriente implements Serializable  {
 	
 	private int id;

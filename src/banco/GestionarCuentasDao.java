@@ -11,15 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import com.mysql.jdbc.Driver;
+
 public class GestionarCuentasDao {
 
 	private GestionarCuentasDao() {
 
 	}
 
-	public static Connection getConexion() {
+	public static Connection getConexion(String ruta) {
 
-		try(FileInputStream fileInputStream=new FileInputStream("bd.properties")) {
+		try(FileInputStream fileInputStream=new FileInputStream(ruta+"bd.properties")) {
+			DriverManager.registerDriver(new Driver());
 			Properties properties = new Properties();
 			properties.load(fileInputStream);
 			return DriverManager.getConnection("jdbc:mysql://" + properties.getProperty("servidor") + ":3306/banco",
@@ -39,10 +42,10 @@ public class GestionarCuentasDao {
 		}
 	}
 
-	public static int grabaCuentaBaseDatos(CuentaCorriente cuenta) {
+	public static int grabaCuentaBaseDatos(CuentaCorriente cuenta,String ruta) {
 
 		int salida = 0;
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		if (conexion != null)
 			try (Statement statement = conexion.createStatement();) {
 				salida = statement.executeUpdate("INSERT INTO CUENTAS (NOMBRE,SALDO,CREDITO) " + "VALUES ('"
@@ -58,11 +61,11 @@ public class GestionarCuentasDao {
 		return salida;
 	}
 
-	public static int modificarCuentaBaseDatos(CuentaCorriente cuenta) {
+	public static int modificarCuentaBaseDatos(CuentaCorriente cuenta,String ruta) {
 		int salida = 0;
 
 		String sql = "update cuentas set nombre=?, saldo=?, credito=? where id=?";
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		if (conexion != null)
 			try (PreparedStatement preparedStatement = conexion.prepareStatement(sql);) {
 
@@ -79,10 +82,10 @@ public class GestionarCuentasDao {
 		return salida;
 	}
 
-	public static List<CuentaCorriente> getCuentasBaseDatos() {
+	public static List<CuentaCorriente> getCuentasBaseDatos(String ruta) {
 
 		List<CuentaCorriente> cuentas = new ArrayList<>();
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		if (conexion != null)
 			try (PreparedStatement preparedStatement = conexion
 					.prepareStatement("select id,nombre,credito,saldo from cuentas");
@@ -101,9 +104,9 @@ public class GestionarCuentasDao {
 		return cuentas;
 	}
 
-	public static int borrarCuenta(int idCuenta) {
+	public static int borrarCuenta(int idCuenta,String ruta) {
 		int salida = 0;
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		String sql = "delete from cuentas where id=?";
 		if (conexion != null)
 			try (PreparedStatement preparedStatement = conexion.prepareStatement(sql);) {
@@ -120,11 +123,11 @@ public class GestionarCuentasDao {
 
 	}
 
-	public static int borrarMovimiento(int idMovimiento) {
+	public static int borrarMovimiento(int idMovimiento,String ruta) {
 		int salida = 0;
 
 		String sql = "delete from movimientos where id=?";
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		if (conexion != null)
 			try(PreparedStatement preparedStatement = conexion.prepareStatement(sql);) {
 				
@@ -139,11 +142,11 @@ public class GestionarCuentasDao {
 
 	}
 
-	public static List<MovimientoCuenta> getMovimientosDeCuentaBaseDatos(int cuentaId) {
+	public static List<MovimientoCuenta> getMovimientosDeCuentaBaseDatos(int cuentaId,String ruta) {
 		List<MovimientoCuenta> movimientos = new ArrayList<>();
 
 		String sql = "select id,fecha,concepto,importe,cuenta_id from movimientos where cuenta_id=?";
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 		if (conexion != null)
 			try (PreparedStatement preparedStatement = conexion.prepareStatement(sql);) {
 				preparedStatement.setInt(1, cuentaId);
@@ -162,10 +165,10 @@ public class GestionarCuentasDao {
 		return movimientos;
 	}
 
-	public static int grabaMovimientoBaseDatos(String concepto, int importe, int cuentaId) {
+	public static int grabaMovimientoBaseDatos(String concepto, int importe, int cuentaId,String ruta) {
 
 		int salida = 0;
-		Connection conexion = GestionarCuentasDao.getConexion();
+		Connection conexion = GestionarCuentasDao.getConexion(ruta);
 
 		if (conexion != null)
 			try (Statement statement = conexion.createStatement();) {
