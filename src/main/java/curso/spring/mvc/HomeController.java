@@ -1,6 +1,6 @@
 package curso.spring.mvc;
 
-import java.text.DateFormat;
+
 import java.util.Date;
 import java.util.Locale;
 
@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import curso.spring.mvc.beans.Login;
 
+import cu
 /**
  * Handles requests for the application home page.
  */
