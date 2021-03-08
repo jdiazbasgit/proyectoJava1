@@ -5,6 +5,7 @@ DROP SCHEMA IF EXISTS `accesosCurso`;
 create schema accesosCurso;
 
 
+use accesosCurso;
 
 -- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
