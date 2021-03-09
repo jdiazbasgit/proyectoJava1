@@ -90,12 +90,14 @@ public class Employee {
 		this.fecha_baja = fecha_baja;
 	}
 
-	public Day getJornada() {
+	public Day getDay() {
 		return day;
 	}
 
-	public void setJornada(Day jornada) {
-		this.day = jornada;
+	public void setDay(Day day) {
+		this.day = day;
 	}
+
+	
 
 }
