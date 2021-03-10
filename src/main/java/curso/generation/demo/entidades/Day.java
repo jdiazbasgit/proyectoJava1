@@ -20,9 +20,13 @@ public class Day {
 	
 	@Column
 	private String martes,miercoles,jueves,viernes,sabado,domingo,descripcion;
+	
 	@Column
 	private boolean especial;
 
+	
+	
+	
 	public int getId() {
 		return id;
 	}
