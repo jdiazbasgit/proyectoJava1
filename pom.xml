@@ -12,7 +12,7 @@
 	<groupId>curso.generation</groupId>
 	<artifactId>demoBoot</artifactId>
 	<version>1.0</version>
-	<name>accesos</name>
+	<name>accesoWilly</name>
 	<packaging>war</packaging>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -64,18 +64,11 @@
 	</dependencies>
 
 	<build>
-		<finalName>accesos</finalName>
+	<finalName>accesoWilly</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
