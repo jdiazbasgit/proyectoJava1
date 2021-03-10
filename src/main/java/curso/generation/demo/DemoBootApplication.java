@@ -10,7 +10,7 @@ import curso.generation.demo.entidades.Day;
 import curso.generation.demo.repositorios.DaysCRUDRepository;
 
 @SpringBootApplication
-public class DemoBootApplication extends SpringBootServletInitializer {
+public class DemoBootApplication extends SpringBootServletInitializer{
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoBootApplication.class, args);
