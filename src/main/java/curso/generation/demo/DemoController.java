@@ -7,12 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import curso.generation.demo.entidades.Day;
+import curso.generation.demo.entidades.Employee;
 import curso.generation.demo.repositorios.DaysCRUDRepository;
+import curso.generation.demo.repositorios.EmployeesCRUDRepository;
 
 @Controller
 public class DemoController {
 	
-	
+//DAYS
 	@Autowired
 	private DaysCRUDRepository repository;
 	
@@ -38,4 +40,16 @@ public class DemoController {
 		this.repository = repository;
 	}
 
+	
+//Employee
+	
+	//private EmployeesCRUDRepository employeesRepository;
+	
+	/*
+	 * @RequestMapping("/employees") public String verEmployees() {
+	 * 
+	 * Iterable<Employee> empleados=(Iterable<Employee>)getRepository().findAll();
+	 * 
+	 * return ""; }
+	 */
 }
