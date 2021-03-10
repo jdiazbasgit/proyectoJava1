@@ -12,7 +12,7 @@
 	<groupId>curso.generation</groupId>
 	<artifactId>demoBoot</artifactId>
 	<version>1.0</version>
-	<name>accesos</name>
+	<name>accesosAngel</name>
 	<packaging>war</packaging>
 	<description>Demo project for Spring Boot</description>
 	<properties>
@@ -64,7 +64,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>accesos</finalName>
+		<finalName>accesosAngel</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
