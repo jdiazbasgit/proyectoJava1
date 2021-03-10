@@ -9,8 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="employees_states")
-public class Employee_state {
+@Table(name="empleados_estados")
+public class Employee_status {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
