@@ -64,7 +64,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>accesos</finalName>
+		<finalName>accesosNico</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
