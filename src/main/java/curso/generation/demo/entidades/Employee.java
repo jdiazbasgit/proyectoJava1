@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.ManyToAny;
 
@@ -33,6 +34,9 @@ public class Employee {
 	@ManyToOne
 	@JoinColumn(name = "jornadas_id")
 	private Day day;
+	
+	@Transient
+	private String algo;
 
 	public int getId() {
 		return id;
@@ -96,6 +100,14 @@ public class Employee {
 
 	public void setDay(Day day) {
 		this.day = day;
+	}
+
+	public String getAlgo() {
+		return algo;
+	}
+
+	public void setAlgo(String algo) {
+		this.algo = algo;
 	}
 
 	

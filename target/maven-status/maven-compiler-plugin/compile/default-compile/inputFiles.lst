@@ -1,0 +1,6 @@
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/DemoController.java
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/DemoBootApplication.java
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/entidades/Employee.java
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/repositorios/EmployeeCRUDRepository.java
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/entidades/Day.java
+/Users/javierdiaz/git/bootJPA/src/main/java/curso/generation/demo/repositorios/DaysCRUDRepository.java
