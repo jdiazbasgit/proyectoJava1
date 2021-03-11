@@ -2,7 +2,7 @@ package curso.generation.demo;
 
 public class AccesoParametros {
 	
-	private int mes,anio;
+	private int mes,anio,nuevo;
 
 	public int getMes() {
 		return mes;
