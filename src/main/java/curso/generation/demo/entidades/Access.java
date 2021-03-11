@@ -36,7 +36,7 @@ public class Access {
 	
 	@ManyToOne
 	@JoinColumn(name = "empleados_id")
-	private Access access;
+	private Employee employee;
 
 	
 	
@@ -122,12 +122,13 @@ public class Access {
 		this.fecha = fecha;
 	}
 
-	public Access getAccess() {
-		return access;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setAccess(Access access) {
-		this.access = access;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 }
+	
 
