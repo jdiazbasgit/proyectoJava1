@@ -1,8 +1,6 @@
 package curso.generation.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,6 +13,20 @@ public class DemoController {
 	
 	@Autowired
 	private DaysCRUDRepository repository;
+	
+	
+	@RequestMapping("/")
+	public String index() {
+		
+		return "index";
+		
+	}
+	@RequestMapping("/login")
+	public String login() {
+		
+		return "login";
+		
+	}
 	
 	
 	@RequestMapping("/jornadas")
@@ -39,3 +51,4 @@ public class DemoController {
 	}
 
 }
+

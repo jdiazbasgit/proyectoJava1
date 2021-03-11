@@ -1,6 +1,6 @@
-curso/generation/demo/repositorios/DaysCRUDRepository.class
-curso/generation/demo/DemoController.class
-curso/generation/demo/entidades/Day.class
-curso/generation/demo/repositorios/EmployeeCRUDRepository.class
-curso/generation/demo/DemoBootApplication.class
-curso/generation/demo/entidades/Employee.class
+curso\generation\demo\DemoController.class
+curso\generation\demo\entidades\Employee.class
+curso\generation\demo\repositorios\EmployeeCRUDRepository.class
+curso\generation\demo\repositorios\DaysCRUDRepository.class
+curso\generation\demo\DemoBootApplication.class
+curso\generation\demo\entidades\Day.class
