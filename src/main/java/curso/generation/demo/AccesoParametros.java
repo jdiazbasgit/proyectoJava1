@@ -20,4 +20,12 @@ public class AccesoParametros {
 		this.anio = anio;
 	}
 
+	public int getNuevo() {
+		return nuevo;
+	}
+
+	public void setNuevo(int nuevo) {
+		this.nuevo = nuevo;
+	}
+
 }
