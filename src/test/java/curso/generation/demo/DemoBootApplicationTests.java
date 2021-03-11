@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import curso.generation.demo.repositorios.AccessesCRUDRepository;
 import curso.generation.demo.repositorios.DaysCRUDRepository;
 import curso.generation.demo.repositorios.EmployeeCRUDRepository;
 
@@ -22,6 +23,9 @@ class DemoBootApplicationTests {
 	@Autowired
 	private DaysCRUDRepository repository1;
 	
+	@Autowired
+	private AccessesCRUDRepository repository2; 
+	
 	@Test
 	 void contextLoads() {
 		assertNotNull(getRepository().findAll());
@@ -32,6 +36,16 @@ class DemoBootApplicationTests {
 	void test2() {
 		
 		assertNotNull(getRepository1().getJornadasConUno(true));
+	}
+	
+	@Test
+	void test3() {
+		assertNotNull(getRepository2().getAccessByAnioAndMes(2019, 0));
+	}
+	
+	@Test
+	void test4() {
+		assertNotNull(getRepository2().getAccessByAnioAndMesAndName(2019, 0, "PATRICIA"));
 	}
 
 	public EmployeeCRUDRepository getRepository() {
@@ -48,6 +62,14 @@ class DemoBootApplicationTests {
 
 	public void setRepository1(DaysCRUDRepository repository1) {
 		this.repository1 = repository1;
+	}
+
+	public AccessesCRUDRepository getRepository2() {
+		return repository2;
+	}
+
+	public void setRepository2(AccessesCRUDRepository repository2) {
+		this.repository2 = repository2;
 	}
 	
 }

@@ -27,6 +27,16 @@ public class DemoController {
 		}
 		return "pepe";
 	}
+	
+	@RequestMapping("/")
+	public String index() {
+		return "index";
+	}
+	
+	@RequestMapping("/login")
+	public String login() {
+		return "login";
+	}
 
 
 	public DaysCRUDRepository getRepository() {
