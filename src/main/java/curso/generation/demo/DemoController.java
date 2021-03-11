@@ -13,8 +13,8 @@ import curso.generation.demo.repositorios.DaysCRUDRepository;
 public class DemoController {
 	
 	
-	@Autowired
-	private DaysCRUDRepository repository;
+//	@Autowired
+//	private DaysCRUDRepository repository;
 	
 	
 //	@RequestMapping("/jornadas")
@@ -33,14 +33,14 @@ public class DemoController {
 		return "index";
 	}
 
-
-	public DaysCRUDRepository getRepository() {
-		return repository;
-	}
-
-
-	public void setRepository(DaysCRUDRepository repository) {
-		this.repository = repository;
-	}
+//
+//	public DaysCRUDRepository getRepository() {
+//		return repository;
+//	}
+//
+//
+//	public void setRepository(DaysCRUDRepository repository) {
+//		this.repository = repository;
+//	}
 
 }
