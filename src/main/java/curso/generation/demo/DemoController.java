@@ -1,7 +1,7 @@
 package curso.generation.demo;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class DemoController {
@@ -11,7 +11,7 @@ public class DemoController {
 
 	
 
-	@PostMapping("/")
+	@RequestMapping("/")
 	public String index() {
 		
 		return "index";
