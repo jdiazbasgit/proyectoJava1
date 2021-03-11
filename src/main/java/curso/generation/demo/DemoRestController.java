@@ -7,16 +7,25 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.generation.demo.entidades.Access;
+import curso.generation.demo.entidades.User;
 import curso.generation.demo.repositorios.AccessesCRUDRepository;
+import curso.generation.demo.repositorios.UsersCRUDRepository;
 
 @RestController
 public class DemoRestController {
 
 	@Autowired
 	private AccessesCRUDRepository repository;
+	
+	@Autowired
+	private UsersCRUDRepository repository2;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
-
+	@PostMapping(value = "login")
+	public User getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
+		
+		return getRepository2().getUserByUsuarioAndClave(usuario, clave);
+	}
 	@PostMapping(value = "api/accesosMes")
 	// public Iterable<Access> getAccesosByanioAndMes(@RequestBody DatosAccesoMes
 	// dato){
@@ -43,6 +52,14 @@ public class DemoRestController {
 
 	public void setRepository(AccessesCRUDRepository repository) {
 		this.repository = repository;
+	}
+
+	public UsersCRUDRepository getRepository2() {
+		return repository2;
+	}
+
+	public void setRepository2(UsersCRUDRepository repository2) {
+		this.repository2 = repository2;
 	}
 	
 }
