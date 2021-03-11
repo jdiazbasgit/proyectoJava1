@@ -21,12 +21,15 @@ public class DemoController {
 		return "index";
 		
 	}
+	
 	@RequestMapping("/login")
 	public String login() {
 		
 		return "login";
 		
 	}
+	
+	
 	
 	
 	@RequestMapping("/jornadas")

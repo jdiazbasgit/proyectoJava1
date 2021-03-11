@@ -11,8 +11,8 @@ import curso.generation.demo.entidades.Access;
 public interface AccessesCRUDRepository extends CrudRepository<Access, Integer> {
   
 	
-	//@Query(value="SELECT * FROM ACCESOS WHERE YEAR=:ANIO AND MONTH=:MES", nativeQuery = true)
-	@Query("from Access a where a.mont=:mes and a.year=:anio")
+	//@Query(value="SELECT * FROM ACCESOS WHERE YEAR=;ANIO AND MONTH=:MES",nativeQuery = true)
+	@Query("from Access a where a.month=:mes and a.year=:anio")
 	public Iterable<Access> getAccessByAnioAndMes(int anio, int mes);
 	
 	@Query("from Access a where a.month=:mes and a.year=:anio and a.employee.nombre=:nombre")
