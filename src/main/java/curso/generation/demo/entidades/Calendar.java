@@ -2,6 +2,7 @@ package curso.generation.demo.entidades;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +14,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="calendars")
+@Table(name="calendario")
 public class Calendar {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	@Column
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 	

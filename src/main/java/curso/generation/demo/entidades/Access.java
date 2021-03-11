@@ -14,8 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name="logs")
-public class Log {
+@Table(name="accesos")
+public class Access {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
