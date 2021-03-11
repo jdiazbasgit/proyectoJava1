@@ -13,9 +13,9 @@ public interface AccessesCRUDRepository extends CrudRepository<Access, Integer> 
 	@Query("from Access a where a.month=:mes and a.year=:anio")
 	public Iterable<Access> getAccessByAnioAndMes(int anio, int mes);
 	
-	@Query("from Access a where a.month=:mes and a.year=:anio and a.employee.nombre")
-	public Iterable<Access> getAccesByAnioAndMesAndName(int anio, int mes, String name);
+	@Query("from Access a where a.month=:mes and a.year=:anio and a.employee.nombre=:nombre")
+	public Iterable<Access> getAccesByAnioAndMesAndName(int anio, int mes, String nombre);
 	
-	@Query("from Access a where a.month=:mes and a.year>=:anioOrigen and a.year<=anioFinal and a.employee.nombre")
-	public Iterable<Access> getAccesByAnioAndMesAndName(int anioOrigen, int anioFinal, int mes, String name);
+	@Query("from Access a where a.month=:mes and a.year>=:anioOrigen and a.year<=anioFinal and a.employee.nombre=:nombre")
+	public Iterable<Access> getAccesByAnioAndMesAndName(int anioOrigen, int anioFinal, int mes, String nombre);
 }
