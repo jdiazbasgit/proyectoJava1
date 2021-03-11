@@ -13,21 +13,17 @@ import curso.generation.demo.repositorios.DaysCRUDRepository;
 public class DemoController {
 	
 	
-	@Autowired
-	private DaysCRUDRepository repository;
 	
-	
-	@RequestMapping("/jornadas")
-	public String verDatos() {
-		
-		
-		Iterable<Day> jornadas=getRepository().getJornadasConUno(false);
-		for (Day day : jornadas) {
-			System.out.println(day.getDescripcion());
-		}
-		return "pepe";
-	}
 
+	
+
+	@RequestMapping("/")
+	public String index() {
+		
+		return "index";
+		
+	}
+	
 
 	public DaysCRUDRepository getRepository() {
 		return repository;
