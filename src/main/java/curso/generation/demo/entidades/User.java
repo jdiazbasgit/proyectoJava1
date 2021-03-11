@@ -26,6 +26,9 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name = "roles_id")
 	private Role rol;
+	
+	
+	
 
 	public int getId() {
 		return id;

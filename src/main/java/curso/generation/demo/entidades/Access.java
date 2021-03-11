@@ -7,31 +7,55 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-@Entity
-@Table(name = "accesos")
-public class Access {
 
+@Entity
+@Table(name="accesos")
+public class Access {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
 	@Column
-	private int year, empleados_id, month, day, minuto, hora, tipo; 
+	private int year;
 	
-	@Column(name = "horareal")
-	private int horaReal;
+	@ManyToOne
+	@JoinColumn(name = "empleados_id")
+	private Employee employee;
 	
-	@Column(name = "minutoreal")
-	private int minutoReal;
+	@Column
+	private int month;
+	
+	@Column
+	private int day;
+	
+	@Column
+	private int minuto;
+	
+	@Column
+	private int hora;
+	
+	@Column
+	private int tipo;
 	
 	@Column
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
-
+	
+	@Column (name="horareal")
+	private int horaReal;
+	
+	@Column (name="minutoreal")
+	private int minutoReal;
+	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -48,12 +72,12 @@ public class Access {
 		this.year = year;
 	}
 
-	public int getEmpleados_id() {
-		return empleados_id;
+	public Employee getEmployee() {
+		return employee;
 	}
 
-	public void setEmpleados_id(int empleados_id) {
-		this.empleados_id = empleados_id;
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 
 	public int getMonth() {
@@ -96,6 +120,14 @@ public class Access {
 		this.tipo = tipo;
 	}
 
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
 	public int getHoraReal() {
 		return horaReal;
 	}
@@ -112,12 +144,6 @@ public class Access {
 		this.minutoReal = minutoReal;
 	}
 
-	public Date getFecha() {
-		return fecha;
-	}
-
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-	
 }
+
+
