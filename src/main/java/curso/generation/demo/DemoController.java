@@ -15,7 +15,7 @@ import curso.generation.demo.repositorios.EmployeesCRUDRepository;
 public class DemoController {
 	
 //DAYS
-	@Autowired
+	/*@Autowired
 	private DaysCRUDRepository repository;
 	
 	
@@ -39,7 +39,13 @@ public class DemoController {
 	public void setRepository(DaysCRUDRepository repository) {
 		this.repository = repository;
 	}
-
+*/
+	@RequestMapping("/")
+	public String index() {
+		
+		return "index";
+		
+	}
 	
 //Employee
 	

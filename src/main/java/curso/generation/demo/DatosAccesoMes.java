@@ -2,8 +2,8 @@ package curso.generation.demo;
 
 public class DatosAccesoMes {
 	
-	
-	private int anio,mes;
+	private String nombre;
+	private int anioOrigen,anioFinal, mes;
 
 	public int getMes() {
 		return mes;
@@ -13,12 +13,28 @@ public class DatosAccesoMes {
 		this.mes = mes;
 	}
 
-	public int getAnio() {
-		return anio;
+	public int getAnioOrigen() {
+		return anioOrigen;
 	}
 
-	public void setAnio(int anio) {
-		this.anio = anio;
+	public void setAnioOrigen(int anio) {
+		this.anioOrigen = anio;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public int getAnioFinal() {
+		return anioFinal;
+	}
+
+	public void setAnioFinal(int anioFinal) {
+		this.anioFinal = anioFinal;
 	}
 
 }
