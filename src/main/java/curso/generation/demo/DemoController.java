@@ -17,15 +17,20 @@ public class DemoController {
 	private DaysCRUDRepository repository;
 	
 	
-	@RequestMapping("/jornadas")
-	public String verDatos() {
-		
-		
-		Iterable<Day> jornadas=getRepository().getJornadasConUno(false);
-		for (Day day : jornadas) {
-			System.out.println(day.getDescripcion());
-		}
-		return "pepe";
+//	@RequestMapping("/jornadas")
+//	public String verDatos() {
+//		
+//		
+//		Iterable<Day> jornadas=getRepository().getJornadasConUno(false);
+//		for (Day day : jornadas) {
+//			System.out.println(day.getDescripcion());
+//		}
+//		return "pepe";
+//	}
+	
+	@RequestMapping("/")
+	public String index() {
+		return "index";
 	}
 
 
