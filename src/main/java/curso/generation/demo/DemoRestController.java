@@ -20,7 +20,7 @@ public class DemoRestController {
 	private UsersCRUDRepository repositoryUser;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
-	@PostMapping(value = "api/verlogin")
+	@PostMapping(value = "api/verLogin")
 	public String getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
 
 		if (getRepositoryUser().getUserByUsuarioAndClave(usuario, clave) != null)
