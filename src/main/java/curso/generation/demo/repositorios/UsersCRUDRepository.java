@@ -10,5 +10,5 @@ public interface UsersCRUDRepository extends CrudRepository<User, Integer> {
 	@Query("from User u where u.user=:usuario and u.password=:clave")
 	public User getUserByUsuarioAndClave(String usuario, String clave);
 
-	
+
 }

@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.generation.demo.entidades.Access;
-import curso.generation.demo.entidades.Role;
-import curso.generation.demo.entidades.User;
 import curso.generation.demo.repositorios.AccessesCRUDRepository;
 import curso.generation.demo.repositorios.UsersCRUDRepository;
 
@@ -17,17 +15,20 @@ public class DemoRestController {
 
 	@Autowired
 	private AccessesCRUDRepository repository;
-	
+
 	@Autowired
-	private UsersCRUDRepository repository2;
+	private UsersCRUDRepository repositoryUser;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
 	@PostMapping(value = "api/verlogin")
-	public Role getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
-		
-		return getRepository2().getUserByUsuarioAndClave(usuario, clave).getRole();
+	public String getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
+
+		if (getRepositoryUser().getUserByUsuarioAndClave(usuario, clave) != null)
+			return getRepositoryUser().getUserByUsuarioAndClave(usuario, clave).getRole().getRol();
+		else
+			return "no tienes rol";
 	}
-	
+
 	@PostMapping(value = "api/accesosMes")
 	// public Iterable<Access> getAccesosByanioAndMes(@RequestBody DatosAccesoMes
 	// dato){
@@ -41,11 +42,12 @@ public class DemoRestController {
 
 		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getMes(), dato.getNombre());
 	}
-	
+
 	@PostMapping(value = "api/accesosMesNombreAnio")
 	public Iterable<Access> getAccesosByanioAndMesNombreAnio(@RequestBody DatosAccesoMes dato) {
 
-		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(),dato.getAnioFinal(), dato.getMes(), dato.getNombre());
+		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getAnioFinal(), dato.getMes(),
+				dato.getNombre());
 	}
 
 	public AccessesCRUDRepository getRepository() {
@@ -56,12 +58,12 @@ public class DemoRestController {
 		this.repository = repository;
 	}
 
-	public UsersCRUDRepository getRepository2() {
-		return repository2;
+	public UsersCRUDRepository getRepositoryUser() {
+		return repositoryUser;
 	}
 
-	public void setRepository2(UsersCRUDRepository repository2) {
-		this.repository2 = repository2;
+	public void setRepositoryUser(UsersCRUDRepository repository2) {
+		this.repositoryUser = repository2;
 	}
-	
+
 }
