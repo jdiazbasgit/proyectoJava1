@@ -7,6 +7,15 @@
 <title>Usuario</title>
 </head>
 <body>
+
+
+<form action="api/verlogin">
+<input type="text" name="usuario"> <br>
+<input type="password" name="clave"> <br>
+<button type="submit">ENTRAR</button> <br>
+</form>
+
+
 <table>
 <tr> 
 <th>Usuario</th>

@@ -22,11 +22,12 @@ public class DemoRestController {
 	private UsersCRUDRepository repository2;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
-	@PostMapping(value = "api/login")
+	@PostMapping(value = "api/verlogin")
 	public Role getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
 		
 		return getRepository2().getUserByUsuarioAndClave(usuario, clave).getRole();
 	}
+	
 	@PostMapping(value = "api/accesosMes")
 	// public Iterable<Access> getAccesosByanioAndMes(@RequestBody DatosAccesoMes
 	// dato){
