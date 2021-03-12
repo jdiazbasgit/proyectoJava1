@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import curso.generation.demo.entidades.Access;
 import curso.generation.demo.repositorios.AccessCRUDRepository;
+import curso.generation.demo.repositorios.UserCRUDRepository;
 
 @RestController
 public class DemoRestController {
 
 	@Autowired
 	private AccessCRUDRepository repository;
+
+	@Autowired
+	private UserCRUDRepository repositoryUser;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
 
@@ -32,11 +36,21 @@ public class DemoRestController {
 
 		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getMes(), dato.getNombre());
 	}
-	
+
 	@PostMapping(value = "api/accesosMesNombreAnio")
 	public Iterable<Access> getAccesosByanioAndMesNombreAnio(@RequestBody DatosAccesosMes dato) {
 
-		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(),dato.getAnioFinal(), dato.getMes(), dato.getNombre());
+		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getAnioFinal(), dato.getMes(),
+				dato.getNombre());
+	}
+
+	@PostMapping(value = "api/verLogin")
+	public String verLogin(@RequestParam String user, @RequestParam String password) {
+
+		if (getRepositoryUser().getLogin(user, password) != null)
+			return getRepositoryUser().getLogin(user, password).getRol().getRol();
+		else
+			return "No tienes rol";
 	}
 
 	public AccessCRUDRepository getRepository() {
@@ -45,5 +59,13 @@ public class DemoRestController {
 
 	public void setRepository(AccessCRUDRepository repository) {
 		this.repository = repository;
+	}
+
+	public UserCRUDRepository getRepositoryUser() {
+		return repositoryUser;
+	}
+
+	public void setRepositoryUser(UserCRUDRepository repositoryUser) {
+		this.repositoryUser = repositoryUser;
 	}
 }
