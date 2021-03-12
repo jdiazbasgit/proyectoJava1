@@ -10,7 +10,7 @@ import curso.generation.demo.entidades.User;
 public interface UsersCRUDRepository extends CrudRepository<User, Integer> {
 	
 	@Query("from User u where u.user=:usuario and u.password=:clave")
-	public User getUserByUsuarioAndClave(String usuario, String clave);
+	public User getUserByUsuarioAndClave(String user, String password);
 
 	@Override
 	default Optional<User> findById(Integer id) {

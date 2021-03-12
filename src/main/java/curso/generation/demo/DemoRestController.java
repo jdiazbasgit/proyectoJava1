@@ -21,10 +21,10 @@ public class DemoRestController {
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
 	@PostMapping(value = "api/verLogin")
-	public String getUserByUsuarioAndClave(@RequestParam String usuario, @RequestParam String clave) {
+	public String getUserByUsuarioAndClave(@RequestParam String user, @RequestParam String password) {
 
-		if (getRepositoryUser().getUserByUsuarioAndClave(usuario, clave) != null)
-			return getRepositoryUser().getUserByUsuarioAndClave(usuario, clave).getRole().getRol();
+		if (getRepositoryUser().getUserByUsuarioAndClave(user, password) != null)
+			return getRepositoryUser().getUserByUsuarioAndClave(user, password).getRole().getRol();
 		else
 			return "no tienes rol";
 	}

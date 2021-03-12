@@ -22,8 +22,8 @@
 <th>Clave</th>
 </tr>
 <tr>
-<td>${user} </td>
-<td>${password} </td>
+<td> </td>
+<td></td>
 </tr>
 </table>
 
