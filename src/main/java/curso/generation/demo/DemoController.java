@@ -2,7 +2,7 @@ package curso.generation.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import curso.generation.demo.repositorios.DaysCRUDRepository;
 
@@ -12,12 +12,12 @@ public class DemoController {
 	@Autowired
 	private DaysCRUDRepository repository;
 
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String index() {
 		return "index";
 	}
 
-	@RequestMapping("/login")
+	@GetMapping("/login")
 	public String login() {
 
 		return "login";
