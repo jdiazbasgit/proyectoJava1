@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -20,7 +22,11 @@ public class Access {
 	private int id;
 	
 	@Column
-	private int year, empleados_id, month, day, minuto, hora, tipo; 
+	private int year, month, day, minuto, hora, tipo; 
+	
+	@ManyToOne
+	@JoinColumn(name = "empleados_id")
+	private Employee employee;
 	
 	@Column(name = "horareal")
 	private int horaReal;
@@ -48,13 +54,6 @@ public class Access {
 		this.year = year;
 	}
 
-	public int getEmpleados_id() {
-		return empleados_id;
-	}
-
-	public void setEmpleados_id(int empleados_id) {
-		this.empleados_id = empleados_id;
-	}
 
 	public int getMonth() {
 		return month;
@@ -118,6 +117,14 @@ public class Access {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 }
