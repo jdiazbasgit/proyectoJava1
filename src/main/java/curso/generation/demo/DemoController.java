@@ -2,8 +2,7 @@ package curso.generation.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import curso.generation.demo.entidades.Day;
 import curso.generation.demo.repositorios.DaysCRUDRepository;
@@ -16,14 +15,14 @@ public class DemoController {
 	private DaysCRUDRepository repository;
 	
 	
-	@PostMapping("/")
+	@GetMapping("/")
 	public String index() {
 		
 		return "index";
 		
 	}
 	
-	@PostMapping("/login")
+	@GetMapping("/login")
 	public String login() {
 		
 		return "login";
@@ -33,7 +32,7 @@ public class DemoController {
 	
 	
 	
-	@PostMapping("/jornadas")
+	@GetMapping("/jornadas")
 	public String verDatos() {
 		
 		
