@@ -304,8 +304,8 @@ class WCEmpleados extends HTMLElement {
 
     let thIcono = document.createElement("th")
     
-    //thIcono.innerHTML = `<i class="bi bi-people-fill"></i> `
-    thIcono.innerHTML = ""
+    thIcono.innerHTML = `<i class="bi bi-people-fill"></i> `
+    //thIcono.innerHTML = ""
     thead.appendChild(thIcono)
 
     propiedadesTablaEmpleados.forEach(propiedad => {
