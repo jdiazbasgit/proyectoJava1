@@ -25,7 +25,7 @@ public Employee altaEmpleado(@RequestParam String nombre,@RequestParam String ap
 
 @PutMapping(value= "")//para el formulario de modificar empleados
 public Employee modificarEmpleado(@RequestParam String nombre, @RequestParam String apellido,@RequestParam String dni, @RequestParam String identificador, @RequestParam String fecha_alta, @RequestParam String fecha_baja) {
-	return "";
+	return getEmployeeRepository().getEmployeeModificar(nombre, apellido, dni, identificador, fecha_alta, fecha_baja);
 }
 
 
