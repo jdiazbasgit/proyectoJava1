@@ -73,7 +73,7 @@
 	</dependencies>
 
 	<build>
-	<finalName>accesoWilly</finalName>
+	<finalName>accesoGrupo2</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
