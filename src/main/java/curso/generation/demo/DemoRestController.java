@@ -1,19 +1,32 @@
 package curso.generation.demo;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import curso.generation.demo.entidades.Access;
+import curso.generation.demo.entidades.User;
 import curso.generation.demo.repositorios.AccessesCRUDRepository;
 import curso.generation.demo.repositorios.UsersCRUDRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @RestController
 public class DemoRestController {
 
+	
+	public static String UNAUTHORIZED="Usuario o clave incorrectos";
+	
 	@Autowired
 	private AccessesCRUDRepository repository;
 
@@ -21,20 +34,6 @@ public class DemoRestController {
 	private UsersCRUDRepository repositoryUser;
 
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
-	@PostMapping(value = "api/verLogin")
-	public String getUserByUsuarioAndClave(@RequestParam String user, @RequestParam String password) {
-		curso.generation.demo.entidades.User userDetails = getRepositoryUser().findByUserName(user);
-		UserDto userDto = new UserDto();
-		if(userDetails.getPassword().equals(password))
-			userDto.setUser((userDetails.getUser()));
-			userDto.setRol(userDetails.getRole().getRol());
-		
-		
-		if (getRepositoryUser().getUserByUsuarioAndClave(user, password) != null)
-			return getRepositoryUser().getUserByUsuarioAndClave(user, password).getRole().getRol();
-		else
-			return "no tienes rol";
-	}
 
 	@PostMapping(value = "api/accesosMes")
 	// public Iterable<Access> getAccesosByanioAndMes(@RequestBody DatosAccesoMes
@@ -44,17 +43,38 @@ public class DemoRestController {
 		return getRepository().getAccessByAnioAndMes(anio, mes);
 	}
 
-	@PostMapping(value = "api/accesosMesNombre")
-	public Iterable<Access> getAccesosByanioAndMesNombre(@RequestBody DatosAccesoMes dato) {
+	@PostMapping(value = "user")
+	public UserDto verLogin(@RequestParam String user, @RequestParam String password, HttpServletResponse response) throws IOException {
 
-		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getMes(), dato.getNombre());
+		User userDetails = getRepositoryUser().findByUserName(user);
+		UserDto userDto = new UserDto();
+		if (userDetails.getPassword().equals(password)) {
+			userDto.setUser(userDetails.getUser());
+			userDto.setRol(userDetails.getRole().getRol());
+			userDto.setToken(getJWTToken(user, userDto.getRol()));
+			return userDto;
+		}
+		else
+		{
+			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+			response.sendError(HttpServletResponse.SC_FORBIDDEN,DemoRestController.UNAUTHORIZED);
+			return null;
+		}
+
 	}
 
-	@PostMapping(value = "api/accesosMesNombreAnio")
-	public Iterable<Access> getAccesosByanioAndMesNombreAnio(@RequestBody DatosAccesoMes dato) {
+	private String getJWTToken(String username, String rol) {
+		String secretKey = "generation";
+		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(rol);
 
-		return getRepository().getAccessByAnioAndMesAndName(dato.getAnioOrigen(), dato.getAnioFinal(), dato.getMes(),
-				dato.getNombre());
+		String token = Jwts.builder().setId("cursoJWT").setSubject(username)
+				.claim("authorities",
+						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 600000))
+				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+
+		return "Bearer " + token;
 	}
 
 	public AccessesCRUDRepository getRepository() {
@@ -69,8 +89,7 @@ public class DemoRestController {
 		return repositoryUser;
 	}
 
-	public void setRepositoryUser(UsersCRUDRepository repository2) {
-		this.repositoryUser = repository2;
+	public void setRepositoryUser(UsersCRUDRepository repositoryUser) {
+		this.repositoryUser = repositoryUser;
 	}
-
 }
