@@ -1,4 +1,4 @@
-package curso.generation.demo;
+package curso.generation.demo.beans;
 
 public class AccesosParametros {
 

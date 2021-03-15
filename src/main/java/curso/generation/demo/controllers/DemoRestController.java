@@ -1,4 +1,4 @@
-package curso.generation.demo;
+package curso.generation.demo.controllers;
 
 import java.io.IOException;
 import java.util.Date;
@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import curso.generation.demo.beans.DatosAccesosMes;
+import curso.generation.demo.beans.UserFront;
+import curso.generation.demo.dtos.UserDto;
 import curso.generation.demo.entidades.Access;
 import curso.generation.demo.entidades.User;
 import curso.generation.demo.repositorios.AccessCRUDRepository;
@@ -58,15 +61,15 @@ public class DemoRestController {
 	}
 
 	@PostMapping(value = "user")
-	public UserDto verLogin(@RequestParam String user, @RequestParam String password, HttpServletResponse response)
+	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)
 			throws IOException {
 
-		Optional<User> userDetails = getRepositoryUser().findByUserName(user);
+		Optional<User> userDetails = getRepositoryUser().findByUserName(userFront.getUser());
 		UserDto userDto = new UserDto();
-		if (userDetails.get().equals(password)) {
+		if (userDetails.get().getPassword().equals(userFront.getPassword())) {
 			userDto.setUser(userDetails.get().getUser());
 			userDto.setRol(userDetails.get().getRol().getRol());
-			userDto.setToken(getJWTToken(user, userDto.getRol()));
+			userDto.setToken(getJWTToken(userFront.getUser(), userDto.getRol()));
 			return userDto;
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);

@@ -1,4 +1,4 @@
-package curso.generation.demo;
+package curso.generation.demo.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
