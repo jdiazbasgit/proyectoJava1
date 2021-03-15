@@ -4,7 +4,9 @@
     
     
     
+
     <wb-module deploy-name="mvc-1.0.0-BUILD-SNAPSHOT">
+
                                                 
         
         
@@ -32,6 +34,7 @@
                         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+
                         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-test-sources/test-annotations"/>
@@ -46,10 +49,12 @@
         <property name="context-root" value="mvc"/>
                                                 
         
+
         
         
         
         <property name="java-output-path" value="/springMVC/target/classes"/>
+
                                             
     
     

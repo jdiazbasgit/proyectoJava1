@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>curso.generation</groupId>
-	<artifactId>demoBoot</artifactId>
+	<artifactId>accesoWilly</artifactId>
 	<version>1.0</version>
 	<name>accesoWilly</name>
 	<packaging>war</packaging>
