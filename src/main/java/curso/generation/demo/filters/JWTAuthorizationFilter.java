@@ -18,6 +18,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
 public class JWTAuthorizationFilter extends OncePerRequestFilter {
@@ -41,7 +42,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 				SecurityContextHolder.clearContext();
 			}
 			filterChain.doFilter(request, response);
-		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException e) {
+		} catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException |SignatureException  | IllegalArgumentException e) {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
 			response.sendError(HttpServletResponse.SC_FORBIDDEN,e.getMessage());
 		}
@@ -49,8 +50,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 	}
 
 	private Claims validateToken(HttpServletRequest request) {
-		String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
-		return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
+		
+			String jwtToken = request.getHeader(HEADER).replace(PREFIX, "");
+			return Jwts.parser().setSigningKey(SECRET.getBytes()).parseClaimsJws(jwtToken).getBody();
 	}
 
 	private void setUpSpringAuthentication(Claims claims) {
