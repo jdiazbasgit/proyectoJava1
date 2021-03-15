@@ -253,21 +253,27 @@ class WCEmpleados extends HTMLElement {
 
 
     // **************     SACAR LA URL DEL JSON     ****************
-    //let link = document.querySelector('#urlJSON');
-    //let URL = link.getAttribute('url');
 
-    //Datos de JSON
-    let datosJSON = getDatos(this.url, "get", "{}")
+   
+    //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
+    const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
+    console.log(url)
+
+    // *** URL buena a usar cuando se arregle lo del HEAD
+    //let datosJSON = apiHandler(url)
+
+    //Datos del JSON (provisional)
+    let datosJSON = apiHandler(this.url)
 
     //Array con Empleados
-    //let listaEmpleados
+    let listaEmpleados
 
-    datosJSON.then((empleados) => {
+    datosJSON.then((empleado) => {
 
-     // listaEmpleados = empleado
+      listaEmpleados = empleado
       //console.log("Lista inicial", listaEmpleados)
 
-      this.crearTablaEmpeados(empleados)
+      this.crearTablaEmpeados(listaEmpleados)
     })
 
     let nuevoEmp
@@ -282,6 +288,7 @@ class WCEmpleados extends HTMLElement {
   attributeChangedCallback(name, oldValue, newValue) {
 
     this.url = newValue;
+    console.log("PEPE", this.url)
 
   }
 
@@ -523,8 +530,9 @@ class WCEmpleados extends HTMLElement {
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
-    //Iddentificar e empleado seleccionado
+    //Identificar el empleado seleccionado
     let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
     let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
@@ -558,6 +566,14 @@ class WCEmpleados extends HTMLElement {
 
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
+
+    console.log("Empleado seleccionado", empleadoSelect)
+
+    //**** Llamada de la API para MODIFICAR el empleado seleccionado ***************
+
+    apiHandler(this.url, "put", empleadoSelect);
+
+    this.cerrarModalAddEmpleado()
 
   }
 
@@ -596,7 +612,6 @@ class WCEmpleados extends HTMLElement {
 
       nuevaFila.appendChild(datoIcono);
 
-      //se tocó  viewBox="0 -150 980 980" para hacer el icono más pequeño
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
@@ -665,10 +680,15 @@ class WCEmpleados extends HTMLElement {
         if (confirmarIdentificador === nuevoEmpleado.identificador) {
 
           this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
+
           this.cerrarModalEditar()
 
         }
       })
+
+      //**** Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
+      console.log(nuevoEmpleado)
+      apiHandler(this.url, "post", nuevoEmpleado);
 
       this.cerrarModalAddEmpleado()
 
@@ -683,15 +703,52 @@ class WCEmpleados extends HTMLElement {
 
 window.customElements.define("wc-empleados", WCEmpleados);
 
-sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODMwMDg1LCJleHAiOjE2MTU4MzA2ODV9.KZY2PlIpRU5rGcP0O3UR1K1XScdtQK5fIkL0DyJufpwW-RG2tlqvPl7iJm26XLwoqswwvGLzxfy-oWGwW-Crhw"
-//Funcion que obtiene los datos
-function getDatos(url, method, data) {
+sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODQwMzg1LCJleHAiOjE2MTU4NDA5ODV9.XGg-JHToPcmr2f2VwkIUoBTkeVhrqb5UO4FzNmDfy9hlhTcndMCOdYPLL9A3-Z-l_yY6S8aI4Pr5U9TKdwQaFw"
+//Funciones que obtiene los datos
+
+//*** ****************************
+function apiHandler(url, method = "get", data) {
+  if (method == "get") {
+    return getDatos(url)
+  } else {
+    return sendDatos(url, method, data)
+  }
+}
+
+function getDatos(url) {
+  return new Promise(function (resolve, reject) {
+    fetch(url, {
+        "method": "get",
+        "headers": {
+          "Authorization": sessionStorage.token,
+          //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+          //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+          "Access-Control-Allow-Origin": "*"
+        }
+      })
+      .then(function (response) {
+        if (response.ok)
+          resolve(response.json())
+        else {
+          reject(response.status)
+        }
+      }).catch(function (error) {
+        console.log(`ERROR ${error}`)
+        reject(error);
+      })
+  })
+}
+
+function sendDatos(url, method, data) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
         "method": method,
         "body": JSON.stringify(data),
         "headers": {
-          "authorization": sessionStorage.token
+          "Authorization": sessionStorage.token,
+          //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+          //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+          "Access-Control-Allow-Origin": "*"
         }
       })
       .then(function (response) {
