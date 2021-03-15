@@ -1,6 +1,7 @@
 package curso.generation.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,13 @@ public class DemoRestController {
 	// @RequestMapping(value="api/accesosMes",method = RequestMethod.POST)
 	@PostMapping(value = "api/verLogin")
 	public String getUserByUsuarioAndClave(@RequestParam String user, @RequestParam String password) {
-
+		curso.generation.demo.entidades.User userDetails = getRepositoryUser().findByUserName(user);
+		UserDto userDto = new UserDto();
+		if(userDetails.getPassword().equals(password))
+			userDto.setUser((userDetails.getUser()));
+			userDto.setRol(userDetails.getRole().getRol());
+		
+		
 		if (getRepositoryUser().getUserByUsuarioAndClave(user, password) != null)
 			return getRepositoryUser().getUserByUsuarioAndClave(user, password).getRole().getRol();
 		else
