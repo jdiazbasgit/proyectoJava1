@@ -3,6 +3,7 @@ package curso.generation.demo;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletResponse;
@@ -25,9 +26,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @RestController
 public class DemoRestController {
 
-	
-	public static String UNAUTHORIZED="Usuario o clave incorrectos";
-	
+	public static String UNAUTHORIZED = "Usuario o clave incorrectos";
+
 	@Autowired
 	private AccessCRUDRepository repository;
 
@@ -58,20 +58,19 @@ public class DemoRestController {
 	}
 
 	@PostMapping(value = "user")
-	public UserDto verLogin(@RequestParam String user, @RequestParam String password, HttpServletResponse response) throws IOException {
+	public UserDto verLogin(@RequestParam String user, @RequestParam String password, HttpServletResponse response)
+			throws IOException {
 
-		User userDetails = getRepositoryUser().findByUserName(user);
+		Optional<User> userDetails = getRepositoryUser().findByUserName(user);
 		UserDto userDto = new UserDto();
-		if (userDetails.getPassword().equals(password)) {
-			userDto.setUser(userDetails.getUser());
-			userDto.setRol(userDetails.getRol().getRol());
+		if (userDetails.get().equals(password)) {
+			userDto.setUser(userDetails.get().getUser());
+			userDto.setRol(userDetails.get().getRol().getRol());
 			userDto.setToken(getJWTToken(user, userDto.getRol()));
 			return userDto;
-		}
-		else
-		{
+		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			response.sendError(HttpServletResponse.SC_FORBIDDEN,DemoRestController.UNAUTHORIZED);
+			response.sendError(HttpServletResponse.SC_FORBIDDEN, DemoRestController.UNAUTHORIZED);
 			return null;
 		}
 

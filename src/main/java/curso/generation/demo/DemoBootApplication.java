@@ -30,6 +30,8 @@ public class DemoBootApplication extends SpringBootServletInitializer {
 					.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
 					.authorizeRequests()
 					.antMatchers("/user").permitAll()
+					.antMatchers("/login").permitAll()
+					.antMatchers("/").permitAll()
 					.anyRequest().authenticated();
 		}
 

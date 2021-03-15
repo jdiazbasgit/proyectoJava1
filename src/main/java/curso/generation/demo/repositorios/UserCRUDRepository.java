@@ -13,18 +13,7 @@ public interface UserCRUDRepository extends CrudRepository<User, Integer> {
 	public User getLogin (String user, String password);
 	
 	@Query("from User u where u.user=:username")
-	public User findByUserName(String username);
+	public Optional<User> findByUserName(String username);
 
-	@Override
-	default Optional<User> findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	default Iterable<User> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

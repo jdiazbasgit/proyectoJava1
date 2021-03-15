@@ -8,7 +8,7 @@
 </head>
 <body>
 	<h1>Login</h1>
-	<form action="api/verLogin" method="post">
+	<form action="user" method="post">
 		Usuario<br> <input type="text" name="user"><br>
 		Clave<br> <input type="password" name="password"><br>
 		<input type="submit" name="aceptar"><br>
