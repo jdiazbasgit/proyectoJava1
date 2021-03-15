@@ -1,6 +1,6 @@
-projectKey=prueba
+projectKey=curso.generation:accesosProfeSonar
 serverUrl=http://192.168.1.145:9000
 serverVersion=8.7.0.41497
-dashboardUrl=http://192.168.1.145:9000/dashboard?id=prueba
-ceTaskId=AXgjIjXzOZxunaF9RAAc
-ceTaskUrl=http://192.168.1.145:9000/api/ce/task?id=AXgjIjXzOZxunaF9RAAc
+dashboardUrl=http://192.168.1.145:9000/dashboard?id=curso.generation%3AaccesosProfeSonar
+ceTaskId=AXg1K-9GOZxunaF9RAAu
+ceTaskUrl=http://192.168.1.145:9000/api/ce/task?id=AXg1K-9GOZxunaF9RAAu

@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>curso.generation</groupId>
-	<artifactId>accesosProfe</artifactId>
+	<artifactId>accesosProfeSonar</artifactId>
 	<version>1.0</version>
 	<name>accesosProfe</name>
 	<packaging>war</packaging>
@@ -63,7 +63,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>accesosProfe</finalName>
+		<finalName>accesosProfeSonar</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
