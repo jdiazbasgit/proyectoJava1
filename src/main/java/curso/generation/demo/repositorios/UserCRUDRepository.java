@@ -11,6 +11,9 @@ public interface UserCRUDRepository extends CrudRepository<User, Integer> {
 
 	@Query("from User u where u.user=:user and u.password=:password")
 	public User getLogin (String user, String password);
+	
+	@Query("from User u where u.user=:username")
+	public User findByUserName(String username);
 
 	@Override
 	default Optional<User> findById(Integer id) {
