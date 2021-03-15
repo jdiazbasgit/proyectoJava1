@@ -11,7 +11,7 @@
  <a href="api">Pincha aqui para ver los servicios</a>
  <br>
  <a>Acceso a Log in</a>
- <form action='${pageContext.request.contextPath}/api/user'  method="post">
+ <form action='/api/user'  method="post">
  	Name <input type="text" id="user" name="user"/>
  	Password <input type="password" id="password" name="password" />
  	<button type="submit">Enviar</button>
