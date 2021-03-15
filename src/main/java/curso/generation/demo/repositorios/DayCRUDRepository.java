@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import curso.generation.demo.entidades.Day;
 
 @Repository
-public interface DaysCRUDRepository extends CrudRepository<Day, Integer> {
+public interface DayCRUDRepository extends CrudRepository<Day, Integer> {
 
 	
 	@Query("from Day as d  where d.especial=:dato")

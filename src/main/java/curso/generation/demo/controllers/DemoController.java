@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import curso.generation.demo.entidades.Day;
-import curso.generation.demo.repositorios.DaysCRUDRepository;
+import curso.generation.demo.repositorios.DayCRUDRepository;
 
 @Controller
 public class DemoController {

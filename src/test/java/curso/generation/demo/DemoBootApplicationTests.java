@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import curso.generation.demo.repositorios.DaysCRUDRepository;
+import curso.generation.demo.repositorios.DayCRUDRepository;
 import curso.generation.demo.repositorios.EmployeeCRUDRepository;
 
 
@@ -20,7 +20,7 @@ class DemoBootApplicationTests {
 	private EmployeeCRUDRepository repository;
 	
 	@Autowired
-	private DaysCRUDRepository repository1;
+	private DayCRUDRepository repository1;
 	
 	@Test
 	 void contextLoads() {
@@ -42,11 +42,11 @@ class DemoBootApplicationTests {
 		this.repository = repository;
 	}
 
-	public DaysCRUDRepository getRepository1() {
+	public DayCRUDRepository getRepository1() {
 		return repository1;
 	}
 
-	public void setRepository1(DaysCRUDRepository repository1) {
+	public void setRepository1(DayCRUDRepository repository1) {
 		this.repository1 = repository1;
 	}
 	
