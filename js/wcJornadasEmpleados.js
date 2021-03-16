@@ -24,6 +24,10 @@ class WCJornadasEmpleados extends HTMLElement {
         /* #tabla td, #tabla th{
             border-bottom: 5px solid rgb(236, 235, 235);
         } */
+        td{
+            vertical-align: middle;
+            height: 50px;
+        }
         thead{
             background-color: rgb(50,64,71);
             color: white;
