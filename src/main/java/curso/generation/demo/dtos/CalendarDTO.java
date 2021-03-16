@@ -1,6 +1,6 @@
-package curso.generation.demo.beans;
+package curso.generation.demo.dtos;
 
-import java.util.Date;
+import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 

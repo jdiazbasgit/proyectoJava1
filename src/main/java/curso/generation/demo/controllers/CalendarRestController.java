@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import curso.generation.demo.beans.CalendarDTO;
 import curso.generation.demo.beans.Year;
+import curso.generation.demo.dtos.CalendarDTO;
 import curso.generation.demo.entidades.Calendar;
 import curso.generation.demo.repositorios.CalendarCRUDRepository;
 import curso.generation.demo.repositorios.StatusCRUDRepository;
