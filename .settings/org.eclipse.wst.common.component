@@ -5,7 +5,7 @@
     
     
     
-    <wb-module deploy-name="accesoWilly">
+    <wb-module deploy-name="acceso5">
                                                         
         
         
@@ -38,7 +38,6 @@
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
                                                         
         
         
@@ -46,7 +45,7 @@
         
         
         <property name="java-output-path" value="/springMVC/target/classes"/>
-        <property name="context-root" value="accesoWilly"/>
+        <property name="context-root" value="acceso5"/>
                                                     
     
     
