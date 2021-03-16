@@ -13,13 +13,14 @@ import org.springframework.stereotype.Component;
 public class VigilanteDeExcepciones {
 	
 	
-	@Pointcut("execution(@curso.generation.demo.Vigilado * *.*(..))")
+	@Pointcut("execution(* *.verLogin(..))")
 	public void vigilante() {
 
 	}
 	
-	@Around("execution(@curso.generation.demo.Vigilado * *.*(..))")
+	@Around("vigilante()")
 	public Object comprobarExcepcion(ProceedingJoinPoint joinPoint) {
+		System.err.println("entrooo");
 		Object salida=null;
 		final Logger logger = LoggerFactory.getLogger(joinPoint.getTarget().getClass());
 		try {

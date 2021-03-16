@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import curso.generation.demo.anotaciones.Vigilado;
 import curso.generation.demo.beans.DatosAccesosMes;
 import curso.generation.demo.beans.UserFront;
 import curso.generation.demo.dtos.UserDto;
@@ -61,9 +62,12 @@ public class DemoRestController {
 	}
 
 	@PostMapping(value = "user")
-	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)
-			throws IOException {
-
+	@Vigilado
+	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)  
+			throws IOException,NumberFormatException{
+		
+			Integer.parseInt("a");
+		
 		Optional<User> userDetails = getRepositoryUser().findByUserName(userFront.getUser());
 		UserDto userDto = new UserDto();
 		if (userDetails.get().getPassword().equals(userFront.getPassword())) {

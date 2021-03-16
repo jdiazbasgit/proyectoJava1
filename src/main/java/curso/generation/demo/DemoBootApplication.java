@@ -25,6 +25,7 @@ public class DemoBootApplication extends SpringBootServletInitializer {
 
 	@Configuration
 	@EnableWebSecurity
+	@EnableAspectJAutoProxy
 	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		@Override

@@ -2,12 +2,16 @@ package curso.generation.demo.repositorios;
 
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import curso.generation.demo.controllers.Acceso;
 import curso.generation.demo.entidades.Access;
 import curso.generation.demo.entidades.Calendar;
+import curso.generation.demo.entidades.Employee;
 
 
 
@@ -24,4 +28,8 @@ public interface AccessCRUDRepository extends CrudRepository<Access, Integer> {
 
 		@Query("from Access a where a.month=:mes and a.year>=:anioOrigen and a.year<=:anioFinal and a.employee.nombre=:nombre")
 		public Iterable<Access> getAccessByAnioAndMesAndName(int anioOrigen, int anioFinal,  int mes, String nombre);
+
+		@Query("")
+		public List<Access> getAccesosByEmployeeAndMonthAndYear(Employee employee, int month, int year)
+
 }
