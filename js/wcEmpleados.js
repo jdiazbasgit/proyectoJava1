@@ -312,9 +312,7 @@ class WCEmpleados extends HTMLElement {
       if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        //th.innerHTML = this.capitalizarPrimeraLetra(propiedad); ------>>>>
-
-        th.innerHTML = propiedad;
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad); //------>>>>
 
         if (propiedad === "dni") {
           th.innerHTML = propiedad.toUpperCase()
@@ -353,8 +351,8 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links" && propiedad !== "id") {
           let td = document.createElement("td");
-          // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
-          td.innerHTML = empleado[propiedad];
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); //---------------------->>
+          //td.innerHTML = empleado[propiedad];
 
           if (propiedad === "dni") {
             td.innerHTML = empleado[propiedad].toUpperCase()
@@ -529,6 +527,7 @@ class WCEmpleados extends HTMLElement {
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
 
+    if(miString)
     return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
