@@ -1,0 +1,13 @@
+clase coche
+
+ip:port/[domain]/api/coches
+
+GET -> lista de coches
+POST -> objeto coche en json->graba nuevo coche
+PUT -> objeto coche en json -> url añado id->modifica
+ip:port/[domain]/api/coches/id
+
+DELETE -> ip con id ->borra
+ip:port/[domain]/api/coches/id
+
+GET -> ip conn id>un coche de esa id
