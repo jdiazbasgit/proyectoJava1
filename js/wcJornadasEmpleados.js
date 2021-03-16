@@ -40,15 +40,15 @@ class WCJornadasEmpleados extends HTMLElement {
     <link rel="stylesheet" href="./css/stylesWcJornadas.css">
     <div>
     <div id="flexContainer">
-        <h3>JORNADAS/EMPLEADOS</h3>
+        <h3>Jornadas/Empleados</h3>
     </div>
         <table class="table table-sm table-hover" id="tabla">
             <thead class="thead">
                 <tr>
                     <th><img src="img/svg/icono3blanco.svg" alt=""></th>
-                    <th id="thNombre">NOMBRE</th>
-                    <th id="thApellidos">APELLIDOS</th>                    
-                    <th>JORNADA</th>                    
+                    <th id="thNombre">Nombre</th>
+                    <th id="thApellidos">Apellidos</th>                    
+                    <th>Jornada</th>                    
                 </tr>
             </thead>
             <!--<tbody id="tbody"></tbody>-->
