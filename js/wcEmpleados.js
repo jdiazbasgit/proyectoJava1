@@ -1,4 +1,4 @@
-//import { Employee } from "./clases/clases"; ******************* ???
+import { Employee } from "./clases/clases";
 
 
 class WCEmpleados extends HTMLElement {
