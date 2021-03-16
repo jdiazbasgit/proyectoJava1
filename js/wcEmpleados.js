@@ -703,7 +703,7 @@ class WCEmpleados extends HTMLElement {
 
 window.customElements.define("wc-empleados", WCEmpleados);
 
-sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODQwMzg1LCJleHAiOjE2MTU4NDA5ODV9.XGg-JHToPcmr2f2VwkIUoBTkeVhrqb5UO4FzNmDfy9hlhTcndMCOdYPLL9A3-Z-l_yY6S8aI4Pr5U9TKdwQaFw"
+sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODgyNTU0LCJleHAiOjE2MTU4ODMxNTR9.sQOcjY22D5ViA90zbe2LSUQPZNchJpgWZbZLPI7VcfbNrc12z3niP5Nswk-S-cQSoEY9CcIzqQoZ3xNdntJ-Yg"
 //Funciones que obtiene los datos
 
 //*** ****************************
