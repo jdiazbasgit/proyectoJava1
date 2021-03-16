@@ -67,7 +67,7 @@ public class DemoRestController {
 	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)  
 			throws IOException,NumberFormatException{
 		
-			Integer.parseInt("a");
+			
 		
 		Optional<User> userDetails = getRepositoryUser().findByUserName(userFront.getUser());
 		UserDto userDto = new UserDto();
