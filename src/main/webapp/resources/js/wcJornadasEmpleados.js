@@ -9,7 +9,7 @@ class WCJornadasEmpleados extends HTMLElement {
 
         let shadowRoot = this.attachShadow({ mode: "open" });
 
-        shadowRoot.innerHTML=<style>
+        shadowRoot.innerHTML=`<style>
         /* #divp{
         background-color: rgb(236, 235, 235);
     } */
