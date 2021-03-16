@@ -15,7 +15,7 @@ import curso.generation.demo.filters.JWTAuthorizationFilter;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@CrossOrigin("*")
+@CrossOrigin(origins="*")
 public class DemoBootApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
