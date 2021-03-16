@@ -1,4 +1,6 @@
-import { Employee } from "./clases/clases";
+import {
+  Employee
+} from "./clases/clases.js";
 
 
 class WCEmpleados extends HTMLElement {
@@ -255,14 +257,8 @@ class WCEmpleados extends HTMLElement {
     body[0].style.backgroundColor = '#EEEE'
 
 
-    // **************     SACAR LA URL DEL JSON     ****************
-
-
-    //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
-
-    console.log("nueva:" + this.url)
-
-    // *** URL buena a usar 
+    // **************     USO DE LA URL    ****************
+    // console.log("nueva:" + this.url)
     let datosJSON = apiHandler(this.url)
 
     //Array con Empleados
@@ -284,17 +280,13 @@ class WCEmpleados extends HTMLElement {
 
   }
 
-  //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
+  //Hacer que la url se le pase directamente desde la etiqueta del WC 
   attributeChangedCallback(name, oldValue, newValue) {
-
     this.url = newValue;
-
-    console.log("PEPE", this.url)
-
+    //console.log("PEPE", this.url)
   }
 
   static get observedAttributes() {
-
     return ["url"]
   }
 
@@ -303,8 +295,6 @@ class WCEmpleados extends HTMLElement {
   crearTablaEmpeados(arrayEmpleados) {
 
     let propiedadesTablaEmpleados = Object.keys(arrayEmpleados[0])
-
-    console.log("propiedadesTablaEmpleados", propiedadesTablaEmpleados)
 
     let tablaDatos = this.shadowRoot.querySelector("#tablaDatos")
 
@@ -341,8 +331,6 @@ class WCEmpleados extends HTMLElement {
 
     //********* BODY TABLA*/
 
-    console.log("arrayEmpleados BODY", arrayEmpleados)
-
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
     tbody.setAttribute("id", "tbody");
@@ -363,7 +351,7 @@ class WCEmpleados extends HTMLElement {
           empleado.fecha_baja = "---"
         }
 
-        if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
+        if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links" && propiedad !== "id") {
           let td = document.createElement("td");
           // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
           td.innerHTML = empleado[propiedad];
@@ -540,18 +528,21 @@ class WCEmpleados extends HTMLElement {
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
-    //Identificar el empleado seleccionado
-    //let empleadoSelect = new Employee // ----------------------->>> OBJETO DE CLASES.JS
 
-    let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+    // -------->>>>> **EMPLEADO DESDE CLASES.JS */
+    let empleadoSelect = new Employee(this.id, nombre, apellidos, dni, identificador, fecha_alta, fecha_baja)
+
+    //Identificar el empleado seleccionado
+    empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
 
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
-    let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
-    let apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
-    let dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
-    let fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
-    let fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
+    // ------------------>>> Propiedades de EMPLOYEE DE CLASES.JS
+    nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
+    apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
+    dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
+    fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
+    fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
 
     //en caso de no tener fecha de baja
     if (!fecha_baja) fecha_baja = "---"
@@ -599,7 +590,7 @@ class WCEmpleados extends HTMLElement {
     let dni = this.shadowRoot.querySelector("#nuevoDNI").value.toUpperCase();
     let fechaAlta = this.shadowRoot.querySelector("#nuevoFecha").value;
 
-    //En caso de no haber añadido nuevo empleado y darle a guardar, saca una alerta
+    //En caso de no haber añadido nuevo empleado y darle a guardar, lanza una alerta
     if (nombre.trim() === "" && apellidos.trim() === "" && dni.trim() === "") {
       alert("Debes de rellenar todos los datos")
 
@@ -611,18 +602,19 @@ class WCEmpleados extends HTMLElement {
 
       tbody.appendChild(nuevaFila);
 
-      //nuevoEmpleado = new Employee //------------------------------->>>>>>
+      // -------->>>>> **EMPLEADO DESDE CLASES.JS */
+      nuevoEmpleado = new Employee(0, nombre, apellidos, dni, this.identificadorAleatorio(), fechaAlta, null)
 
       console.log("nuevoEmpleado", nuevoEmpleado)
 
-      nuevoEmpleado = {
-        "nombre": nombre,
-        "apellidos": apellidos,
-        "dni": dni,
-        "identificador": this.identificadorAleatorio(),
-        "fecha_alta": fechaAlta,
-        "fecha_baja": null
-      };
+      /* nuevoEmpleado = {
+         "nombre": nombre,
+         "apellidos": apellidos,
+         "dni": dni,
+         "identificador": this.identificadorAleatorio(),
+         "fecha_alta": fechaAlta,
+         "fecha_baja": null
+       };*/
 
       let datoIcono = document.createElement("td");
 
@@ -631,10 +623,11 @@ class WCEmpleados extends HTMLElement {
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
-        if (nuevoEmpleado.fecha_baja == null) {
-          nuevoEmpleado.fecha_baja = "---";
+        if (nuevoEmpleado.fechaBaja == null) {
+          nuevoEmpleado.fechaBaja = "---";
         }
-        if (propiedad !== null) {
+        if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
+
           let td = document.createElement("td");
           td.innerHTML = nuevoEmpleado[propiedad];
           nuevaFila.appendChild(td);
@@ -687,6 +680,9 @@ class WCEmpleados extends HTMLElement {
         confirmarIdentificador = nuevoEmpleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
+        //**** Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
+        console.log(nuevoEmpleado)
+        apiHandler(this.url, "post", nuevoEmpleado);
 
       })
 
@@ -702,9 +698,7 @@ class WCEmpleados extends HTMLElement {
         }
       })
 
-      //**** Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
-      console.log(nuevoEmpleado)
-      apiHandler(this.url, "post", nuevoEmpleado);
+
 
       this.cerrarModalAddEmpleado()
 
