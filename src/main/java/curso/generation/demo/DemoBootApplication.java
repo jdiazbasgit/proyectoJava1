@@ -23,20 +23,22 @@ public class DemoBootApplication extends SpringBootServletInitializer {
 
 	}
 
-	@Configuration
-	@EnableWebSecurity
-	@EnableAspectJAutoProxy
-	
-	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable()
-					.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-					.authorizeRequests().antMatchers("/user").permitAll().antMatchers("/login").permitAll()
-					.antMatchers("/").permitAll().anyRequest().authenticated();
-		}
-
-	}
+	/*
+	 * @Configuration
+	 * 
+	 * @EnableWebSecurity
+	 * 
+	 * @EnableAspectJAutoProxy
+	 * 
+	 * class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	 * 
+	 * @Override protected void configure(HttpSecurity http) throws Exception {
+	 * http.csrf().disable() .addFilterAfter(new JWTAuthorizationFilter(),
+	 * UsernamePasswordAuthenticationFilter.class)
+	 * .authorizeRequests().antMatchers("/user").permitAll().antMatchers("/login").
+	 * permitAll() .antMatchers("/").permitAll().anyRequest().authenticated(); }
+	 * 
+	 * }
+	 */
 
 }
