@@ -456,6 +456,8 @@ class WCEmpleados extends HTMLElement {
     //Sacar las propiedades del empleado seleccionado
     let propiedadEmpleadoSelect = Object.keys(empleadoSeleccionado)
 
+    console.log("propiedadEmpleadoSelect", propiedadEmpleadoSelect)
+
     //****Crear el formulario del empleado seleccionado */
     let formEmpleadoSelect = this.shadowRoot.querySelector("#formEditar")
 
@@ -471,13 +473,17 @@ class WCEmpleados extends HTMLElement {
         formEmpleadoSelect.removeChild(selectLabel)
       }
 
-      if (propiedad !== "jornada") {
+      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== "links") {
 
-        //Se pinta el label con un id único, que será la propia propiedad
+        //Se pinta el LABEL con un id único, que será la propia propiedad
+
+        console.log("propiedad Form EDITAR", propiedad)
 
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-        // labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
+
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
+
         labelpropiedad.innerHTML = propiedad
         //Poner "dni" en mayúscula
         if (propiedad === "dni") {
@@ -498,8 +504,8 @@ class WCEmpleados extends HTMLElement {
         formEmpleadoSelect.removeChild(selectInput)
       }
 
-      if (propiedad !== "jornada") {
-        //Se pinta el label con un id único, que será la propia propiedad
+      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== "_links") {
+        //Se pinta el valor de los inputs del formulario EDITAR con un id único, que será la propia propiedad
 
         let inputPropiedad = document.createElement("input")
         inputPropiedad.setAttribute('id', `input${propiedad}`)
@@ -530,19 +536,19 @@ class WCEmpleados extends HTMLElement {
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
 
     // -------->>>>> **EMPLEADO DESDE CLASES.JS */
-    let empleadoSelect = new Employee(this.id, nombre, apellidos, dni, identificador, fecha_alta, fecha_baja)
+    //let empleadoSelect = new Employee(this.id, nombre, apellidos, dni, identificador, fecha_alta, fecha_baja)
 
     //Identificar el empleado seleccionado
-    empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+    let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
 
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
     // ------------------>>> Propiedades de EMPLOYEE DE CLASES.JS
-    nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
-    apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
-    dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
-    fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
-    fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
+    let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
+    let apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
+    let dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
+    let fecha_alta = this.shadowRoot.querySelector("#inputfecha_alta").value
+    let fecha_baja = this.shadowRoot.querySelector("#inputfecha_baja").value
 
     //en caso de no tener fecha de baja
     if (!fecha_baja) fecha_baja = "---"
@@ -553,8 +559,6 @@ class WCEmpleados extends HTMLElement {
     empleadoSelect.dni = dni
     empleadoSelect.fecha_alta = fecha_alta
     empleadoSelect.fecha_baja = fecha_baja
-
-    //console.log("Nuevo Array MODIFICADO", arrayEmpleados)
 
     //Sobrescribimos la tabla:
     let tablaDatos = this.shadowRoot.querySelector('#tablaDatos');
@@ -572,9 +576,6 @@ class WCEmpleados extends HTMLElement {
 
     console.log("Empleado seleccionado", empleadoSelect)
 
-    //**** Llamada de la API para MODIFICAR el empleado seleccionado ***************
-
-    apiHandler(this.url, "put", empleadoSelect);
 
     this.cerrarModalAddEmpleado()
 
@@ -680,7 +681,8 @@ class WCEmpleados extends HTMLElement {
         confirmarIdentificador = nuevoEmpleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
-        //**** Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
+
+        //****?? Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
         console.log(nuevoEmpleado)
         apiHandler(this.url, "post", nuevoEmpleado);
 
@@ -692,6 +694,10 @@ class WCEmpleados extends HTMLElement {
         if (confirmarIdentificador === nuevoEmpleado.identificador) {
 
           this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
+
+          //****?? Llamada de la API para MODIFICAR el empleado seleccionado ***************
+
+          apiHandler(this.url, "put", nuevoEmpleado.identificador);
 
           this.cerrarModalEditar()
 
