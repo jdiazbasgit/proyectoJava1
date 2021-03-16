@@ -723,7 +723,10 @@ function getDatos(url) {
           "Authorization": sessionStorage.token,
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          "Access-Control-Allow-Origin": "*"
+          
+         // "Access-Control-Allow-Origin": "*"
+
+          "cors":"no-cors"
         }
       })
       .then(function (response) {
@@ -748,7 +751,10 @@ function sendDatos(url, method, data) {
           "Authorization": sessionStorage.token,
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          "Access-Control-Allow-Origin": "*"
+
+          //"Access-Control-Allow-Origin": "*"
+
+          "cors":"no-cors"
         }
       })
       .then(function (response) {
