@@ -74,12 +74,12 @@ class WCJornadasEmpleados extends HTMLElement {
     }
 
     cargaEmpleados(empleados, jornadas, tabla, funcion, url, url2) {
-        getData(url, get).then(function (datos) {
+        getData(url).then(function (datos) {
             Array.prototype.forEach.call(datos, dato => {
                 empleados.push(dato);
 
             })
-            getData(url2, get).then(function (datos) {
+            getData(url2).then(function (datos) {
                 Array.prototype.forEach.call(datos, dato => {
                     jornadas.push(dato);
                 })
@@ -176,7 +176,9 @@ class WCJornadasEmpleados extends HTMLElement {
                 jornadaSelect.style.borderColor = null;
                 let jornadaSeleccionada = option[jornadaSelect.selectedIndex].text;
                 let idJornadaSeleccionada = option[jornadaSelect.selectedIndex].value;
-                console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
+                //console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
+                getDataBody(url, "post", idJornadaSeleccionada);
+            
             });
 
         });
@@ -202,6 +204,8 @@ function getData(url, metodo) {
         });
     });
 }
+
+//sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODg5MTM3LCJleHAiOjE2MTU4ODk3Mzd9.BRtBSDPqQJiKpYgXYOfGynLiYlqmsCaR3OnULyO_cTcfy3y3fjmpq5y99oQ_i9geksf8eMeuxlYFyT1pPXtzyg"
 
 function getDataBody(url, metodo, data) {
     return new Promise(function (resolve, reject) {
