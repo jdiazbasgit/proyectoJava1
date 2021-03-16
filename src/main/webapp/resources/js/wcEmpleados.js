@@ -42,7 +42,7 @@ class WCEmpleados extends HTMLElement {
           .styleModal {
             min-width: 40%;
             margin: 0 auto;
-            padding: 2rem 3rem;
+            padding: .5rem 1.5rem;
             background-color: #EEEEEE;
             border-radius: 30px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
@@ -88,6 +88,7 @@ class WCEmpleados extends HTMLElement {
           color: #F2BB3F;
           font-size: 0.85rem;
           padding-right: .5rem;
+          padding-left: .5rem;
         }
         
         #tablaDatos tr > td:first-child {
@@ -250,7 +251,7 @@ class WCEmpleados extends HTMLElement {
       this.crearTablaEmpeados(listaEmpleados)
     })
 
-   // let nuevoEmp = new Employee(0, nombre, apellidos, dni, this.identificadorAleatorio(), fechaAlta, null, new Day(1, "", "", "", "", "", "", "", false, ""))
+    // let nuevoEmp = new Employee(0, nombre, apellidos, dni, this.identificadorAleatorio(), fechaAlta, null, new Day(1, "", "", "", "", "", "", "", false, ""))
     let nuevoEmp
 
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
@@ -585,9 +586,9 @@ class WCEmpleados extends HTMLElement {
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
-        if (nuevoEmpleado.fecha_baja == null || nuevoEmpleado.fechaAlta == "") {
+        if (nuevoEmpleado.fecha_baja == null || nuevoEmpleado.fecha_alta == "undefined") {
           nuevoEmpleado.fecha_baja = "---";
-          nuevoEmpleado.fechaAlta = "---";
+          nuevoEmpleado.fecha_alta = "---";
         }
         if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
           let td = document.createElement("td");
@@ -642,8 +643,6 @@ class WCEmpleados extends HTMLElement {
         confirmarIdentificador = nuevoEmpleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
-
-        //------------------->>>>>>>>>>
       })
 
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
@@ -666,7 +665,16 @@ class WCEmpleados extends HTMLElement {
 
       console.log("METODO POST!!", JSON.stringify(nuevoEmpleado))
 
-      apiHandler(this.url, "POST", nuevoEmpleado);
+      // **** Para usar los datos del nuevo empleado que requiere la tabla EMPLOYEES de la BD *****
+      const newBodyForEmpleado = {
+        nombre: nuevoEmpleado.nombre,
+        apellidos: nuevoEmpleado.apellidos,
+        identificador: nuevoEmpleado.identificador,
+        dni: nuevoEmpleado.dni,
+        fecha_alta: nuevoEmpleado.fecha_alta
+      }
+
+      apiHandler(this.url, "POST", newBodyForEmpleado);
 
       this.cerrarModalAddEmpleado()
 
@@ -687,7 +695,7 @@ sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1
 //*** ****************************
 function apiHandler(url, method = "get", data) {
 
-  console.log(JSON.stringify(data))
+  console.log(method, url, data)
 
   if (method == "get") {
     return getDatos(url)
@@ -740,7 +748,7 @@ function sendDatos(url, method, data) {
         "body": JSON.stringify(data),
 
         "headers": {
-          "Content-Type": "Aplication/JSON"
+          "Content-Type": "application/json"
           // "Authorization": sessionStorage.token,
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
