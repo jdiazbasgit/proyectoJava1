@@ -271,7 +271,7 @@ class WCEmpleados extends HTMLElement {
     datosJSON.then((empleados) => {
 
       listaEmpleados = empleados._embedded.employees
-     // console.log("Lista inicial" , listaEmpleados)
+      // console.log("Lista inicial" , listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
     })
@@ -339,7 +339,7 @@ class WCEmpleados extends HTMLElement {
 
     //********* BODY TABLA*/
 
-console.log("arrayEmpleados BODY", arrayEmpleados)
+    console.log("arrayEmpleados BODY", arrayEmpleados)
 
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
@@ -729,9 +729,7 @@ function getDatos(url) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
         "method": "get",
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "cors": "no-cors"
+        "cors": "no-cors",
         // "headers": {
         //"Access-Control-Allow-Origin":"*",
         //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
@@ -739,28 +737,20 @@ function getDatos(url) {
         //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
 
         // }
-=======
-        "cors":"no-cors",
-=======
-        
->>>>>>> 7ef02d214cffcab5b4ce32ed9275beb8a0f1d7cd
-        "headers": {
+
+        /*"headers": {
           //"Access-Control-Allow-Origin":"*",
-          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
+          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          
-         // "Access-Control-Allow-Origin": "*"
->>>>>>> d03431fb21cde0fab282f73bd0de331e943dcf76
 
-<<<<<<< HEAD
+          // "Access-Control-Allow-Origin": "*"
+
+          // }
+
+        }*/
       })
-=======
-         
-       // }
-        
-      }})
->>>>>>> 7ef02d214cffcab5b4ce32ed9275beb8a0f1d7cd
+
       .then(function (response) {
         if (response.ok)
           resolve(response.json())
@@ -774,19 +764,23 @@ function getDatos(url) {
   })
 }
 
+
+
+
+
 function sendDatos(url, method, data) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
         "method": method,
         "body": JSON.stringify(data),
-        "headers": {
-          "Authorization": sessionStorage.token,
+        "cors": "no-cors",
+        /*"headers": {
+          // "Authorization": sessionStorage.token,
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+          // },
 
-
-        },
-        "cors": "no-cors"
+        }*/
       })
       .then(function (response) {
         if (response.ok)
