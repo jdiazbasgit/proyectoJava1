@@ -32,7 +32,7 @@ public class CalendarRestController {
 		List<CalendarDTO> salida = new ArrayList<>();
 		List<Calendar> calendario = getRepository().getCalendarByYear(year.getYear());
 		for (Calendar calendar : calendario) {
-			@SuppressWarnings("deprecation")
+//			@SuppressWarnings("deprecation")
 			//GregorianCalendar fecha = new GregorianCalendar(year.getYear(), calendar.getFecha().getMonth(),
 				//	calendar.getFecha().getDay());
 			CalendarDTO dto = convertirCalendarDto(calendar);
@@ -51,7 +51,8 @@ public class CalendarRestController {
 		GregorianCalendar fecha = new GregorianCalendar();
 		fecha.setTimeInMillis(inicio.getFecha().getTime());
 		dto.setColumna(fecha.get(java.util.Calendar.DAY_OF_WEEK));
-		dto.setFila(fecha.get(java.util.Calendar.WEEK_OF_YEAR));
+		dto.setFila(fecha.get(java.util.Calendar.WEEK_OF_MONTH));
+		dto.setMes(fecha.get(java.util.Calendar.MONTH));
 		return dto;
 	}
 

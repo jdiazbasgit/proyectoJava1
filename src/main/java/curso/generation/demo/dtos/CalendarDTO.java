@@ -18,6 +18,9 @@ public class CalendarDTO {
 	private Status status;
 	private int fila;//semana del mes o semana del año
 	private int columna;// dia de la semana
+	private int mes;
+	
+
 	public int getId() {
 		return id;
 	}
@@ -47,6 +50,18 @@ public class CalendarDTO {
 	}
 	public void setColumna(int columna) {
 		this.columna = columna;
+	}
+	/**
+	 * @return the mes
+	 */
+	public int getMes() {
+		return mes;
+	}
+	/**
+	 * @param mes the mes to set
+	 */
+	public void setMes(int mes) {
+		this.mes = mes;
 	}
 	
 }
