@@ -1,12 +1,10 @@
 package curso.generation.demo.controllers;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import curso.generation.demo.beans.CalendarDTO;
 import curso.generation.demo.beans.Year;
 import curso.generation.demo.entidades.Calendar;
+import curso.generation.demo.entidades.User;
 import curso.generation.demo.repositorios.CalendarCRUDRepository;
 import curso.generation.demo.repositorios.StatusCRUDRepository;
+import curso.generation.demo.repositorios.UserCRUDRepository;
 
 @RestController
 public class CalendarRestController {
@@ -25,6 +25,8 @@ public class CalendarRestController {
 
 	@Autowired
 	private StatusCRUDRepository repositoryStatus;
+	@Autowired
+	private UserCRUDRepository repositoryUsers;
 
 	@PostMapping("api/calendarByYear")
 	public List<CalendarDTO> getCalendarRest(@RequestBody Year year) {
@@ -40,6 +42,12 @@ public class CalendarRestController {
 
 		return salida;
 
+	}
+	
+	@PostMapping("api/users")
+	public Iterable<User> getCalendarRest1() {
+		
+		return getRepositoryUsers().findAll();
 	}
 
 	private CalendarDTO convertirCalendarDto(Calendar inicio) {
@@ -92,6 +100,14 @@ public class CalendarRestController {
 
 	public void setRepositoryStatus(StatusCRUDRepository repositoryStatus) {
 		this.repositoryStatus = repositoryStatus;
+	}
+
+	public UserCRUDRepository getRepositoryUsers() {
+		return repositoryUsers;
+	}
+
+	public void setRepositoryUsers(UserCRUDRepository repositoryUsers) {
+		this.repositoryUsers = repositoryUsers;
 	}
 
 }
