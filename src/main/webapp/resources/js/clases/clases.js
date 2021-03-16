@@ -1,10 +1,10 @@
-export class Acceso {
+class Acceso {
     constructor(id, year, empleado, month, day, minuto, hora, tipo, fecha, horaReal, minutoReal) {
         this.id = id;
         this.year = year;
         this.empleado = empleado;
         this.month = month;
-        this.day = day;
+        thia.day = day;
         this.minuto = minuto;
         this.hora = hora;
         this.tipo = tipo;
@@ -13,7 +13,7 @@ export class Acceso {
         this.minutoReal = minutoReal;
     }
 }
-export class Employee {
+class Employee {
     constructor(id, nombre, apellidos, dni, identificador, fechaAlta, fechaBaja, day) {
         this.id = id;
         this.nombre = nombre;
@@ -26,7 +26,7 @@ export class Employee {
     }
 }
 
-export class Day {
+class Day {
     constructor(id, lunes, martes, miercoles, jueves, viernes, sabado, domingo, especial, descripcion) {
         this.id = id;
         this.lunes = lunes
@@ -41,7 +41,7 @@ export class Day {
     }
 
 }
-export class Status {
+class Status {
     constructor(id, descripcion, tipo, color) {
         this.id = id
         this.descripcion = descripcion
@@ -50,32 +50,30 @@ export class Status {
 
     }
 }
-export class User {
+class User {
     constructor(id, user, password, enabled, rol) {
-        this.id = id
-        this.user = user
+        this.id = idthis.user = user
         this.password = password
         this.enabled = enabled
         this.rol = rol
     }
 }
-export class Rol {
+class Rol {
     constructor(id, rol) {
         this.id = id
         this.rol = rol
     }
 }
-export class Calendar {
+class Calendar {
     constructor(id, fecha, status) {
         this.id = id
         this.fecha = fecha
         this.status = status
     }
 }
-export class EmployeeStatus {
+class EmployeeStatus {
     constructor(id, employee, status, calendar, day) {
-        this.id = id
-        this.employee = employee
+        this.id = idthis.employee = employee
         this.status = status;
         this.calendar = calendar
         this.day = day
@@ -83,9 +81,9 @@ export class EmployeeStatus {
 }
 
 
-export class Login {
-    constructor(user, password) {
-        this.user = user
-        this.password = password
+class Login{
+    constructor(user, password){
+        this.user=user
+        this.password=password
     }
 }
