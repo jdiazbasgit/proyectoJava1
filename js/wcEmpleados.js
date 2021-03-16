@@ -257,17 +257,18 @@ class WCEmpleados extends HTMLElement {
     //let URL = link.getAttribute('url');
 
     //Datos de JSON
-    let datosJSON = getDatos(this.url)
+    let empleado=new Employee(0,document.querySelector("#nombre"),"","","","","",jornada);
+    let datosJSON = getDatos(this.url, "PUT",empleado)
 
     //Array con Empleados
-    let listaEmpleados
+    //let listaEmpleados
 
-    datosJSON.then((empleado) => {
+    datosJSON.then((empleados) => {
 
-      listaEmpleados = empleado
+     // listaEmpleados = empleado
       //console.log("Lista inicial", listaEmpleados)
 
-      this.crearTablaEmpeados(listaEmpleados)
+      this.crearTablaEmpeados(empleados)
     })
 
     let nuevoEmp
@@ -303,19 +304,19 @@ class WCEmpleados extends HTMLElement {
     thead.classList.add("thead");
 
     let thIcono = document.createElement("th")
-    
-    //thIcono.innerHTML = `<i class="bi bi-people-fill"></i> `
-    thIcono.innerHTML = ""
+
+    thIcono.innerHTML = `<i class="bi bi-people-fill"></i> `
+    //thIcono.innerHTML = ""
     thead.appendChild(thIcono)
 
     propiedadesTablaEmpleados.forEach(propiedad => {
       if (propiedad !== "jornada") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        th.innerHTML = this.capitalizarPrimeraLetra(propiedad); 
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
 
         if (propiedad === "dni") {
-          th.innerHTML = propiedad.toUpperCase() 
+          th.innerHTML = propiedad.toUpperCase()
         }
 
         thead.appendChild(th);
@@ -340,7 +341,7 @@ class WCEmpleados extends HTMLElement {
 
       let datoIcono = document.createElement("td");
       tr.appendChild(datoIcono);
-      
+
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in empleado) {
@@ -350,10 +351,10 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada") {
           let td = document.createElement("td");
-          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); 
-          
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
+
           if (propiedad === "dni") {
-            td.innerHTML = empleado[propiedad].toUpperCase() 
+            td.innerHTML = empleado[propiedad].toUpperCase()
           }
 
           tr.appendChild(td);
@@ -683,11 +684,39 @@ class WCEmpleados extends HTMLElement {
 
 window.customElements.define("wc-empleados", WCEmpleados);
 
-
+sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODMwMDg1LCJleHAiOjE2MTU4MzA2ODV9.KZY2PlIpRU5rGcP0O3UR1K1XScdtQK5fIkL0DyJufpwW-RG2tlqvPl7iJm26XLwoqswwvGLzxfy-oWGwW-Crhw"
 //Funcion que obtiene los datos
-function getDatos(url) {
+function getDatos(url, method) {
   return new Promise(function (resolve, reject) {
-    fetch(url)
+    fetch(url, {
+        "method": method,
+        //"body": JSON.stringify(data),
+        "headers": {
+          "authorization": sessionStorage.token+"a"
+        }
+      })
+      .then(function (response) {
+        if (response.ok)
+          resolve(response.json())
+        else {
+          reject(response.status)
+        }
+      }).catch(function (error) {
+        console.log(`ERROR ${error}`)
+        reject(error);
+      })
+  })
+}
+
+function getDatos(url, method,data) {
+  return new Promise(function (resolve, reject) {
+    fetch(url, {
+        "method": method,
+        "body": JSON.stringify(data),
+        "headers": {
+        "authorization": sessionStorage.token+"a"
+        }
+      })
       .then(function (response) {
         if (response.ok)
           resolve(response.json())
