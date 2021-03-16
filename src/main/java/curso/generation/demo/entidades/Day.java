@@ -15,8 +15,8 @@ public class Day {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "lunes")
-	private String lunes1;
+	@Column
+	private String lunes;
 	
 	@Column
 	private String martes,miercoles,jueves,viernes,sabado,domingo,descripcion;
@@ -32,11 +32,11 @@ public class Day {
 	}
 
 	public String getLunes() {
-		return lunes1;
+		return lunes;
 	}
 
 	public void setLunes(String lunes) {
-		this.lunes1 = lunes;
+		this.lunes = lunes;
 	}
 
 	public String getMartes() {

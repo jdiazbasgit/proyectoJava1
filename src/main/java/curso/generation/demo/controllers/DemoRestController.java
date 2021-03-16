@@ -61,15 +61,15 @@ public class DemoRestController {
 	}
 
 	@PostMapping(value = "user")
-	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)
+	public UserDto verLogin(@RequestParam String user, @RequestParam String password, HttpServletResponse response)
 			throws IOException {
 
-		Optional<User> userDetails = getRepositoryUser().findByUserName(userFront.getUser());
+		Optional<User> userDetails = getRepositoryUser().findByUserName(user);
 		UserDto userDto = new UserDto();
-		if (userDetails.get().getPassword().equals(userFront.getPassword())) {
+		if (userDetails.get().getPassword().equals(password)) {
 			userDto.setUser(userDetails.get().getUser());
 			userDto.setRol(userDetails.get().getRol().getRol());
-			userDto.setToken(getJWTToken(userFront.getUser(), userDto.getRol()));
+			userDto.setToken(getJWTToken(user , userDto.getRol()));
 			return userDto;
 		} else {
 			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
