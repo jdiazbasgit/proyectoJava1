@@ -11,14 +11,11 @@
     <script src="./js/clases/clases.js"></script>
     <script src="./js/acceso.js"></script>
     <script>
-
         function login() {
             login = new Login(document.querySelector("#user").value, document.querySelector("#password").value);
-
             getDatosLogin("http://192.168.1.145:8081/accesoGrupo2/user", "POST", login).then(function (dato) {
                 console.log(dato)
-
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log(error)
             })
         }
@@ -26,12 +23,12 @@
 </head>
 
 <body style="background: linear-gradient(to bottom,#364047, #F1BB40); background-repeat: no-repeat; height: 100vh;">
-    <div style="">
+    <div>
         <div style="text-align: center; margin: 5%;">
-            <img src="img/logo.png" style="width:10%" alt="logo">
+            <a href="#"><img src="img/logo.png" style="width:10%" alt="logo"></a>
         </div>
         <div style="margin: auto; width: 18%;">
-            <form action="index.html" method="POST">
+            <form action="#" method="POST">
                 <div>
                     <label style="font-weight: bold;" for="username">Usuario</label>
                 </div>
@@ -39,11 +36,11 @@
                     <input id="user" style="width: 100%; border-radius: 30px; padding-left: 5%;" type="text"
                         placeholder="Escriba su usuario">
                 </div>
-                <div  id="password" style="margin-top: 5%;">
+                <div style="margin-top: 5%;">
                     <label style="font-weight: bold;" for="password">Contraseña</label>
                 </div>
                 <div>
-                    <input style="width: 100%; border-radius: 30px; padding-left: 5%;" type="password"
+                    <input id="password" style="width: 100%; border-radius: 30px; padding-left: 5%;" type="password"
                         placeholder="Escriba su contraseña">
                 </div>
                 <div style="margin-top: 5%;">
@@ -51,9 +48,9 @@
                     <input type="checkbox">
                 </div>
                 <div>
-                    <button onclick="login()"
+                    <input onclick="login()"
                         style="background-color: #364047; color: white; width: 100%; border-radius: 30px; margin-top: 20%; font-weight: bold;"
-                        type="submit" class="btn">ENTRA</button>
+                        type="submit" value="ACEPTAR" class="btn" name="aceptar">
                 </div>
             </form>
         </div>
