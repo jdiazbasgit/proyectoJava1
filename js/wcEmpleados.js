@@ -1,3 +1,6 @@
+//import { Employee } from "./clases/clases"; ******************* ???
+
+
 class WCEmpleados extends HTMLElement {
   constructor() {
     super();
@@ -256,13 +259,10 @@ class WCEmpleados extends HTMLElement {
 
 
     //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
-    //const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
+
     console.log("nueva:" + this.url)
 
-    // *** URL buena a usar cuando se arregle lo del HEAD
-    //let datosJSON = apiHandler(url)
-
-    //Datos del JSON (provisional)
+    // *** URL buena a usar 
     let datosJSON = apiHandler(this.url)
 
     //Array con Empleados
@@ -322,7 +322,9 @@ class WCEmpleados extends HTMLElement {
       if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
+        //th.innerHTML = this.capitalizarPrimeraLetra(propiedad); ------>>>>
+
+        th.innerHTML = propiedad;
 
         if (propiedad === "dni") {
           th.innerHTML = propiedad.toUpperCase()
@@ -363,7 +365,8 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
           let td = document.createElement("td");
-          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
+          // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
+          td.innerHTML = empleado[propiedad];
 
           if (propiedad === "dni") {
             td.innerHTML = empleado[propiedad].toUpperCase()
@@ -486,7 +489,8 @@ class WCEmpleados extends HTMLElement {
 
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad)
+        // labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
+        labelpropiedad.innerHTML = propiedad
         //Poner "dni" en mayúscula
         if (propiedad === "dni") {
           labelpropiedad.innerHTML = propiedad.toUpperCase()
@@ -537,9 +541,9 @@ class WCEmpleados extends HTMLElement {
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
     //Identificar el empleado seleccionado
-    let empleadoSelect = new Employee // ----------------------->>>
+    //let empleadoSelect = new Employee // ----------------------->>> OBJETO DE CLASES.JS
 
-    empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+    let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
 
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
@@ -607,16 +611,18 @@ class WCEmpleados extends HTMLElement {
 
       tbody.appendChild(nuevaFila);
 
-      nuevoEmpleado = new Employee //------------------------------->>>>>>
+      //nuevoEmpleado = new Employee //------------------------------->>>>>>
 
-      /* nuevoEmpleado = {
-         "nombre": nombre,
-         "apellidos": apellidos,
-         "dni": dni,
-         "identificador": this.identificadorAleatorio(),
-         "fecha_alta": fechaAlta,
-         "fecha_baja": null
-       };*/
+      console.log("nuevoEmpleado", nuevoEmpleado)
+
+      nuevoEmpleado = {
+        "nombre": nombre,
+        "apellidos": apellidos,
+        "dni": dni,
+        "identificador": this.identificadorAleatorio(),
+        "fecha_alta": fechaAlta,
+        "fecha_baja": null
+      };
 
       let datoIcono = document.createElement("td");
 

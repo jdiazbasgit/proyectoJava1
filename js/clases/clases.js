@@ -13,7 +13,7 @@ class Acceso {
         this.minutoReal = minutoReal;
     }
 }
-class Employee {
+export class Employee {
     constructor(id, nombre, apellidos, dni, identificador, fechaAlta, fechaBaja, day) {
         this.id = id;
         this.nombre = nombre;
@@ -88,3 +88,5 @@ class Login {
         this.password = password
     }
 }
+
+//export default Clases //CREO QUE FALTA ALGO MÁS
