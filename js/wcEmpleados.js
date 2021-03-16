@@ -256,8 +256,8 @@ class WCEmpleados extends HTMLElement {
 
    
     //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
-    const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
-    console.log(url)
+  //const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
+    console.log("nueva:"+this.url)
 
     // *** URL buena a usar cuando se arregle lo del HEAD
     //let datosJSON = apiHandler(url)
@@ -286,15 +286,16 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-
+    
     this.url = newValue;
+    
     console.log("PEPE", this.url)
 
   }
 
   static get observedAttributes() {
 
-    return ["url", "id"]
+    return ["url"]
   }
 
   //Fuera de "connectedCallback()"
