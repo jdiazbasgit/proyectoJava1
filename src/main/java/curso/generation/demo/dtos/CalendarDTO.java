@@ -19,6 +19,7 @@ public class CalendarDTO {
 	private int fila;//semana del mes o semana del año
 	private int columna;// dia de la semana
 	private int mes;
+	private int numSem;
 	
 
 	public int getId() {
@@ -62,6 +63,18 @@ public class CalendarDTO {
 	 */
 	public void setMes(int mes) {
 		this.mes = mes;
+	}
+	/**
+	 * @return the numSem
+	 */
+	public int getNumSem() {
+		return numSem;
+	}
+	/**
+	 * @param numSem the numSem to set
+	 */
+	public void setNumSem(int numSem) {
+		this.numSem = numSem;
 	}
 	
 }

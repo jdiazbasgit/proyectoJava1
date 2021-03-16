@@ -53,6 +53,7 @@ public class CalendarRestController {
 		dto.setColumna(fecha.get(java.util.Calendar.DAY_OF_WEEK));
 		dto.setFila(fecha.get(java.util.Calendar.WEEK_OF_MONTH));
 		dto.setMes(fecha.get(java.util.Calendar.MONTH));
+		dto.setNumSem(fecha.getActualMaximum(java.util.Calendar.WEEK_OF_MONTH));
 		return dto;
 	}
 
