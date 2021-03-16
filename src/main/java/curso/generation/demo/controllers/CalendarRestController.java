@@ -33,9 +33,10 @@ public class CalendarRestController {
 		List<Calendar> calendario = getRepository().getCalendarByYear(year.getYear());
 		for (Calendar calendar : calendario) {
 			@SuppressWarnings("deprecation")
-			GregorianCalendar fecha = new GregorianCalendar(year.getYear(), calendar.getFecha().getMonth(),
-					calendar.getFecha().getDay());
+			//GregorianCalendar fecha = new GregorianCalendar(year.getYear(), calendar.getFecha().getMonth(),
+				//	calendar.getFecha().getDay());
 			CalendarDTO dto = convertirCalendarDto(calendar);
+			salida.add(dto);
 		}
 
 		return salida;
