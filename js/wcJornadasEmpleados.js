@@ -9,9 +9,55 @@ class WCJornadasEmpleados extends HTMLElement {
 
         let shadowRoot = this.attachShadow({ mode: "open" });
 
-        const template = document.querySelector("#plantilla3");
-        const plantilla = template.content.cloneNode(true);
-        shadowRoot.appendChild(plantilla);
+        shadowRoot.innerHTML=`
+        <style>
+        /* #divp{
+            background-color: rgb(236, 235, 235);
+        } */
+        #tabla{
+            width: 90vw;
+            margin: 0 auto;
+            text-align: left; 
+            border-collapse:separate; 
+            border-spacing: 0 2px;
+        }
+        /* #tabla td, #tabla th{
+            border-bottom: 5px solid rgb(236, 235, 235);
+        } */
+        thead{
+            background-color: rgb(50,64,71);
+            color: white;
+        }
+        /* h3, tbody{
+            color: rgb(50,64,71); 
+        } */
+        img{
+            width: 20px;
+            height: 20px;
+        }           
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/stylesWcJornadas.css">
+    <div>
+    <div id="flexContainer">
+        <h3>JORNADAS/EMPLEADOS</h3>
+    </div>
+        <table class="table table-sm table-hover" id="tabla">
+            <thead class="thead">
+                <tr>
+                    <th><img src="img/svg/icono3blanco.svg" alt=""></th>
+                    <th id="thNombre">NOMBRE</th>
+                    <th id="thApellidos">APELLIDOS</th>                    
+                    <th>JORNADA</th>                    
+                </tr>
+            </thead>
+            <!--<tbody id="tbody"></tbody>-->
+        </table>
+    </div>`;
+
+        //const template = document.querySelector("#plantilla3");
+        //const plantilla = template.content.cloneNode(true);
+        //shadowRoot.appendChild(plantilla);
 
         let thNombre = shadowRoot.querySelector("#thNombre");
         let thApellidos = shadowRoot.querySelector("#thApellidos");
@@ -130,7 +176,9 @@ class WCJornadasEmpleados extends HTMLElement {
                 jornadaSelect.style.borderColor = null;
                 let jornadaSeleccionada = option[jornadaSelect.selectedIndex].text;
                 let idJornadaSeleccionada = option[jornadaSelect.selectedIndex].value;
-                console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
+                //console.log("Ha seleccionado la jornada \""+jornadaSeleccionada +" "+idJornadaSeleccionada+"\" para " + empleado.apellidos);
+                getDataBody(url, "post", idJornadaSeleccionada);
+            
             });
 
         });
@@ -142,9 +190,30 @@ class WCJornadasEmpleados extends HTMLElement {
 window.customElements.define("wc-jornadasempleados", WCJornadasEmpleados);
 
 
-function getData(url) {
+function getData(url, metodo) {
     return new Promise(function (resolve, reject) {
-        fetch(url).then(function (response) {
+        fetch(url,{
+            "method": metodo
+        }).then(function (response) {
+            if (response.status == 200)
+                resolve(response.json());
+            else
+                reject(response.status);
+        }).catch(function (error) {
+            reject(error);
+        });
+    });
+}
+
+//sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODg5MTM3LCJleHAiOjE2MTU4ODk3Mzd9.BRtBSDPqQJiKpYgXYOfGynLiYlqmsCaR3OnULyO_cTcfy3y3fjmpq5y99oQ_i9geksf8eMeuxlYFyT1pPXtzyg"
+
+function getDataBody(url, metodo, data) {
+    return new Promise(function (resolve, reject) {
+        fetch(url,{
+            "method": metodo,
+            "body": JSON.stringify (data),
+            "headers":[{"authorization":sessionStorage.token}]
+        }).then(function (response) {
             if (response.status == 200)
                 resolve(response.json());
             else
