@@ -22,13 +22,13 @@ class DemoBootApplicationTests {
 	@Autowired
 	private DayCRUDRepository repository1;
 	
-	@Test
+	//@Test
 	 void contextLoads() {
 		assertNotNull(getRepository().findAll());
 		
 	}
 	
-	@Test
+	//@Test
 	void test2() {
 		
 		assertNotNull(getRepository1().getJornadasConUno(true));
