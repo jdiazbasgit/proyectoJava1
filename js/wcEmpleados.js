@@ -454,8 +454,6 @@ class WCEmpleados extends HTMLElement {
     //Sacar las propiedades del empleado seleccionado
     let propiedadEmpleadoSelect = Object.keys(empleadoSeleccionado)
 
-    console.log("propiedadEmpleadoSelect", propiedadEmpleadoSelect)
-
     //****Crear el formulario del empleado seleccionado */
     let formEmpleadoSelect = this.shadowRoot.querySelector("#formEditar")
 
@@ -475,12 +473,10 @@ class WCEmpleados extends HTMLElement {
 
         //Se pinta el LABEL con un id único, que será la propia propiedad
 
-        console.log("propiedad Form EDITAR", propiedad)
-
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
 
-        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad)
 
         labelpropiedad.innerHTML = propiedad
         //Poner "dni" en mayúscula
@@ -527,8 +523,8 @@ class WCEmpleados extends HTMLElement {
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
 
-    if(miString)
-    return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    if (miString)
+      return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
 
@@ -542,7 +538,6 @@ class WCEmpleados extends HTMLElement {
 
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
-    // ------------------>>> Propiedades de EMPLOYEE DE CLASES.JS
     let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
     let apellidos = this.shadowRoot.querySelector("#inputapellidos").value.toUpperCase()
     let dni = this.shadowRoot.querySelector("#inputdni").value.toUpperCase()
@@ -623,8 +618,9 @@ class WCEmpleados extends HTMLElement {
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
-        if (nuevoEmpleado.fechaBaja == null) {
+        if (nuevoEmpleado.fechaBaja == null || nuevoEmpleado.fechaAlta == "") {
           nuevoEmpleado.fechaBaja = "---";
+          nuevoEmpleado.fechaAlta = "---";
         }
         if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
 
