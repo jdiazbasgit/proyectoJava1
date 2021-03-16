@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./js/clases/clases.js"></script>
+    <script src="./js/acceso.js"></script>
+    <script>
+
+        function login() {
+            login = new Login(document.querySelector("#user").value, document.querySelector("#password").value);
+
+            getDatosLogin("http://192.168.1.145:8081/accesoGrupo2/user", "POST", login).then(function (dato) {
+                console.log(dato)
+
+            }).catch(function(error){
+                console.log(error)
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <form action="">
+        <input id="user"><br>
+        <input type="password" id="password"><br>
+        <button onclick="login()">enviar</button>
+
+    </form>
+</body>
+
+</html>
