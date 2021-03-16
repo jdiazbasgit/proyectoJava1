@@ -755,8 +755,9 @@ function sendDatos(url, method, data) {
 
           //"Access-Control-Allow-Origin": "*"
 
-          "cors":"no-cors"
-        }
+          
+        },
+        "cors":"no-cors"
       })
       .then(function (response) {
         if (response.ok)
