@@ -26,7 +26,7 @@ public interface AccessCRUDRepository extends CrudRepository<Access, Integer> {
 		@Query("from Access a where a.month=:mes and a.year>=:anioOrigen and a.year<=:anioFinal and a.employee.nombre=:nombre")
 		public Iterable<Access> getAccessByAnioAndMesAndName(int anioOrigen, int anioFinal,  int mes, String nombre);
 
-		@Query("")
-		public List<Access> getAccesosByEmployeeAndMonthAndYear(Employee employee, int month, int year)
+		//@Query("")
+		//public List<Access> getAccesosByEmployeeAndMonthAndYear(Employee employee, int month, int year)
 
 }
