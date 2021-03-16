@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/wcJornadasEmpleados.js" async></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/stylesWcJornadas.css">
+    <style>
+    </style>
+</head>
+
+<body>    
+    <wc-jornadasempleados url="datos/empleados.json" url2="datos/jornadas.json"></wc-jornadasempleados>
+    <template id="plantilla3">
+        <style>
+            /* #divp{
+                background-color: rgb(236, 235, 235);
+            } */
+            #tabla{
+                width: 90vw;
+                margin: 0 auto;
+                text-align: left; 
+                border-collapse:separate; 
+                border-spacing: 0 2px;
+            }
+            /* #tabla td, #tabla th{
+                border-bottom: 5px solid rgb(236, 235, 235);
+            } */
+            thead{
+                background-color: rgb(50,64,71);
+                color: white;
+            }
+            /* h3, tbody{
+                color: rgb(50,64,71); 
+            } */
+            img{
+                width: 20px;
+                height: 20px;
+            }           
+        </style>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./css/stylesWcJornadas.css">
+        <div>
+        <div id="flexContainer">
+            <h3>JORNADAS/EMPLEADOS</h3>
+        </div>
+            <table class="table table-sm table-hover" id="tabla">
+                <thead class="thead">
+                    <tr>
+                        <th><img src="img/svg/icono3blanco.svg" alt=""></th>
+                        <th id="thNombre">NOMBRE</th>
+                        <th id="thApellidos">APELLIDOS</th>                    
+                        <th>JORNADA</th>                    
+                    </tr>
+                </thead>
+                <!--<tbody id="tbody"></tbody>-->
+            </table>
+        </div>
+    </template>
+</body>
+
+</html>
