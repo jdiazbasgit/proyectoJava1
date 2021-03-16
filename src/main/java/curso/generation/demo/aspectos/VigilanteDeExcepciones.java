@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-@Aspect
+//@Aspect
 public class VigilanteDeExcepciones {
 	
 	
@@ -18,7 +18,7 @@ public class VigilanteDeExcepciones {
 
 	}
 	
-	@Around("vigilante()")
+	//@Around("vigilante()")
 	public Object comprobarExcepcion(ProceedingJoinPoint joinPoint) {
 		System.err.println("entrooo");
 		Object salida=null;
