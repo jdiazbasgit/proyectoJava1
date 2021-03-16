@@ -13,7 +13,7 @@
     <script>
         function login() {
             login = new Login(document.querySelector("#user").value, document.querySelector("#password").value);
-            getDatosLogin("http://192.168.1.145:8081/accesoGrupo2/user", "POST", login).then(function (dato) {
+            getDatosLogin("http://188.127.175.42:8081/accesoGrupo2/user", "POST", login).then(function (dato) {
                 console.log(dato)
             }).catch(function (error) {
                 console.log(error)
@@ -25,9 +25,9 @@
 <body style="background: linear-gradient(to bottom,#364047, #F1BB40); background-repeat: no-repeat; height: 100vh;">
     <div>
         <div style="text-align: center; margin: 5%;">
-            <a href="#"><img src="img/logo.png" style="width:10%" alt="logo"></a>
+            <a href="#"><img src="img/logo.png" style="width:10%; min-width: 100px;" alt="logo"></a>
         </div>
-        <div style="margin: auto; width: 18%;">
+        <div style="margin: auto; width: 20%; min-width: 300px;">
             <form action="#" method="POST">
                 <div>
                     <label style="font-weight: bold;" for="username">Usuario</label>
