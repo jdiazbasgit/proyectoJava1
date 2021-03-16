@@ -526,7 +526,7 @@ class WCEmpleados extends HTMLElement {
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
 
-    return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    //return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
 
