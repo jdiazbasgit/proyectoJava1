@@ -268,9 +268,9 @@ class WCEmpleados extends HTMLElement {
     //Array con Empleados
     let listaEmpleados
 
-    datosJSON.then((empleado) => {
-
-      listaEmpleados = empleado
+    datosJSON.then((empleados) => {
+      console.log(empleados._embedded.employees[0])
+      listaEmpleados = empleados
       //console.log("Lista inicial", listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
@@ -720,17 +720,17 @@ function getDatos(url) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
         "method": "get",
-        "cors":"no-cors",
-        "headers": {
-          "Access-Control-Allow-Origin":"*",
-          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
+        "cors":"no-cors"
+       // "headers": {
+          //"Access-Control-Allow-Origin":"*",
+          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
           
          // "Access-Control-Allow-Origin": "*"
 
          
-        }
+       // }
         
       })
       .then(function (response) {
