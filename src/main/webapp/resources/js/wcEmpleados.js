@@ -1,4 +1,6 @@
-
+import {
+  Employee
+} from "./clases/clases.js";
 
 
 class WCEmpleados extends HTMLElement {
@@ -247,6 +249,8 @@ class WCEmpleados extends HTMLElement {
       this.crearTablaEmpeados(listaEmpleados)
     })
 
+    
+
     let nuevoEmp
 
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
@@ -257,15 +261,10 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-
     this.url = newValue;
-
-    console.log("PEPE", this.url)
-
   }
 
   static get observedAttributes() {
-
     return ["url"]
   }
 
@@ -293,9 +292,7 @@ class WCEmpleados extends HTMLElement {
       if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        //th.innerHTML = this.capitalizarPrimeraLetra(propiedad); ------>>>>
-
-        th.innerHTML = propiedad;
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
 
         if (propiedad === "dni") {
           th.innerHTML = propiedad.toUpperCase()
@@ -336,8 +333,7 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
           let td = document.createElement("td");
-          // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
-          td.innerHTML = empleado[propiedad];
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
 
           if (propiedad === "dni") {
             td.innerHTML = empleado[propiedad].toUpperCase()
@@ -458,8 +454,7 @@ class WCEmpleados extends HTMLElement {
 
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-        // labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
-        labelpropiedad.innerHTML = propiedad
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) 
         //Poner "dni" en mayúscula
         if (propiedad === "dni") {
           labelpropiedad.innerHTML = propiedad.toUpperCase()
@@ -503,7 +498,7 @@ class WCEmpleados extends HTMLElement {
 
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
-
+    if (miString)
     return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
