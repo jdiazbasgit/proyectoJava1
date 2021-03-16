@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.AuthorityUtils;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,41 +61,43 @@ public class DemoRestController {
 				dato.getNombre());
 	}
 
-	@PostMapping(value = "user")
-	@Vigilado
-	public UserDto verLogin(@RequestBody UserFront userFront, HttpServletResponse response)  
-			throws IOException,NumberFormatException{
-		
-			
-		
-		Optional<User> userDetails = getRepositoryUser().findByUserName(userFront.getUser());
-		UserDto userDto = new UserDto();
-		if (userDetails.get().getPassword().equals(userFront.getPassword())) {
-			userDto.setUser(userDetails.get().getUser());
-			userDto.setRol(userDetails.get().getRol().getRol());
-			userDto.setToken(getJWTToken(userFront.getUser(), userDto.getRol()));
-			return userDto;
-		} else {
-			response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-			response.sendError(HttpServletResponse.SC_FORBIDDEN, DemoRestController.UNAUTHORIZED);
-			return null;
-		}
+	/*
+	 * @PostMapping(value = "user")
+	 * 
+	 * @Vigilado public UserDto verLogin(@RequestBody UserFront userFront,
+	 * HttpServletResponse response) throws IOException,NumberFormatException{
+	 * 
+	 * 
+	 * 
+	 * Optional<User> userDetails =
+	 * getRepositoryUser().findByUserName(userFront.getUser()); UserDto userDto =
+	 * new UserDto(); if
+	 * (userDetails.get().getPassword().equals(userFront.getPassword())) {
+	 * userDto.setUser(userDetails.get().getUser());
+	 * userDto.setRol(userDetails.get().getRol().getRol());
+	 * userDto.setToken(getJWTToken(userFront.getUser(), userDto.getRol())); return
+	 * userDto; } else { response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+	 * response.sendError(HttpServletResponse.SC_FORBIDDEN,
+	 * DemoRestController.UNAUTHORIZED); return null; }
+	 * 
+	 * }
+	 */
 
-	}
-
-	private String getJWTToken(String username, String rol) {
-		String secretKey = "generation";
-		List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(rol);
-
-		String token = Jwts.builder().setId("cursoJWT").setSubject(username)
-				.claim("authorities",
-						grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 600000))
-				.signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
-
-		return "Bearer " + token;
-	}
+	/*
+	 * private String getJWTToken(String username, String rol) { String secretKey =
+	 * "generation"; List<GrantedAuthority> grantedAuthorities =
+	 * AuthorityUtils.commaSeparatedStringToAuthorityList(rol);
+	 * 
+	 * String token = Jwts.builder().setId("cursoJWT").setSubject(username)
+	 * .claim("authorities",
+	 * grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(
+	 * Collectors.toList())) .setIssuedAt(new Date(System.currentTimeMillis()))
+	 * .setExpiration(new Date(System.currentTimeMillis() + 600000))
+	 * .signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+	 * 
+	 * re
+	 turn "Bearer " + token;
+	}*/
 
 	public AccessCRUDRepository getRepository() {
 		return repository;
