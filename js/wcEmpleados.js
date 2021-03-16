@@ -730,6 +730,7 @@ function getDatos(url) {
     fetch(url, {
         "method": "get",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "cors": "no-cors"
         // "headers": {
         //"Access-Control-Allow-Origin":"*",
@@ -740,16 +741,26 @@ function getDatos(url) {
         // }
 =======
         "cors":"no-cors",
+=======
+        
+>>>>>>> 7ef02d214cffcab5b4ce32ed9275beb8a0f1d7cd
         "headers": {
           //"Access-Control-Allow-Origin":"*",
-          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
+          "Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
           
          // "Access-Control-Allow-Origin": "*"
 >>>>>>> d03431fb21cde0fab282f73bd0de331e943dcf76
 
+<<<<<<< HEAD
       })
+=======
+         
+       // }
+        
+      }})
+>>>>>>> 7ef02d214cffcab5b4ce32ed9275beb8a0f1d7cd
       .then(function (response) {
         if (response.ok)
           resolve(response.json())
