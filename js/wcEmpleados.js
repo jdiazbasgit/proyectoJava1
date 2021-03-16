@@ -254,10 +254,10 @@ class WCEmpleados extends HTMLElement {
 
     // **************     SACAR LA URL DEL JSON     ****************
 
-   
+
     //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
-  //const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
-    console.log("nueva:"+this.url)
+    //const url = "http://188.127.175.42:8081/accesoGrupo2/api/employees"
+    console.log("nueva:" + this.url)
 
     // *** URL buena a usar cuando se arregle lo del HEAD
     //let datosJSON = apiHandler(url)
@@ -269,9 +269,9 @@ class WCEmpleados extends HTMLElement {
     let listaEmpleados
 
     datosJSON.then((empleados) => {
-      console.log(empleados._embedded.employees[0])
-      listaEmpleados = empleados
-      //console.log("Lista inicial", listaEmpleados)
+
+      listaEmpleados = empleados._embedded.employees
+     // console.log("Lista inicial" , listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
     })
@@ -286,9 +286,9 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-    
+
     this.url = newValue;
-    
+
     console.log("PEPE", this.url)
 
   }
@@ -304,6 +304,8 @@ class WCEmpleados extends HTMLElement {
 
     let propiedadesTablaEmpleados = Object.keys(arrayEmpleados[0])
 
+    console.log("propiedadesTablaEmpleados", propiedadesTablaEmpleados)
+
     let tablaDatos = this.shadowRoot.querySelector("#tablaDatos")
 
     //********* HEAD TABLA*/
@@ -317,7 +319,7 @@ class WCEmpleados extends HTMLElement {
     thead.appendChild(thIcono)
 
     propiedadesTablaEmpleados.forEach(propiedad => {
-      if (propiedad !== "jornada") {
+      if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
         th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
@@ -336,6 +338,9 @@ class WCEmpleados extends HTMLElement {
     thead.appendChild(thEditar);
 
     //********* BODY TABLA*/
+
+console.log("arrayEmpleados BODY", arrayEmpleados)
+
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
     tbody.setAttribute("id", "tbody");
@@ -356,7 +361,7 @@ class WCEmpleados extends HTMLElement {
           empleado.fecha_baja = "---"
         }
 
-        if (propiedad !== null && propiedad !== "jornada") {
+        if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
           let td = document.createElement("td");
           td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
 
@@ -526,13 +531,15 @@ class WCEmpleados extends HTMLElement {
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
 
-    //return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
     //Identificar el empleado seleccionado
-    let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
+    let empleadoSelect = new Employee // ----------------------->>>
+
+    empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
 
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
@@ -600,14 +607,16 @@ class WCEmpleados extends HTMLElement {
 
       tbody.appendChild(nuevaFila);
 
-      nuevoEmpleado = {
-        "nombre": nombre,
-        "apellidos": apellidos,
-        "dni": dni,
-        "identificador": this.identificadorAleatorio(),
-        "fecha_alta": fechaAlta,
-        "fecha_baja": null
-      };
+      nuevoEmpleado = new Employee //------------------------------->>>>>>
+
+      /* nuevoEmpleado = {
+         "nombre": nombre,
+         "apellidos": apellidos,
+         "dni": dni,
+         "identificador": this.identificadorAleatorio(),
+         "fecha_alta": fechaAlta,
+         "fecha_baja": null
+       };*/
 
       let datoIcono = document.createElement("td");
 
@@ -720,18 +729,15 @@ function getDatos(url) {
   return new Promise(function (resolve, reject) {
     fetch(url, {
         "method": "get",
-        "cors":"no-cors"
-       // "headers": {
-          //"Access-Control-Allow-Origin":"*",
-          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
-          //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
-          //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          
-         // "Access-Control-Allow-Origin": "*"
+        "cors": "no-cors"
+        // "headers": {
+        //"Access-Control-Allow-Origin":"*",
+        //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
+        //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+        //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
 
-         
-       // }
-        
+        // }
+
       })
       .then(function (response) {
         if (response.ok)
@@ -756,11 +762,9 @@ function sendDatos(url, method, data) {
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
 
-          //"Access-Control-Allow-Origin": "*"
 
-          
         },
-        "cors":"no-cors"
+        "cors": "no-cors"
       })
       .then(function (response) {
         if (response.ok)
