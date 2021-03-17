@@ -1,6 +1,6 @@
 package curso.generation.demo.entidades;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,7 +49,7 @@ public class Calendar {
 	}
 
 
-	public void setFecha(Date fecha) {
+	public void setFecha(java.util.Date fecha) {
 		this.fecha = fecha;
 	}
 
