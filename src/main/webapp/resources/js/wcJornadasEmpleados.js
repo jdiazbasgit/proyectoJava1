@@ -52,50 +52,8 @@ class WCJornadasEmpleados extends HTMLElement {
         </thead>
         <!--<tbody id="tbody"></tbody>-->
     </table>
-</div><style>
-/* #divp{
-background-color: rgb(236, 235, 235);
-} */
-#tabla{
-width: 90vw;
-margin: 0 auto;
-text-align: left; 
-border-collapse:separate; 
-border-spacing: 0 2px;
-}
-/* #tabla td, #tabla th{
-border-bottom: 5px solid rgb(236, 235, 235);
-} */
-thead{
-background-color: rgb(50,64,71);
-color: white;
-}
-/* h3, tbody{
-color: rgb(50,64,71); 
-} */
-img{
-width: 20px;
-height: 20px;
-}           
-</style>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="./css/stylesWcJornadas.css">
-<div>
-<div id="flexContainer">
-<h3>JORNADAS/EMPLEADOS</h3>
-</div>
-<table class="table table-sm table-hover" id="tabla">
-<thead class="thead">
-    <tr>
-        <th><img src="img/svg/icono3blanco.svg" alt=""></th>
-        <th id="thNombre">NOMBRE</th>
-        <th id="thApellidos">APELLIDOS</th>                    
-        <th>JORNADA</th>                    
-    </tr>
-</thead>
-<!--<tbody id="tbody"></tbody>-->
-</table>
 </div>`
+
 
         let thNombre = shadowRoot.querySelector("#thNombre");
         let thApellidos = shadowRoot.querySelector("#thApellidos");
@@ -195,7 +153,7 @@ height: 20px;
                 i++;
             });
             
-            icono.innerHTML = `<img src="img/svg/icono3amarillo.svg"/>`;
+            icono.innerHTML =`<img src="img/svg/icono3amarillo.svg"/>`;
             nombre.innerHTML = empleado.nombre.capitalize();
             apellidos.innerHTML = empleado.apellidos.capitalize();
 
