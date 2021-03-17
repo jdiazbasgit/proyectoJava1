@@ -11,42 +11,43 @@ class WCCalendario extends HTMLElement {
         //const template = document.querySelector("#plantilla");
         //const plantilla = template.content.cloneNode(true);
         //shadowRoot.appendChild(plantilla);
-        shadowRoot.innerHTML = `<table id=tabla0>
-        <thead><th>Enero</th></thead>            
-    </table>
-    <table id=tabla1>
-        <thead><th>Febrero</th></thead>            
-    </table>
-    <table id=tabla2>
-        <thead><th>Marzo</th></thead>            
-    </table>
-    <table id=tabla3>
-        <thead><th>Abril</th></thead>            
-    </table>
-    <table id=tabla4>
-        <thead><th>Mayo</th></thead>            
-    </table>
-    <table id=tabla5>
-        <thead><th>Junio</th></thead>            
-    </table>
-    <table id=tabla6>
-        <thead><th>Julio</th></thead>            
-    </table>
-    <table id=tabla7>
-        <thead><th>Agosto</th></thead>            
-    </table>        
-    <table id=tabla8>
-        <thead><th>Septiembre</th></thead>           
-    </table>
-    <table id=tabla9>
-        <thead><th>Ocutbre</th></thead>            
-    </table>
-    <table id=tabla10>
-        <thead><th>Noviembre</th></thead>            
-    </table>
-    <table id=tabla11>
-        <thead><th>Diciembre</th></thead>            
-    </table>`
+        shadowRoot.innerHTML = 
+        `<table id=tabla0>
+            <thead><th>Enero</th></thead>            
+        </table>
+        <table id=tabla1>
+            <thead><th>Febrero</th></thead>            
+        </table>
+        <table id=tabla2>
+            <thead><th>Marzo</th></thead>            
+        </table>
+        <table id=tabla3>
+            <thead><th>Abril</th></thead>            
+        </table>
+        <table id=tabla4>
+            <thead><th>Mayo</th></thead>            
+        </table>
+        <table id=tabla5>
+            <thead><th>Junio</th></thead>            
+        </table>
+        <table id=tabla6>
+            <thead><th>Julio</th></thead>            
+        </table>
+        <table id=tabla7>
+            <thead><th>Agosto</th></thead>            
+        </table>        
+        <table id=tabla8>
+            <thead><th>Septiembre</th></thead>           
+        </table>
+        <table id=tabla9>
+            <thead><th>Octubre</th></thead>            
+        </table>
+        <table id=tabla10>
+            <thead><th>Noviembre</th></thead>            
+        </table>
+        <table id=tabla11>
+            <thead><th>Diciembre</th></thead>            
+        </table>`
 
 
         let table = [];
@@ -65,7 +66,7 @@ class WCCalendario extends HTMLElement {
             }
             let tbody = table[i].appendChild(document.createElement("tbody"));
             tbody.appendChild(semana);
-            for (let j = 1; j < 7; j++) {
+            for (let j = 0; j < 6; j++) {
                 let tr = tbody.appendChild(document.createElement("tr"));
                 for (let k = 1; k < 8; k++) {
                     let td = document.createElement("td");
@@ -73,8 +74,7 @@ class WCCalendario extends HTMLElement {
                     tr.appendChild(td);
                 }
             }
-        }
-
+        }        
         this.cargaDias(this.dias, this.url, this.shadowRoot);
             
     }
@@ -87,11 +87,10 @@ class WCCalendario extends HTMLElement {
             dias.forEach(dia=>{
                 let id = "".concat(dia.mes, dia.fila, dia.columna);
                 console.log(id);
-                let tipo = dia.status.descripcion;
-                //let tiempo = dia.fecha;
+                let tipo = dia.status.descripcion;                
                 let fecha = new Date(dia.fecha);
                 let numeroDia = fecha.getDate();
-                let casilla = shadowRoot.querySelector("#"+id);
+                let casilla = shadowRoot.getElementById(id);
                 casilla.innerHTML = numeroDia;
                 let select = document.createElement("select");
                 let laborable = document.createElement("option");
@@ -101,6 +100,12 @@ class WCCalendario extends HTMLElement {
                 select.appendChild(laborable);
                 select.appendChild(festivo);
                 casilla.appendChild(select);
+                casilla.style.backgroundColor = "blue";
+                if (tipo == "festivo"){
+                    select.selectedIndex = 1;
+                    casilla.style.backgroundColor = "red";
+                }
+                    
             }) 
         });
     }
