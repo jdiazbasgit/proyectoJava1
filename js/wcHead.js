@@ -375,21 +375,21 @@ class WcHead extends HTMLElement {
                 contenido.appendChild(jornadasempleados);
             }
 
-            /*if (componente.id === "calendario") {
+            if (componente.id === "calendario") {
 
                 let contenido = document.querySelector("#contenido");
                 let empleados = document.createElement("wc-empleados");
                 contenido.appendChild(empleados);
             }
-
+/*
             if (componente.id === "calendarioempleados") {
 
                 let contenido = document.querySelector("#contenido");
                 let empleados = document.createElement("wc-empleados");
                 contenido.appendChild(empleados);
             }
-            */
-
+            
+*/
 
 
         }));
