@@ -71,12 +71,12 @@ class WCJornadasEmpleados extends HTMLElement {
 
     cargaEmpleados(empleados, jornadas, tabla, funcion, url, url2) {
         getData(url).then(function (datos) {
-            Array.prototype.forEach.call(datos, dato => {
+            Array.prototype.forEach.call(datos._embedded.employees, dato => {
                 empleados.push(dato);
 
             })
             getData(url2).then(function (datos) {
-                Array.prototype.forEach.call(datos, dato => {
+                Array.prototype.forEach.call(datos._embedded.days, dato => {
                     jornadas.push(dato);
                 })
                 funcion(empleados, jornadas, tabla);
