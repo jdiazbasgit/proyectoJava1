@@ -235,8 +235,6 @@ class WCEmpleados extends HTMLElement {
 
     //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
 
-    console.log("nueva:" + this.url)
-
     // *** URL buena a usar 
     let datosJSON = apiHandler(this.url)
 
@@ -258,16 +256,6 @@ class WCEmpleados extends HTMLElement {
     shadowRoot.querySelector("#cerrarModal1").addEventListener("click", () => this.cerrarModalAddEmpleado())
     shadowRoot.querySelector("#addEmpleado").addEventListener("click", () => {
       this.addEmpleado(listaEmpleados, nuevoEmp)
-
-      console.log("nuevoEmp", nuevoEmp)
-
-      // ?¿?¿¿? ---------------------->>>>>>>> LLAMADA DEL POST EN BOTÓN GUARDAR ?¿?¿
-
-      //****?? Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
-
-      // console.log("METODO POST!!", JSON.stringify(nuevoEmp))
-
-      // apiHandler(this.url, "POST", nuevoEmp);
     })
 
   }
@@ -457,10 +445,9 @@ class WCEmpleados extends HTMLElement {
         formEmpleadoSelect.removeChild(selectLabel)
       }
 
-      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== "links") {
+      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== " links") {
 
         //Se pinta el LABEL con un id único, que será la propia propiedad
-
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
         labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad)
@@ -548,8 +535,8 @@ class WCEmpleados extends HTMLElement {
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
 
-    console.log("Empleado seleccionado", empleadoSelect)
-
+    // ?¿ --------------->>>>>> LAMADA DEL PUT AQUI?¿?
+    
     this.cerrarModalAddEmpleado()
 
   }
@@ -586,8 +573,12 @@ class WCEmpleados extends HTMLElement {
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
-        if (nuevoEmpleado.fecha_baja == null || nuevoEmpleado.fecha_alta == "undefined") {
+        if (!nuevoEmpleado.fecha_baja) {
           nuevoEmpleado.fecha_baja = "---";
+
+        }
+        if (nuevoEmpleado && !nuevoEmpleado.fecha_alta) {
+          console.log("nuevoEmpleado.fecha_alta",nuevoEmpleado.fecha_alta)
           nuevoEmpleado.fecha_alta = "---";
         }
         if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
@@ -653,7 +644,13 @@ class WCEmpleados extends HTMLElement {
           this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
 
           //****?? Llamada de la API para MODIFICAR el empleado seleccionado ***************
-          apiHandler(this.url, "put", nuevoEmpleado.identificador);
+
+         // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
+
+          //apiHandler(this.url, "put", nuevoEmpleado.identificador);
+
+          console.log("PUT URL EMPLEADO -->> ",nuevoEmpleado._links.self.href, nuevoEmpleado.identificador )
+          apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
 
 
           this.cerrarModalEditar()
@@ -663,15 +660,13 @@ class WCEmpleados extends HTMLElement {
 
       // //****?? Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
 
-      console.log("METODO POST!!", JSON.stringify(nuevoEmpleado))
-
       // **** Para usar los datos del nuevo empleado que requiere la tabla EMPLOYEES de la BD *****
       const newBodyForEmpleado = {
         nombre: nuevoEmpleado.nombre,
         apellidos: nuevoEmpleado.apellidos,
         identificador: nuevoEmpleado.identificador,
         dni: nuevoEmpleado.dni,
-        fecha_alta: nuevoEmpleado.fecha_alta
+        fecha_alta: new Date()
       }
 
       apiHandler(this.url, "POST", newBodyForEmpleado);
