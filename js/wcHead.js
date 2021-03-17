@@ -378,7 +378,7 @@ class WcHead extends HTMLElement {
             if (componente.id === "calendario") {
 
                 let contenido = document.querySelector("#contenido");
-                let empleados = document.createElement("wc-calendario");
+                let calendario = document.createElement("wc-calendario");
                 contenido.appendChild(calendario);
             }
 /*
