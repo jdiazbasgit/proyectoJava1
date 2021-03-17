@@ -535,7 +535,9 @@ class WCEmpleados extends HTMLElement {
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
 
-    //--------------->>>>>> LAMADA DEL PUT AQUI <<<<<<<<<-------------------------------------
+    //?¿--------------->>>>>> LAMADA DEL PUT AQUI <<<<<<<<<-------------------------------------
+
+    console.log("EMPLEADO PUT --> ", empleadoSelect)
 
     apiHandler(empleadoSelect._links.self.href, "put", empleadoSelect);
 
@@ -662,88 +664,89 @@ class WCEmpleados extends HTMLElement {
 
       arrayEmpleados.push(nuevoEmpleado)
 
+
+      }
+
     }
 
   }
 
-}
 
+  window.customElements.define("wc-empleados", WCEmpleados);
 
-window.customElements.define("wc-empleados", WCEmpleados);
+  sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODgyNTU0LCJleHAiOjE2MTU4ODMxNTR9.sQOcjY22D5ViA90zbe2LSUQPZNchJpgWZbZLPI7VcfbNrc12z3niP5Nswk-S-cQSoEY9CcIzqQoZ3xNdntJ-Yg"
+  //Funciones que obtiene los datos
 
-sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODgyNTU0LCJleHAiOjE2MTU4ODMxNTR9.sQOcjY22D5ViA90zbe2LSUQPZNchJpgWZbZLPI7VcfbNrc12z3niP5Nswk-S-cQSoEY9CcIzqQoZ3xNdntJ-Yg"
-//Funciones que obtiene los datos
+  //*** ****************************
+  function apiHandler(url, method = "get", data) {
 
-//*** ****************************
-function apiHandler(url, method = "get", data) {
-
-  if (method == "get") {
-    return getDatos(url)
-  } else {
-    return sendDatos(url, method, data)
+    if (method == "get") {
+      return getDatos(url)
+    } else {
+      return sendDatos(url, method, data)
+    }
   }
-}
 
-function getDatos(url) {
-  return new Promise(function (resolve, reject) {
-    fetch(url, {
-        "method": "get",
-        "cors": "no-cors",
-        // "headers": {
-        //"Access-Control-Allow-Origin":"*",
-        //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
-        //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
-        //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-
-        // }
-
-        /*"headers": {
+  function getDatos(url) {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
+          "method": "get",
+          "cors": "no-cors",
+          // "headers": {
           //"Access-Control-Allow-Origin":"*",
-          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
+          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          // "Access-Control-Allow-Origin": "*"
+
           // }
-        }*/
-      })
 
-      .then(function (response) {
-        if (response.ok)
-          resolve(response.json())
-        else {
-          reject(response.status)
-        }
-      }).catch(function (error) {
-        console.log(`ERROR ${error}`)
-        reject(error);
-      })
-  })
-}
+          /*"headers": {
+            //"Access-Control-Allow-Origin":"*",
+            //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
+            //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+            //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+            // "Access-Control-Allow-Origin": "*"
+            // }
+          }*/
+        })
+
+        .then(function (response) {
+          if (response.ok)
+            resolve(response.json())
+          else {
+            reject(response.status)
+          }
+        }).catch(function (error) {
+          console.log(`ERROR ${error}`)
+          reject(error);
+        })
+    })
+  }
 
 
-function sendDatos(url, method, data) {
-  return new Promise(function (resolve, reject) {
-    fetch(url, {
-        "method": method,
-        "body": JSON.stringify(data),
+  function sendDatos(url, method, data) {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
+          "method": method,
+          "body": JSON.stringify(data),
 
-        "headers": {
-          "Content-Type": "application/json"
-          // "Authorization": sessionStorage.token,
-          //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
-          //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          // },
-        }
-      })
-      .then(function (response) {
-        if (response.ok)
-          resolve(response.json())
-        else {
-          reject(response.status)
-        }
-      }).catch(function (error) {
-        console.log(`ERROR ${error}`)
-        reject(error);
-      })
-  })
-}
+          "headers": {
+            "Content-Type": "application/json"
+            // "Authorization": sessionStorage.token,
+            //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+            //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+            // },
+          }
+        })
+        .then(function (response) {
+          if (response.ok)
+            resolve(response.json())
+          else {
+            reject(response.status)
+          }
+        }).catch(function (error) {
+          console.log(`ERROR ${error}`)
+          reject(error);
+        })
+    })
+  }
