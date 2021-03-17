@@ -17,14 +17,31 @@ class WCCalendario extends HTMLElement {
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
 
             <style>
+                *{
+                    margin: 0 auto;
+                }
                 #containerFlex{
                     width: 100%;
                     display: flex;
                     justify-content: space-between;
                     margin-top: 5rem;
                     margin-bottom: 2rem;
-                    padding-left: 5vw;
-                    padding-right: 5vw;
+                }
+                #calendario{
+                    width: 70%;
+                }
+                .diaCalendario{
+                    min-width: 150px;
+                    min-height: 100px;
+                    
+                }
+                .numeroDia{
+                    font-size: 1.8em;
+                    padding-left: 8%;
+                    padding-top: 4%;
+                }
+                th{
+                    font-size: 2em;
                 }
             </style>
 
@@ -93,12 +110,14 @@ class WCCalendario extends HTMLElement {
             table[i] = shadowRoot.querySelector("#tabla".concat(i));
         }
 
-        let diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+        let diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
         for (let i = 0; i < 12; i++) {
             let semana = document.createElement("tr");
             for (let i = 0; i < 7; i++) {
                 let td = document.createElement("td");
+                td.style.textAlign = 'center';
+                td.style.fontWeight = 'bold'
                 td.innerHTML = diasSemana[i];
                 semana.appendChild(td);
             }
@@ -108,6 +127,7 @@ class WCCalendario extends HTMLElement {
                 let tr = tbody.appendChild(document.createElement("tr"));
                 for (let k = 1; k < 8; k++) {
                     let td = document.createElement("td");
+                    td.className = 'diaCalendario';
                     td.setAttribute("id", "".concat(i, j, k));
                     tr.appendChild(td);
                 }
@@ -117,20 +137,31 @@ class WCCalendario extends HTMLElement {
             
     }
 
+    
     cargaDias (dias, url, shadowRoot){
         getData(url).then(function (datos) {
             Array.prototype.forEach.call(datos, dato => {
                 dias.push(dato);
             });
+
+            var colores = ["bg-primary", "bg-danger"];
+
             dias.forEach(dia=>{
-                let id = "".concat(dia.mes, dia.fila, dia.columna);
+                let id;
+                if (dia.columna==1)
+                    id = "".concat(dia.mes, dia.fila, 7);                  
+                else    
+                    id = "".concat(dia.mes, dia.fila, dia.columna-1);
+
                 console.log(id);
                 let tipo = dia.status.descripcion;                
                 let fecha = new Date(dia.fecha);
                 let numeroDia = fecha.getDate();
                 let casilla = shadowRoot.getElementById(id);
-                casilla.innerHTML = numeroDia;
+                casilla.innerHTML = `<p class="numeroDia">${numeroDia}</p>`;
                 let select = document.createElement("select");
+                select.style.margin = '7%';
+                select.style.width = '120px';
                 let laborable = document.createElement("option");
                 laborable.innerHTML = "laborable";
                 let festivo = document.createElement("option");
@@ -138,11 +169,16 @@ class WCCalendario extends HTMLElement {
                 select.appendChild(laborable);
                 select.appendChild(festivo);
                 casilla.appendChild(select);
-                casilla.style.backgroundColor = "blue";
+                casilla.className = colores[0];
                 if (tipo == "festivo"){
                     select.selectedIndex = 1;
-                    casilla.style.backgroundColor = "red";
+                    casilla.className = colores[1];
                 }
+                select.addEventListener("change", function(){
+                    let indice= select.options.selectedIndex;
+                    casilla.className=colores[indice];
+                });
+
                     
             }) 
         });
