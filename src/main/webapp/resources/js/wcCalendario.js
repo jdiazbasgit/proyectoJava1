@@ -11,43 +11,81 @@ class WCCalendario extends HTMLElement {
         //const template = document.querySelector("#plantilla");
         //const plantilla = template.content.cloneNode(true);
         //shadowRoot.appendChild(plantilla);
-        shadowRoot.innerHTML = 
-        `<table id=tabla0>
-            <thead><th>Enero</th></thead>            
-        </table>
-        <table id=tabla1>
-            <thead><th>Febrero</th></thead>            
-        </table>
-        <table id=tabla2>
-            <thead><th>Marzo</th></thead>            
-        </table>
-        <table id=tabla3>
-            <thead><th>Abril</th></thead>            
-        </table>
-        <table id=tabla4>
-            <thead><th>Mayo</th></thead>            
-        </table>
-        <table id=tabla5>
-            <thead><th>Junio</th></thead>            
-        </table>
-        <table id=tabla6>
-            <thead><th>Julio</th></thead>            
-        </table>
-        <table id=tabla7>
-            <thead><th>Agosto</th></thead>            
-        </table>        
-        <table id=tabla8>
-            <thead><th>Septiembre</th></thead>           
-        </table>
-        <table id=tabla9>
-            <thead><th>Octubre</th></thead>            
-        </table>
-        <table id=tabla10>
-            <thead><th>Noviembre</th></thead>            
-        </table>
-        <table id=tabla11>
-            <thead><th>Diciembre</th></thead>            
-        </table>`
+        shadowRoot.innerHTML = `
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+
+            <style>
+                #containerFlex{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 5rem;
+                    margin-bottom: 2rem;
+                    padding-left: 5vw;
+                    padding-right: 5vw;
+                }
+            </style>
+
+            <div id="containerCalendario">
+                <div id="containerFlex">
+                    <h3>Calendario</h3>
+                    <form method="post" action="#">
+                        <select id="anios">
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>                       
+                        </select>
+                        <!-- <button type="submit">Seleccionar</button> -->
+                    </form>
+                </div>
+                <div id="calendario">
+
+                    <table id=tabla0>
+                        <thead><th>Enero</th></thead>            
+                    </table>
+                    <table id=tabla1>
+                        <thead><th>Febrero</th></thead>            
+                    </table>
+                    <table id=tabla2>
+                        <thead><th>Marzo</th></thead>            
+                    </table>
+                    <table id=tabla3>
+                        <thead><th>Abril</th></thead>            
+                    </table>
+                    <table id=tabla4>
+                        <thead><th>Mayo</th></thead>            
+                    </table>
+                    <table id=tabla5>
+                        <thead><th>Junio</th></thead>            
+                    </table>
+                    <table id=tabla6>
+                        <thead><th>Julio</th></thead>            
+                    </table>
+                    <table id=tabla7>
+                        <thead><th>Agosto</th></thead>            
+                    </table>        
+                    <table id=tabla8>
+                        <thead><th>Septiembre</th></thead>           
+                    </table>
+                    <table id=tabla9>
+                        <thead><th>Octubre</th></thead>            
+                    </table>
+                    <table id=tabla10>
+                        <thead><th>Noviembre</th></thead>            
+                    </table>
+                    <table id=tabla11>
+                        <thead><th>Diciembre</th></thead>            
+                    </table>
+                            
+                </div>
+            </div>
+
+        `
 
 
         let table = [];
