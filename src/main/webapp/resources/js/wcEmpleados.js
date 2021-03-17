@@ -1,6 +1,5 @@
 
 
-
 class WCEmpleados extends HTMLElement {
   constructor() {
     super();
@@ -247,6 +246,8 @@ class WCEmpleados extends HTMLElement {
       this.crearTablaEmpeados(listaEmpleados)
     })
 
+    
+
     let nuevoEmp
 
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
@@ -257,15 +258,10 @@ class WCEmpleados extends HTMLElement {
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-
     this.url = newValue;
-
-    console.log("PEPE", this.url)
-
   }
 
   static get observedAttributes() {
-
     return ["url"]
   }
 
@@ -293,9 +289,7 @@ class WCEmpleados extends HTMLElement {
       if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        //th.innerHTML = this.capitalizarPrimeraLetra(propiedad); ------>>>>
-
-        th.innerHTML = propiedad;
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
 
         if (propiedad === "dni") {
           th.innerHTML = propiedad.toUpperCase()
@@ -336,8 +330,7 @@ class WCEmpleados extends HTMLElement {
 
         if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
           let td = document.createElement("td");
-          // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
-          td.innerHTML = empleado[propiedad];
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
 
           if (propiedad === "dni") {
             td.innerHTML = empleado[propiedad].toUpperCase()
@@ -385,11 +378,12 @@ class WCEmpleados extends HTMLElement {
 
       let confirmarIdentificador
 
-      this.shadowRoot.getElementById(`${empleado.identificador}`).addEventListener("click", () => {
+      this.shadowRoot.getElementById("addEmpleado").addEventListener("click", () => {
         //Para confirmar el empleado seleccionado
         confirmarIdentificador = empleado.identificador
-        this.verModalEditar()
+        this.verModalAddEmpleado()
         this.cargarFormuarioEditar(arrayEmpleados, empleado.identificador)
+        this.shadowRoot.querySelector("#myModalAddEmpleado").style.display = 'none'
 
       })
 
@@ -458,8 +452,7 @@ class WCEmpleados extends HTMLElement {
 
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-        // labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
-        labelpropiedad.innerHTML = propiedad
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) 
         //Poner "dni" en mayúscula
         if (propiedad === "dni") {
           labelpropiedad.innerHTML = propiedad.toUpperCase()
@@ -503,7 +496,7 @@ class WCEmpleados extends HTMLElement {
 
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
-
+    if (miString)
     return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
@@ -552,7 +545,7 @@ class WCEmpleados extends HTMLElement {
 
     //**** Llamada de la API para MODIFICAR el empleado seleccionado ***************
 
-    apiHandler(this.url, "put", empleadoSelect);
+    apiHandler(this.url, "put", empleadoSelect)
 
     this.cerrarModalAddEmpleado()
 
@@ -590,7 +583,7 @@ class WCEmpleados extends HTMLElement {
         "dni": dni,
         "identificador": this.identificadorAleatorio(),
         "fecha_alta": fechaAlta,
-        "fecha_baja": null
+        "fecha_baja": ""
       };
 
       let datoIcono = document.createElement("td");
@@ -694,7 +687,12 @@ function apiHandler(url, method = "get", data) {
   if (method == "get") {
     return getDatos(url)
   } else {
-    return sendDatos(url, method, data)
+    return sendDatos(url, method, data).then(function(){
+      //ok grabacion
+    }).catch(function(){
+    	
+    	//error grabacion
+    })
   }
 }
 
@@ -744,12 +742,13 @@ function sendDatos(url, method, data) {
         "method": method,
         "body": JSON.stringify(data),
         "cors": "no-cors",
-        /*"headers": {
+        "headers": {
+          "Content-Type":"application/json"
           // "Authorization": sessionStorage.token,
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
           // },
-        }*/
+        }
       })
       .then(function (response) {
         if (response.ok)

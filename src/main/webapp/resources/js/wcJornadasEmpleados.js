@@ -153,7 +153,7 @@ class WCJornadasEmpleados extends HTMLElement {
                 i++;
             });
             
-            icono.innerHTML =`<img src="img/svg/icono3amarillo.svg"/>`;
+            icono.innerHTML = `<img src="img/svg/icono3amarillo.svg"/>`;
             nombre.innerHTML = empleado.nombre.capitalize();
             apellidos.innerHTML = empleado.apellidos.capitalize();
 
