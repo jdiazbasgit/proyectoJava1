@@ -244,7 +244,6 @@ class WCEmpleados extends HTMLElement {
     datosJSON.then((empleados) => {
 
       listaEmpleados = empleados._embedded.employees
-      // console.log("Lista inicial" , listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
     })
@@ -393,16 +392,6 @@ class WCEmpleados extends HTMLElement {
         if (confirmarIdentificador === empleado.identificador) {
           this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
 
-          // ?¿ ++++++++++++++++++++++++++++++++ PUT +++++++++++++++++++++++++
-
-          // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
-
-          //apiHandler(this.url, "put", nuevoEmpleado.identificador);
-
-          console.log("PUT URL EMPLEADO -->> ", nuevoEmpleado._links.self.href, nuevoEmpleado.identificador)
-          apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
-
-
           this.cerrarModalEditar()
         }
       })
@@ -546,7 +535,10 @@ class WCEmpleados extends HTMLElement {
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
 
-    // ?¿ --------------->>>>>> LAMADA DEL PUT AQUI?¿?
+    //--------------->>>>>> LAMADA DEL PUT AQUI <<<<<<<<<-------------------------------------
+
+    apiHandler(empleadoSelect._links.self.href, "put", empleadoSelect);
+
 
     this.cerrarModalAddEmpleado()
 
@@ -589,7 +581,6 @@ class WCEmpleados extends HTMLElement {
 
         }
         if (nuevoEmpleado && !nuevoEmpleado.fecha_alta) {
-          console.log("nuevoEmpleado.fecha_alta", nuevoEmpleado.fecha_alta)
           nuevoEmpleado.fecha_alta = "---";
         }
         if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
@@ -638,8 +629,6 @@ class WCEmpleados extends HTMLElement {
       //Para comprobar el identificador del empleado seleccionado
       let confirmarIdentificador
 
-      //console.log(JSON.stringify(nuevoEmpleado))
-
       this.shadowRoot.getElementById(`${nuevoEmpleado.identificador}`).addEventListener("click", () => {
 
         confirmarIdentificador = nuevoEmpleado.identificador
@@ -651,21 +640,8 @@ class WCEmpleados extends HTMLElement {
 
       this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
         if (confirmarIdentificador === nuevoEmpleado.identificador) {
-
           this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
-
-          //****?? Llamada de la API para MODIFICAR el empleado seleccionado ***************
-
-          // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
-
-          //apiHandler(this.url, "put", nuevoEmpleado.identificador);
-
-          // console.log("PUT URL EMPLEADO -->> ",nuevoEmpleado._links.self.href, nuevoEmpleado.identificador )
-          // apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
-
-
           this.cerrarModalEditar()
-
         }
       })
 
@@ -700,8 +676,6 @@ sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1
 
 //*** ****************************
 function apiHandler(url, method = "get", data) {
-
-  console.log(method, url, data)
 
   if (method == "get") {
     return getDatos(url)
