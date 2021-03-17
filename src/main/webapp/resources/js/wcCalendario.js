@@ -11,43 +11,98 @@ class WCCalendario extends HTMLElement {
         //const template = document.querySelector("#plantilla");
         //const plantilla = template.content.cloneNode(true);
         //shadowRoot.appendChild(plantilla);
-        shadowRoot.innerHTML = 
-        `<table id=tabla0>
-            <thead><th>Enero</th></thead>            
-        </table>
-        <table id=tabla1>
-            <thead><th>Febrero</th></thead>            
-        </table>
-        <table id=tabla2>
-            <thead><th>Marzo</th></thead>            
-        </table>
-        <table id=tabla3>
-            <thead><th>Abril</th></thead>            
-        </table>
-        <table id=tabla4>
-            <thead><th>Mayo</th></thead>            
-        </table>
-        <table id=tabla5>
-            <thead><th>Junio</th></thead>            
-        </table>
-        <table id=tabla6>
-            <thead><th>Julio</th></thead>            
-        </table>
-        <table id=tabla7>
-            <thead><th>Agosto</th></thead>            
-        </table>        
-        <table id=tabla8>
-            <thead><th>Septiembre</th></thead>           
-        </table>
-        <table id=tabla9>
-            <thead><th>Octubre</th></thead>            
-        </table>
-        <table id=tabla10>
-            <thead><th>Noviembre</th></thead>            
-        </table>
-        <table id=tabla11>
-            <thead><th>Diciembre</th></thead>            
-        </table>`
+        shadowRoot.innerHTML = `
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+
+            <style>
+                *{
+                    margin: 0 auto;
+                }
+                #containerFlex{
+                    width: 100%;
+                    display: flex;
+                    justify-content: space-between;
+                    margin-top: 5rem;
+                    margin-bottom: 2rem;
+                }
+                #calendario{
+                    width: 70%;
+                }
+                .diaCalendario{
+                    min-width: 150px;
+                    min-height: 100px;
+                    
+                }
+                .numeroDia{
+                    font-size: 1.8em;
+                    padding-left: 8%;
+                    padding-top: 4%;
+                }
+                th{
+                    font-size: 2em;
+                }
+            </style>
+
+            <div id="containerCalendario">
+                <div id="containerFlex">
+                    <h3>Calendario</h3>
+                    <form method="post" action="#">
+                        <select id="anios">
+                            <option value="2019">2019</option>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>                       
+                        </select>
+                        <!-- <button type="submit">Seleccionar</button> -->
+                    </form>
+                </div>
+                <div id="calendario">
+
+                    <table id=tabla0>
+                        <thead><th>Enero</th></thead>            
+                    </table>
+                    <table id=tabla1>
+                        <thead><th>Febrero</th></thead>            
+                    </table>
+                    <table id=tabla2>
+                        <thead><th>Marzo</th></thead>            
+                    </table>
+                    <table id=tabla3>
+                        <thead><th>Abril</th></thead>            
+                    </table>
+                    <table id=tabla4>
+                        <thead><th>Mayo</th></thead>            
+                    </table>
+                    <table id=tabla5>
+                        <thead><th>Junio</th></thead>            
+                    </table>
+                    <table id=tabla6>
+                        <thead><th>Julio</th></thead>            
+                    </table>
+                    <table id=tabla7>
+                        <thead><th>Agosto</th></thead>            
+                    </table>        
+                    <table id=tabla8>
+                        <thead><th>Septiembre</th></thead>           
+                    </table>
+                    <table id=tabla9>
+                        <thead><th>Octubre</th></thead>            
+                    </table>
+                    <table id=tabla10>
+                        <thead><th>Noviembre</th></thead>            
+                    </table>
+                    <table id=tabla11>
+                        <thead><th>Diciembre</th></thead>            
+                    </table>
+                            
+                </div>
+            </div>
+
+        `
 
 
         let table = [];
@@ -55,12 +110,14 @@ class WCCalendario extends HTMLElement {
             table[i] = shadowRoot.querySelector("#tabla".concat(i));
         }
 
-        let diasSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+        let diasSemana = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
 
         for (let i = 0; i < 12; i++) {
             let semana = document.createElement("tr");
             for (let i = 0; i < 7; i++) {
                 let td = document.createElement("td");
+                td.style.textAlign = 'center';
+                td.style.fontWeight = 'bold'
                 td.innerHTML = diasSemana[i];
                 semana.appendChild(td);
             }
@@ -70,6 +127,7 @@ class WCCalendario extends HTMLElement {
                 let tr = tbody.appendChild(document.createElement("tr"));
                 for (let k = 1; k < 8; k++) {
                     let td = document.createElement("td");
+                    td.className = 'diaCalendario';
                     td.setAttribute("id", "".concat(i, j, k));
                     tr.appendChild(td);
                 }
@@ -79,20 +137,31 @@ class WCCalendario extends HTMLElement {
             
     }
 
+    
     cargaDias (dias, url, shadowRoot){
         getData(url).then(function (datos) {
             Array.prototype.forEach.call(datos, dato => {
                 dias.push(dato);
             });
+
+            var colores = ["bg-primary", "bg-danger"];
+
             dias.forEach(dia=>{
-                let id = "".concat(dia.mes, dia.fila, dia.columna);
+                let id;
+                if (dia.columna==1)
+                    id = "".concat(dia.mes, dia.fila, 7);                  
+                else    
+                    id = "".concat(dia.mes, dia.fila, dia.columna-1);
+
                 console.log(id);
                 let tipo = dia.status.descripcion;                
                 let fecha = new Date(dia.fecha);
                 let numeroDia = fecha.getDate();
                 let casilla = shadowRoot.getElementById(id);
-                casilla.innerHTML = numeroDia;
+                casilla.innerHTML = `<p class="numeroDia">${numeroDia}</p>`;
                 let select = document.createElement("select");
+                select.style.margin = '7%';
+                select.style.width = '120px';
                 let laborable = document.createElement("option");
                 laborable.innerHTML = "laborable";
                 let festivo = document.createElement("option");
@@ -100,11 +169,16 @@ class WCCalendario extends HTMLElement {
                 select.appendChild(laborable);
                 select.appendChild(festivo);
                 casilla.appendChild(select);
-                casilla.style.backgroundColor = "blue";
+                casilla.className = colores[0];
                 if (tipo == "festivo"){
                     select.selectedIndex = 1;
-                    casilla.style.backgroundColor = "red";
+                    casilla.className = colores[1];
                 }
+                select.addEventListener("change", function(){
+                    let indice= select.options.selectedIndex;
+                    casilla.className=colores[indice];
+                });
+
                     
             }) 
         });

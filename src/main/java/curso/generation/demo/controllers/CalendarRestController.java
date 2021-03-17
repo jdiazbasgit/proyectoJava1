@@ -50,7 +50,12 @@ public class CalendarRestController {
 		dto.setStatus(inicio.getEstado());
 		GregorianCalendar fecha = new GregorianCalendar();
 		fecha.setTimeInMillis(inicio.getFecha().getTime());
-		dto.setColumna(fecha.get(java.util.Calendar.DAY_OF_WEEK));
+		int columna = fecha.get(java.util.Calendar.DAY_OF_WEEK);
+		if (columna == 1)
+			columna +=6;
+		else 
+			columna -=1;
+		dto.setColumna(columna);
 		dto.setFila(fecha.get(java.util.Calendar.WEEK_OF_MONTH));
 		dto.setMes(fecha.get(java.util.Calendar.MONTH));
 		dto.setNumSem(fecha.getActualMaximum(java.util.Calendar.WEEK_OF_MONTH));

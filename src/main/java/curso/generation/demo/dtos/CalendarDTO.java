@@ -1,6 +1,6 @@
 package curso.generation.demo.dtos;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
@@ -31,8 +31,8 @@ public class CalendarDTO {
 	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(java.util.Date date) {
+		this.fecha = date;
 	}
 	public Status getStatus() {
 		return status;
