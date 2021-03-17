@@ -392,6 +392,17 @@ class WCEmpleados extends HTMLElement {
         //Para confirmar el empleado seleccionado
         if (confirmarIdentificador === empleado.identificador) {
           this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
+
+          // ?¿ ++++++++++++++++++++++++++++++++ PUT +++++++++++++++++++++++++
+
+          // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
+
+          //apiHandler(this.url, "put", nuevoEmpleado.identificador);
+
+          console.log("PUT URL EMPLEADO -->> ", nuevoEmpleado._links.self.href, nuevoEmpleado.identificador)
+          apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
+
+
           this.cerrarModalEditar()
         }
       })
@@ -536,7 +547,7 @@ class WCEmpleados extends HTMLElement {
     this.crearTablaEmpeados(arrayEmpleados)
 
     // ?¿ --------------->>>>>> LAMADA DEL PUT AQUI?¿?
-    
+
     this.cerrarModalAddEmpleado()
 
   }
@@ -578,7 +589,7 @@ class WCEmpleados extends HTMLElement {
 
         }
         if (nuevoEmpleado && !nuevoEmpleado.fecha_alta) {
-          console.log("nuevoEmpleado.fecha_alta",nuevoEmpleado.fecha_alta)
+          console.log("nuevoEmpleado.fecha_alta", nuevoEmpleado.fecha_alta)
           nuevoEmpleado.fecha_alta = "---";
         }
         if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
@@ -645,12 +656,12 @@ class WCEmpleados extends HTMLElement {
 
           //****?? Llamada de la API para MODIFICAR el empleado seleccionado ***************
 
-         // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
+          // console.log("PUT EMPLEADO",this.url, nuevoEmpleado.identificador )
 
           //apiHandler(this.url, "put", nuevoEmpleado.identificador);
 
-          console.log("PUT URL EMPLEADO -->> ",nuevoEmpleado._links.self.href, nuevoEmpleado.identificador )
-          apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
+          // console.log("PUT URL EMPLEADO -->> ",nuevoEmpleado._links.self.href, nuevoEmpleado.identificador )
+          // apiHandler(nuevoEmpleado._links.self.href, "put", nuevoEmpleado.identificador);
 
 
           this.cerrarModalEditar()
