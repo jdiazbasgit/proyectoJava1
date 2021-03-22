@@ -27,12 +27,23 @@
         
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
                                                                         
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 3d8ce31b15f5893db3ad99228ef6ae9ddfc59061
         
         
         
         
         
         
+<<<<<<< HEAD
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+                                                                        
+        
+        
+>>>>>>> 3d8ce31b15f5893db3ad99228ef6ae9ddfc59061
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
                                                                         
@@ -40,12 +51,21 @@
         
         
         
+<<<<<<< HEAD
         
         
         
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
+=======
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+                                                
+        
+        
+        
+        
+>>>>>>> 3d8ce31b15f5893db3ad99228ef6ae9ddfc59061
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
                                                                         
         

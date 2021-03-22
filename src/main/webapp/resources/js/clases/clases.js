@@ -1,4 +1,4 @@
-class Acceso {
+export class Acceso {
     constructor(id, year, empleado, month, day, minuto, hora, tipo, fecha, horaReal, minutoReal) {
         this.id = id;
         this.year = year;
@@ -13,7 +13,7 @@ class Acceso {
         this.minutoReal = minutoReal;
     }
 }
-class Employee {
+export class Employee {
     constructor(id, nombre, apellidos, dni, identificador, fechaAlta, fechaBaja, day) {
         this.id = id;
         this.nombre = nombre;
@@ -26,7 +26,7 @@ class Employee {
     }
 }
 
-class Day {
+export class Day {
     constructor(id, lunes, martes, miercoles, jueves, viernes, sabado, domingo, especial, descripcion) {
         this.id = id;
         this.lunes = lunes
@@ -41,7 +41,7 @@ class Day {
     }
 
 }
-class Status {
+export class Status {
     constructor(id, descripcion, tipo, color) {
         this.id = id
         this.descripcion = descripcion
@@ -50,30 +50,32 @@ class Status {
 
     }
 }
-class User {
+export class User {
     constructor(id, user, password, enabled, rol) {
-        this.id = idthis.user = user
+        this.id = id
+        this.user = user
         this.password = password
         this.enabled = enabled
         this.rol = rol
     }
 }
-class Rol {
+export class Rol {
     constructor(id, rol) {
         this.id = id
         this.rol = rol
     }
 }
-class Calendar {
+export class Calendar {
     constructor(id, fecha, status) {
         this.id = id
         this.fecha = fecha
         this.status = status
     }
 }
-class EmployeeStatus {
+export class EmployeeStatus {
     constructor(id, employee, status, calendar, day) {
-        this.id = idthis.employee = employee
+        this.id = id
+        this.employee = employee
         this.status = status;
         this.calendar = calendar
         this.day = day
@@ -81,9 +83,10 @@ class EmployeeStatus {
 }
 
 
-class Login{
-    constructor(user, password){
-        this.user=user
-        this.password=password
+export class Login {
+    constructor(user, password) {
+        this.user = user
+        this.password = password
     }
 }
+

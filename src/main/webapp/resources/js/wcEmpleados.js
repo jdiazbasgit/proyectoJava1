@@ -1,4 +1,7 @@
-
+import {
+  Day,
+  Employee
+} from "./clases/clases.js";
 
 
 class WCEmpleados extends HTMLElement {
@@ -39,7 +42,7 @@ class WCEmpleados extends HTMLElement {
           .styleModal {
             min-width: 40%;
             margin: 0 auto;
-            padding: 2rem 3rem;
+            padding: .5rem 1.5rem;
             background-color: #EEEEEE;
             border-radius: 30px;
             box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
@@ -85,6 +88,7 @@ class WCEmpleados extends HTMLElement {
           color: #F2BB3F;
           font-size: 0.85rem;
           padding-right: .5rem;
+          padding-left: .5rem;
         }
         
         #tablaDatos tr > td:first-child {
@@ -231,8 +235,6 @@ class WCEmpleados extends HTMLElement {
 
     //---------------- Inyectamos url aquí hasta que se cambie en el HEAD -------------------------
 
-    console.log("nueva:" + this.url)
-
     // *** URL buena a usar 
     let datosJSON = apiHandler(this.url)
 
@@ -242,30 +244,27 @@ class WCEmpleados extends HTMLElement {
     datosJSON.then((empleados) => {
 
       listaEmpleados = empleados._embedded.employees
-      // console.log("Lista inicial" , listaEmpleados)
 
       this.crearTablaEmpeados(listaEmpleados)
     })
 
+    // let nuevoEmp = new Employee(0, nombre, apellidos, dni, this.identificadorAleatorio(), fechaAlta, null, new Day(1, "", "", "", "", "", "", "", false, ""))
     let nuevoEmp
 
     shadowRoot.querySelector("#botonAdd").addEventListener("click", () => this.verModalAddEmpleado())
     shadowRoot.querySelector("#cerrarModal1").addEventListener("click", () => this.cerrarModalAddEmpleado())
-    shadowRoot.querySelector("#addEmpleado").addEventListener("click", () => this.addEmpleado(listaEmpleados, nuevoEmp))
+    shadowRoot.querySelector("#addEmpleado").addEventListener("click", () => {
+      this.addEmpleado(listaEmpleados, nuevoEmp)
+    })
 
   }
 
   //Hacer que la url se le pase directamente desde la etiqueta del WC ?????????????????? ****** ¿¿¿¿
   attributeChangedCallback(name, oldValue, newValue) {
-
     this.url = newValue;
-
-    console.log("PEPE", this.url)
-
   }
 
   static get observedAttributes() {
-
     return ["url"]
   }
 
@@ -274,8 +273,6 @@ class WCEmpleados extends HTMLElement {
   crearTablaEmpeados(arrayEmpleados) {
 
     let propiedadesTablaEmpleados = Object.keys(arrayEmpleados[0])
-
-    console.log("propiedadesTablaEmpleados", propiedadesTablaEmpleados)
 
     let tablaDatos = this.shadowRoot.querySelector("#tablaDatos")
 
@@ -293,9 +290,7 @@ class WCEmpleados extends HTMLElement {
       if (propiedad !== "jornada" && propiedad !== "_links") {
         let th = document.createElement("th");
         propiedad = propiedad.replace("_", " ");
-        //th.innerHTML = this.capitalizarPrimeraLetra(propiedad); ------>>>>
-
-        th.innerHTML = propiedad;
+        th.innerHTML = this.capitalizarPrimeraLetra(propiedad);
 
         if (propiedad === "dni") {
           th.innerHTML = propiedad.toUpperCase()
@@ -311,8 +306,6 @@ class WCEmpleados extends HTMLElement {
     thead.appendChild(thEditar);
 
     //********* BODY TABLA*/
-
-    console.log("arrayEmpleados BODY", arrayEmpleados)
 
     let tbody = document.createElement("tbody");
     tbody.classList.add("bg-light");
@@ -334,10 +327,9 @@ class WCEmpleados extends HTMLElement {
           empleado.fecha_baja = "---"
         }
 
-        if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links") {
+        if (propiedad !== null && propiedad !== "jornada" && propiedad !== "_links" && propiedad !== "id") {
           let td = document.createElement("td");
-          // td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]); ---------------------->>
-          td.innerHTML = empleado[propiedad];
+          td.innerHTML = this.capitalizarPrimeraLetra(empleado[propiedad]);
 
           if (propiedad === "dni") {
             td.innerHTML = empleado[propiedad].toUpperCase()
@@ -399,6 +391,7 @@ class WCEmpleados extends HTMLElement {
         //Para confirmar el empleado seleccionado
         if (confirmarIdentificador === empleado.identificador) {
           this.guardarEditarEmpleado(arrayEmpleados, empleado.identificador)
+
           this.cerrarModalEditar()
         }
       })
@@ -452,14 +445,12 @@ class WCEmpleados extends HTMLElement {
         formEmpleadoSelect.removeChild(selectLabel)
       }
 
-      if (propiedad !== "jornada") {
+      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== " links") {
 
-        //Se pinta el label con un id único, que será la propia propiedad
-
+        //Se pinta el LABEL con un id único, que será la propia propiedad
         let labelpropiedad = document.createElement("label")
         labelpropiedad.setAttribute('id', `label${propiedad}`)
-        // labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad) // ------------------>>>>>
-        labelpropiedad.innerHTML = propiedad
+        labelpropiedad.innerHTML = this.capitalizarPrimeraLetra(propiedad)
         //Poner "dni" en mayúscula
         if (propiedad === "dni") {
           labelpropiedad.innerHTML = propiedad.toUpperCase()
@@ -479,8 +470,8 @@ class WCEmpleados extends HTMLElement {
         formEmpleadoSelect.removeChild(selectInput)
       }
 
-      if (propiedad !== "jornada") {
-        //Se pinta el label con un id único, que será la propia propiedad
+      if (propiedad !== "jornada" && propiedad !== "identificador" && propiedad !== "_links") {
+        //Se pinta el alor de los inputs del formulario EDITAR con un id único, que será la propia propiedad
 
         let inputPropiedad = document.createElement("input")
         inputPropiedad.setAttribute('id', `input${propiedad}`)
@@ -503,17 +494,15 @@ class WCEmpleados extends HTMLElement {
 
   //Función para poner a primera letra en mayúscua
   capitalizarPrimeraLetra(miString) {
-
-    return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
+    if (miString)
+      return miString.trim().toLowerCase().replace(/\w\S*/g, (w) => (w.replace(/^\w/, (c) => c.toUpperCase())));
 
   }
 
   guardarEditarEmpleado(arrayEmpleados, idEmpleado) {
-    //Identificar el empleado seleccionado
     //let empleadoSelect = new Employee // ----------------------->>> OBJETO DE CLASES.JS
-
+    //Identificar el empleado seleccionado
     let empleadoSelect = arrayEmpleados.find((empleado) => empleado.identificador === idEmpleado);
-
 
     //Obtener los valores de los inputs. Los ids de los input son "input${propiedad}:"
     let nombre = this.shadowRoot.querySelector("#inputnombre").value.toUpperCase();
@@ -532,8 +521,6 @@ class WCEmpleados extends HTMLElement {
     empleadoSelect.fecha_alta = fecha_alta
     empleadoSelect.fecha_baja = fecha_baja
 
-    //console.log("Nuevo Array MODIFICADO", arrayEmpleados)
-
     //Sobrescribimos la tabla:
     let tablaDatos = this.shadowRoot.querySelector('#tablaDatos');
     let pastBody = tablaDatos.getElementsByTagName('tbody')[0];
@@ -548,11 +535,12 @@ class WCEmpleados extends HTMLElement {
     //2º Añadimos nueva tabla con el "arrayEmpleados" MODIFICADO ***
     this.crearTablaEmpeados(arrayEmpleados)
 
-    console.log("Empleado seleccionado", empleadoSelect)
+    //?¿--------------->>>>>> LAMADA DEL PUT AQUI <<<<<<<<<-------------------------------------
 
-    //**** Llamada de la API para MODIFICAR el empleado seleccionado ***************
+    console.log("EMPLEADO PUT --> ", empleadoSelect)
 
-    apiHandler(this.url, "put", empleadoSelect);
+    apiHandler(empleadoSelect._links.self.href, "put", empleadoSelect);
+
 
     this.cerrarModalAddEmpleado()
 
@@ -568,7 +556,7 @@ class WCEmpleados extends HTMLElement {
     let dni = this.shadowRoot.querySelector("#nuevoDNI").value.toUpperCase();
     let fechaAlta = this.shadowRoot.querySelector("#nuevoFecha").value;
 
-    //En caso de no haber añadido nuevo empleado y darle a guardar, saca una alerta
+    //En caso de no haber añadido nuevo empleado y darle a guardar, LANZA una alerta
     if (nombre.trim() === "" && apellidos.trim() === "" && dni.trim() === "") {
       alert("Debes de rellenar todos los datos")
 
@@ -580,18 +568,8 @@ class WCEmpleados extends HTMLElement {
 
       tbody.appendChild(nuevaFila);
 
-      //nuevoEmpleado = new Employee //------------------------------->>>>>>
-
-      console.log("nuevoEmpleado", nuevoEmpleado)
-
-      nuevoEmpleado = {
-        "nombre": nombre,
-        "apellidos": apellidos,
-        "dni": dni,
-        "identificador": this.identificadorAleatorio(),
-        "fecha_alta": fechaAlta,
-        "fecha_baja": null
-      };
+      // -------->>>>> **EMPLEADO DESDE CLASES.JS */
+      nuevoEmpleado = new Employee(0, nombre, apellidos, dni, this.identificadorAleatorio(), fechaAlta, null, new Day(1, "", "", "", "", "", "", "", false, ""))
 
       let datoIcono = document.createElement("td");
 
@@ -600,10 +578,14 @@ class WCEmpleados extends HTMLElement {
       datoIcono.innerHTML = `<i class="bi bi-people-fill"></i>`;
 
       for (let propiedad in nuevoEmpleado) {
-        if (nuevoEmpleado.fecha_baja == null) {
+        if (!nuevoEmpleado.fecha_baja) {
           nuevoEmpleado.fecha_baja = "---";
+
         }
-        if (propiedad !== null) {
+        if (nuevoEmpleado && !nuevoEmpleado.fecha_alta) {
+          nuevoEmpleado.fecha_alta = "---";
+        }
+        if (propiedad !== null && propiedad !== "id" && propiedad !== "day") {
           let td = document.createElement("td");
           td.innerHTML = nuevoEmpleado[propiedad];
           nuevaFila.appendChild(td);
@@ -654,112 +636,117 @@ class WCEmpleados extends HTMLElement {
         confirmarIdentificador = nuevoEmpleado.identificador
         this.verModalEditar()
         this.cargarFormuarioEditar(arrayEmpleados, nuevoEmpleado.identificador)
-
       })
 
       this.shadowRoot.getElementById('cancelarEditarEmpleado').addEventListener("click", () => this.cerrarModalEditar())
 
       this.shadowRoot.getElementById('guardarEditarEmpleado').addEventListener("click", () => {
         if (confirmarIdentificador === nuevoEmpleado.identificador) {
-
           this.guardarEditarEmpleado(arrayEmpleados, nuevoEmpleado.identificador)
-
           this.cerrarModalEditar()
-
         }
       })
 
-      //**** Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
-      console.log(nuevoEmpleado)
-      apiHandler(this.url, "post", nuevoEmpleado);
+      // //****?? Llamada de la API para añadir el nuevo empleado con los datos del frmulario ***************
+
+      // **** Para usar los datos del nuevo empleado que requiere la tabla EMPLOYEES de la BD *****
+      const newBodyForEmpleado = {
+        nombre: nuevoEmpleado.nombre,
+        apellidos: nuevoEmpleado.apellidos,
+        identificador: nuevoEmpleado.identificador,
+        dni: nuevoEmpleado.dni,
+        fecha_alta: new Date()
+      }
+
+      apiHandler(this.url, "POST", newBodyForEmpleado);
 
       this.cerrarModalAddEmpleado()
 
       arrayEmpleados.push(nuevoEmpleado)
 
+
+      }
+
     }
 
   }
 
-}
 
+  window.customElements.define("wc-empleados", WCEmpleados);
 
-window.customElements.define("wc-empleados", WCEmpleados);
+  sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODgyNTU0LCJleHAiOjE2MTU4ODMxNTR9.sQOcjY22D5ViA90zbe2LSUQPZNchJpgWZbZLPI7VcfbNrc12z3niP5Nswk-S-cQSoEY9CcIzqQoZ3xNdntJ-Yg"
+  //Funciones que obtiene los datos
 
-sessionStorage.token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODgyNTU0LCJleHAiOjE2MTU4ODMxNTR9.sQOcjY22D5ViA90zbe2LSUQPZNchJpgWZbZLPI7VcfbNrc12z3niP5Nswk-S-cQSoEY9CcIzqQoZ3xNdntJ-Yg"
-//Funciones que obtiene los datos
+  //*** ****************************
+  function apiHandler(url, method = "get", data) {
 
-//*** ****************************
-function apiHandler(url, method = "get", data) {
-  if (method == "get") {
-    return getDatos(url)
-  } else {
-    return sendDatos(url, method, data)
+    if (method == "get") {
+      return getDatos(url)
+    } else {
+      return sendDatos(url, method, data)
+    }
   }
-}
 
-function getDatos(url) {
-  return new Promise(function (resolve, reject) {
-    fetch(url, {
-        "method": "get",
-        "cors": "no-cors",
-        // "headers": {
-        //"Access-Control-Allow-Origin":"*",
-        //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
-        //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
-        //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-
-        // }
-
-        /*"headers": {
+  function getDatos(url) {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
+          "method": "get",
+          "cors": "no-cors",
+          // "headers": {
           //"Access-Control-Allow-Origin":"*",
-          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
+          //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODkwNTA2LCJleHAiOjE2MTU4OTExMDZ9.efwJ5BL2YNMHETWlupujamHCWtg6KSPaYWipQlHNQy_MIgQPBPQNutOmzubKehkQsLBWeNyZjqT144k4N4mRuA",
           //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
           //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          // "Access-Control-Allow-Origin": "*"
+
           // }
-        }*/
-      })
 
-      .then(function (response) {
-        if (response.ok)
-          resolve(response.json())
-        else {
-          reject(response.status)
-        }
-      }).catch(function (error) {
-        console.log(`ERROR ${error}`)
-        reject(error);
-      })
-  })
-}
+          /*"headers": {
+            //"Access-Control-Allow-Origin":"*",
+            //"Authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJjdXJzb0pXVCIsInN1YiI6InBlcGUiLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjE1ODk2NTM3LCJleHAiOjE2MTU4OTcxMzd9.M07kd0bijRextp41u95DSqCCjDXpRdeFB-RHpgdKHTMXkLL878RZ63dWYWX7AMvwcTJIf8ooIAsyynoJWlizRw"
+            //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+            //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+            // "Access-Control-Allow-Origin": "*"
+            // }
+          }*/
+        })
+
+        .then(function (response) {
+          if (response.ok)
+            resolve(response.json())
+          else {
+            reject(response.status)
+          }
+        }).catch(function (error) {
+          console.log(`ERROR ${error}`)
+          reject(error);
+        })
+    })
+  }
 
 
+  function sendDatos(url, method, data) {
+    return new Promise(function (resolve, reject) {
+      fetch(url, {
+          "method": method,
+          "body": JSON.stringify(data),
 
-
-
-function sendDatos(url, method, data) {
-  return new Promise(function (resolve, reject) {
-    fetch(url, {
-        "method": method,
-        "body": JSON.stringify(data),
-        "cors": "no-cors",
-        /*"headers": {
-          // "Authorization": sessionStorage.token,
-          //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
-          //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
-          // },
-        }*/
-      })
-      .then(function (response) {
-        if (response.ok)
-          resolve(response.json())
-        else {
-          reject(response.status)
-        }
-      }).catch(function (error) {
-        console.log(`ERROR ${error}`)
-        reject(error);
-      })
-  })
-}
+          "headers": {
+            "Content-Type": "application/json"
+            // "Authorization": sessionStorage.token,
+            //Para poder llamar la IP de Javier desde mi pc (que se permitan llamadas externas)
+            //Hay que configurar en el BACK el CORS **************** --- ???¿¿?¿?¿?
+            // },
+          }
+        })
+        .then(function (response) {
+          if (response.ok)
+            resolve(response.json())
+          else {
+            reject(response.status)
+          }
+        }).catch(function (error) {
+          console.log(`ERROR ${error}`)
+          reject(error);
+        })
+    })
+  }
