@@ -2,7 +2,7 @@
 
 function getDatos(url,method){
     return new Promise(function (resolve, reject) {
-        fetch(url,{method:method,"headers":{"Authorization":sessionStorage.token},"cors":"no-cors"})
+        fetch(url,{method:method,"headers":{"Context-Type":"application/json"}})
           .then(function (response) {
             if (response.ok)
               resolve(response.json())
@@ -21,7 +21,7 @@ function getDatos(url,method){
 
 function getDatos(url,method,dato){
     return new Promise(function (resolve, reject) {
-        fetch(url,{"method":method, "body":JSON.stringify(dato),"headers":{"Authorization":sessionStorage.token},"cors":"no-cors"})
+        fetch(url,{"method":method, "body":JSON.stringify(dato),"headers":{"Context-Type":"application/json"}})
           .then(function (response) {
             if (response.ok)
               resolve(response.json())
@@ -37,7 +37,7 @@ function getDatos(url,method,dato){
 
 function getDatosLogin(url,method,dato){
     return new Promise(function (resolve, reject) {
-        fetch(url,{"method":method, "body":JSON.stringify(dato),"cors":"no-cors"})
+        fetch(url,{"method":method, "body":JSON.stringify(dato),"headers":{"Context-Type":"application/json"}})
           .then(function (response) {
             if (response.ok)
               resolve(response.json())
