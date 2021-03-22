@@ -110,6 +110,7 @@ height: 20px;
         this.rellenarTabla(this.empleados, this.jornadas, tabla);
 
     }
+   this.cargaEmpleados(this.empleados, this.jornadas, tabla, this.rellenarTabla, this.url, this.url2);
 
     cargaEmpleados(empleados, jornadas, tabla, funcion, url, url2) {
         getData(url).then(function (datos) {

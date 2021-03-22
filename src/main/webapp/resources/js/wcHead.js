@@ -80,7 +80,7 @@ class WcHead extends HTMLElement {
 
 
 
-        //metemos los iconos en los img
+        // metemos los iconos en los img
         icono1b.src = "./img/svg/icono1blanco.svg";
         icono1b.id = "icono1b";
         icono2b.src = "./img/svg/icono2blanco.svg";
@@ -102,7 +102,7 @@ class WcHead extends HTMLElement {
 
 
 
-        //metemos los textos en los divs
+        // metemos los textos en los divs
         div19.innerHTML = "Sistema de control de accesos";
         div8.id = "div8";
         div8.href = "#";
@@ -149,24 +149,24 @@ class WcHead extends HTMLElement {
         div17.appendChild(hr);
 
 
-        //div empleados
+        // div empleados
 
         div7.appendChild(icono1b);
         div2.appendChild(div7);
         div2.appendChild(a1);
-        //div jornadas
+        // div jornadas
         div9.appendChild(icono2b);
         div3.appendChild(div9);
         div3.appendChild(a2);
-        //div jornadas/empleados
+        // div jornadas/empleados
         div11.appendChild(icono3b);
         div4.appendChild(div11);
         div4.appendChild(a3);
-        //div calendario
+        // div calendario
         div13.appendChild(icono4b);
         div5.appendChild(div13);
         div5.appendChild(a4);
-        //div calendario-empleados
+        // div calendario-empleados
         div15.appendChild(icono5b);
         div6.appendChild(div15);
         div6.appendChild(a5);
@@ -176,7 +176,7 @@ class WcHead extends HTMLElement {
         div21.appendChild(div4);
         div21.appendChild(div5);
         div21.appendChild(div6);
-        //div1 metemos el sistema de accesos y el div anterior
+        // div1 metemos el sistema de accesos y el div anterior
         div1.appendChild(div17);
         div1.appendChild(div21);
 
@@ -364,6 +364,8 @@ class WcHead extends HTMLElement {
 
                 let contenido = document.querySelector("#contenido");
                 let jornadas = document.createElement("Wc-Jornadas");
+                jornadas.setAttribute("url","http://localhost:8080/api/employees")
+
                 contenido.appendChild(jornadas);
 
             }
@@ -373,22 +375,24 @@ class WcHead extends HTMLElement {
                 let contenido = document.querySelector("#contenido");
                 let jornadasempleados = document.createElement("wc-jornadasempleados");
                 contenido.appendChild(jornadasempleados);
+                jornadasempleados.setAttribute("url","http://localhost:8080/api/employees")
+                jornadasempleados.setAttribute("url2","http://localhost:8080/api/days")
+
             }
 
-            /*if (componente.id === "calendario") {
-
-                let contenido = document.querySelector("#contenido");
-                let empleados = document.createElement("wc-empleados");
-                contenido.appendChild(empleados);
-            }
-
-            if (componente.id === "calendarioempleados") {
-
-                let contenido = document.querySelector("#contenido");
-                let empleados = document.createElement("wc-empleados");
-                contenido.appendChild(empleados);
-            }
-            */
+            /*
+			 * if (componente.id === "calendario") {
+			 * 
+			 * let contenido = document.querySelector("#contenido"); let
+			 * empleados = document.createElement("wc-empleados");
+			 * contenido.appendChild(empleados); }
+			 * 
+			 * if (componente.id === "calendarioempleados") {
+			 * 
+			 * let contenido = document.querySelector("#contenido"); let
+			 * empleados = document.createElement("wc-empleados");
+			 * contenido.appendChild(empleados); }
+			 */
 
 
 

@@ -3,6 +3,17 @@ class WcJornadas extends HTMLElement {
     constructor() {
         super();
     }
+    
+    attributeChangedCallback(name, oldValue, newValue) {
+        if (name === "url")
+            this.url = newValue;
+       
+
+    }
+
+    static get observedAttributes() {
+        return ["url", ];
+    }
 
     connectedCallback() {
 
@@ -357,8 +368,8 @@ class WcJornadas extends HTMLElement {
             </table>
         </div>`;
 
-        const url = "./datos/jornadas.json";
-        var jornadas = this.getDatos(url);
+        
+        var jornadas = this.getDatos(this.url);
 
 
 
