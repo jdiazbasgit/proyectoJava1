@@ -372,6 +372,8 @@ class WcHead extends HTMLElement {
 
                 let contenido = document.querySelector("#contenido");
                 let jornadasempleados = document.createElement("wc-jornadasempleados");
+                jornadasempleados.setAttribute("url","datos/empleados.json")
+                jornadasempleados.setAttribute("url2","datos/jornadas.json")
                 contenido.appendChild(jornadasempleados);
             }
 
